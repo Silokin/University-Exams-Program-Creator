@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/
+xml/ns/persistence/persistence_2_0.xsd"
+version="2.0">
+	<persistence-unit name="sample" transaction-type="RESOURCE_LOCAL">
+    
+    <class>gr.aueb.mscis.sample.model.Epoptis</class>
+    <class>gr.aueb.mscis.sample.model.EpoptisCategory</class>
+    <class>gr.aueb.mscis.sample.model.Epopteia</class>
+    <class>gr.aueb.mscis.sample.model.Aithousa</class>
+    <class>gr.aueb.mscis.sample.model.Mathima</class>
+    <class>gr.aueb.mscis.sample.model.ProgramExe</class>
+    
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    
+	   <properties>
+	      <property name="hibernate.show_sql" value="false"/>
+          <property name="hibernate.format_sql" value="true"/>      
+	      <property name="hibernate.connection.driver_class"
+                    value="org.h2.Driver"/>
+          <property name="hibernate.connection.url"
+                    value="jdbc:h2:./test"/>
+          <property name="hibernate.dialect"
+                    value="org.hibernate.dialect.H2Dialect"/>            
+          <property name="hibernate.connection.username"
+                    value="sa"/>          
+          <property name="hibernate.hbm2ddl.auto" value="create"/> 	       	       
+	   
+	   		<!--  egw ta evala auta -->
+		   <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sample"/>
+	       
+	       <property name="javax.persistence.jdbc.user" value="root"/>
+	       
+	       <property name="javax.persistence.jdbc.password" value="root"/>
+	       
+	       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+	       
+	       <property name="eclipselink.logging.level" value="FINE"/>
+	       
+	       <property name="eclipselink.ddl-generation" value="create-tables"/>
+		   
+	   </properties>
+	   
+	</persistence-unit>
+	
+</persistence>
