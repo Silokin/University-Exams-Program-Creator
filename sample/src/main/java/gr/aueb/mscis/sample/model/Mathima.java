@@ -10,6 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+* Τα μαθήματα εξεταστικής
+* @authorMscIS-AlexGianTas
+*
+*/
 @Entity
 @Table(name = "mathima")
 public class Mathima {
@@ -70,17 +75,20 @@ public class Mathima {
 		this.teacher = teacher ;
 	}
 
+	//mono se mia ek twn duo me many to ... sxesi
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result+ ((teacher == null) ? 0 : teacher.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((epopteia == null) ? 0 : epopteia.hashCode());
+		result = prime * result + id;
 		result = prime * result + semester;
+		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
 
-	//
+	//se oles tis klaseis
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -89,9 +97,16 @@ public class Mathima {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		
 		Mathima other = (Mathima) obj;
-		
+		if (epopteia == null) {
+			if (other.epopteia != null)
+				return false;
+		} else if (!epopteia.equals(other.epopteia))
+			return false;
+		if (id != other.id)
+			return false;
+		if (semester != other.semester)
+			return false;
 		if (teacher == null) {
 			if (other.teacher != null)
 				return false;
@@ -101,8 +116,6 @@ public class Mathima {
 			if (other.title != null)
 				return false;
 		} else if (!title.equals(other.title))
-			return false;
-		if (semester != other.semester)
 			return false;
 		return true;
 	}

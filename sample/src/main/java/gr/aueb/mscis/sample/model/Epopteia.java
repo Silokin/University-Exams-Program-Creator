@@ -1,11 +1,11 @@
 package gr.aueb.mscis.sample.model;
 
-import java.security.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +14,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 
+/**
+ * Οι εποπτείες που αναθέτονται από την Γραμματεία σε Επόπτες συγκεκριμένων κατηγοριών,
+ * δηλαδή Προσωπικό Τμήματος και Υποψήφιος Διδάκτωρ
+ * @author MscIS-AlexGianTas
+ */
+@Entity
+@Table(name="epopteia")
 public class Epopteia {
 
 
@@ -43,14 +50,14 @@ public class Epopteia {
     @JoinTable(name="epopteia_aithousa", 
             joinColumns = {@JoinColumn(name="epopteia_id")},
             inverseJoinColumns = {@JoinColumn(name="aithousa_id")})
-    private Set<Aithousa> aithouses = new HashSet<Aithousa>();
+    private Set<Aithousa> aithousa = new HashSet<Aithousa>();
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
             fetch=FetchType.LAZY)
     @JoinTable(name="epopteia_epoptis", 
             joinColumns = {@JoinColumn(name="epopteia_id")},
             inverseJoinColumns = {@JoinColumn(name="epoptis_id")})
-    private Set<Epoptis> epoptes = new HashSet<Epoptis>();
+    private Set<Epoptis> epoptis = new HashSet<Epoptis>();
 	
 	
 	//leei ti mathima ehei pou epopteyei I KATHE EPOPTEIA POU EPEKSERGAZOMASTE
@@ -61,8 +68,7 @@ public class Epopteia {
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="exetastikiid")
-	private ProgramExe pex;
-	
+	private Program program;
 	
 	public Epopteia()
 	{}
@@ -73,22 +79,14 @@ public class Epopteia {
 		this.ends = ends;
 	
 	}
+//	
+//	public void setProgram(ProgramExe programe)
+//	{
+//	}
 	
-	public void setProgramExe(ProgramExe pex)
+	public Program getProgram()
 	{
-		if (this.pex != null) {
-            this.pex.friendEpopteies().remove(this);
-        }
-        this.pex = pex;
-        
-        if (this.pex != null) {
-            this.pex.friendEpopteies().add(this);
-        }
-	}
-	
-	public ProgramExe getProgramExe()
-	{
-		return pex;
+		return program;
 	}
 	
 	public Integer getId()
@@ -123,16 +121,24 @@ public class Epopteia {
 //	}
 	
 	public Set<Aithousa> getAithouses() {
-	        return new HashSet<Aithousa>(aithouses);
+	        return new HashSet<Aithousa>(aithousa);
 	}
 	
 	//vale aithouses gia multiple different epopteiess
 	//dld gia epopteia 20/2/20 vale 2-3 diaforetikes aithouses
 	//prosoxi na ginete add aithousa (elegxos) mono AN DEN YPARXEI idi
+	//elegxei pws h ai8ousa einai dia8esimh 
 	public void addAithousa(Aithousa aithousa) {
 	        if (aithousa != null) {
+	        	boolean check = false;
+	        	for (Epopteia teia : aithousa.getEpopteies()) {
+	        		check=interval(teia);
+	        		if(check == true) break;	
+	        	}
+	        	if(check==true) {
 	        	aithousa.friendEpopteia().add(this);
-	            this.aithouses.add(aithousa);
+	            this.aithousa.add(aithousa);
+	        	}
 	        }
 	}
 	
@@ -141,12 +147,12 @@ public class Epopteia {
 	public void removeAithousa(Aithousa aithousa) {
 	        if (aithousa != null) {
 	            aithousa.friendEpopteia().remove(this);
-	            this.aithouses.remove(aithousa);
+	            this.aithousa.remove(aithousa);
 	        }
 	 }
  
 	Set<Aithousa> friendAithousa() {
-	    return aithouses;
+	    return aithousa;
 	}
 	
 
@@ -154,10 +160,17 @@ public class Epopteia {
 	//elexe omws mipws eisai full? (elegxos1)
 	//elexe an yparxei idi o epoptis? (elegxos2)
 	public void addEpopti(Epoptis epopti) {
-	        if (epopti != null) {
-	        	epopti.friendEpopteia().add(this);
-	            this.epoptes.add(epopti);
-	        }
+        if (epopti != null) {
+        	boolean check = false;
+        	for (Epopteia teia : epopti.getEpopteies()) {
+        		check=interval(teia);
+        		if(check == true) break;	
+        	}
+        	if(check==true) {
+        	epopti.friendEpopteia().add(this);
+            this.epoptis.add(epopti);
+        	}
+        }
 	}
 	
 	//kane remove epopti apo epopteia
@@ -166,22 +179,46 @@ public class Epopteia {
 	public void removeEpopti(Epoptis epopti) {
 	        if (epopti != null) {
 	        	epopti.friendEpopteia().remove(this);
-	            this.epoptes.remove(epopti);
+	            this.epoptis.remove(epopti);
 	        }
 	 }
  
 	Set<Epoptis> friendEpoptis() {
-	    return epoptes;
+	    return epoptis;
 	}
 	
 
 	public Set<Epoptis> getEpoptes() {
-	        return new HashSet<Epoptis>(epoptes);
+	        return new HashSet<Epoptis>(epoptis);
 	}
+	
+
 
 	@Override
 	public String toString() {
 		return "Epopteia [id=" + id + ", starts=" + starts + ", ends=" + ends + "]";
 	}
+
+	public void setProgram(Program programe) {
+		// TODO Auto-generated method stub
+
+		if (this.program != null) {
+            this.program.friendEpopteies().remove(this);
+        }
+        this.program = programe;
+        
+        if (this.program != null) {
+            this.program.friendEpopteies().add(this);
+        }
+	}
 	
+	public boolean interval (Epopteia epopteia) {
+		if((getStarts().compareTo(epopteia.getStarts())>=0&&getStarts().compareTo(epopteia.getEnds())<0) 
+				||(epopteia.getStarts().compareTo(getStarts())>=0&&epopteia.getStarts().compareTo(getEnds())<0)  
+				||(getStarts().compareTo(epopteia.getStarts())>=0&&getEnds().compareTo(epopteia.getEnds())<=0)
+				||(epopteia.getStarts().compareTo(getStarts())>=0&&epopteia.getEnds().compareTo(getEnds())<=0))
+			return true;
+		return false;
+	}
+
 }

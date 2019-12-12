@@ -96,13 +96,13 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
 //     * @return {@code true} αν η ημερομηνία είναι
 //     * μεταγενέστερη της άλλης
 //     */
-//    public boolean after(SimpleCalendar other) {
-//        if (equals(other)) {
-//            return false;
-//        }
-//
-//        return date.after(other.date);
-//    }
+    public boolean after(SimpleCalendar other) {
+        if (equals(other)) {
+            return false;
+        }
+
+       return date.after(other.date);
+    }
 
 //    /**
 //     * Επιστρέφει {@code true} αν η ημερομηνία είναι.
@@ -111,13 +111,13 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
 //     * @return {@code true} αν η ημερομηνία είναι
 //     * προγενέστερη της άλλης
 //     */
-//    public boolean before(SimpleCalendar other) {
-//        if (equals(other)) {
-//            return false;
-//        }
-//
-//        return date.before(other.date);
-//    }
+    public boolean before(SimpleCalendar other) {
+        if (equals(other)) {
+            return false;
+        }
+
+        return date.before(other.date);
+    }
 
     /**
      * Επιστρέφει μία ημερομηνία προσθέτοντας κάποιο

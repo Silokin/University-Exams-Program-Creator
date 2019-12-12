@@ -1,6 +1,8 @@
 package gr.aueb.mscis.sample.model;
 
 import gr.aueb.mscis.sample.contacts.*;
+import gr.aueb.mscis.sample.exceptions.EpoptisException;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +11,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,13 +30,17 @@ import javax.persistence.Table;
 //kai na mi sympeftei me tis meres mi diathesimotitas??
 
 
-
+/**
+ * Οι επόπτες που αναλαμβάνουν εποπτείες μαθημάτων
+ * @author MscIS-AlexGianTas
+ */
 @Entity
 @Table(name = "epoptis")
 public class Epoptis {
 
 	@Id
     @Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO) //generate automatically
     private Integer id;
 	
 	@Column(name="name", length=50, nullable = false)
@@ -41,6 +49,10 @@ public class Epoptis {
 	@Column(name="surname", length=50, nullable = false)
 	private String surname;
 
+	@Enumerated(EnumType.STRING)
+    @Column(name="epoptisstate")
+    private EpoptisState state = EpoptisState.AVAILABLE;
+	
 	@org.hibernate.annotations.Type(
             type="gr.aueb.mscis.sample.persistence.TelphoneNumberCustomType")
     @Column(name="telephone")
@@ -60,16 +72,19 @@ public class Epoptis {
     @Column(name="password", length=25, nullable=false)
     private String password;
     
-    @JoinTable(name="Epoptes_dates",
-    	    joinColumns = {@JoinColumn(name="epop_id", nullable = false)},
-    	    inverseJoinColumns = {@JoinColumn(name="date", nullable = false)})
-    private Set<Date> mi_diathesimotita = new HashSet<Date>();
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY )
+    @JoinColumn(name="categoryid")
+    private EpoptisCategory category;
     
-    
+//    @JoinTable(name="epoptes_dates",
+//    	    joinColumns = {@JoinColumn(name="epop_id", nullable = false)},
+//   	    inverseJoinColumns = {@JoinColumn(name="date", nullable = false)})
+//    private Set<String> mi_diathesimotita = new HashSet<String>();
+//    
     //polloi epoptes exoun, pithanon, polles hmeres mh diathesimotitas 
     @ManyToMany(mappedBy="epoptis",fetch=FetchType.LAZY, 
             cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Set<Epopteia> epopteies = new HashSet<Epopteia>();
+    private Set<Epopteia> epopteia = new HashSet<Epopteia>();
     
     /*@ManyToMany(mappedBy="epoptis",fetch=FetchType.LAZY, 
             cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -79,9 +94,8 @@ public class Epoptis {
 	public Epoptis() {
 	}
 
-	public Epoptis(int id,String name, String surname, EmailAddress email, TelephoneNumber telephone, String password) {
+	public Epoptis(String name, String surname, EmailAddress email, TelephoneNumber telephone, String password) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -89,19 +103,7 @@ public class Epoptis {
 		this.password = password;
 		
 	}
-	
-	/**
-     * Θέτει την κατηγορία δανειζομένου.
-     * @param category Η κατηγορία δανειζομένου
-     */
-	
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName()
 	{
@@ -150,6 +152,16 @@ public class Epoptis {
         return email;
     }
     
+    public void setCategory(EpoptisCategory category)
+    {
+    	this.category = category;
+    }
+    
+    public EpoptisCategory getCategory()
+    {
+    	return category;
+    }
+    
 //	//epistrefei antigrafo kai oxi to original. auto symbainei dioti theloume na apokleisoume to gegonos
 //	//na ginoun allages stin lista me ti mi diathesimotita me kostos tin apwleia dedomenwn
 //	
@@ -179,27 +191,60 @@ public class Epoptis {
 //    }
 	
 	public Set<Epopteia> getEpopteies() {
-	        return new HashSet<Epopteia>(epopteies);
+	        return new HashSet<Epopteia>(epopteia);
 	}
 	
 	public void addEpopteia(Epopteia epopteia) {
 	        if (epopteia != null) {
 	            epopteia.friendEpoptis().add(this);
-	            this.epopteies.add(epopteia);
+	            this.epopteia.add(epopteia);
 	        }
 	}
 	 
 	public void removeEpopteia(Epopteia epopteia) {
 	        if (epopteia != null) {
 	            epopteia.friendEpoptis().remove(this);
-	            this.epopteies.remove(epopteia);
+	            this.epopteia.remove(epopteia);
 	        }
 	 }
 	 
 	 public Set<Epopteia> friendEpopteia()
 	 {
-		 return epopteies;
+		 return epopteia;
 	 }
+	 
+	 /**
+	     * Επιστέφει {@code true} αν ο δανειζόμενος μπορεί να δανειστεί κάποιο αντίτυπο.
+	     * Το αν ο δανειζόμενος μπορεί να δανειστεί κάποιο
+	     * αντίτυπο εξαρτάται από το μέγιστο αριθμό αντιτύπων
+	     * που μπορεί να δανειστεί και από τον αριθμό των
+	     * αντιτύπων που έχει δανειστεί και δεν έχει επιστρέψει
+	     * Επιστρέφει {@code false} εάν η κατηγορία δανειζομένου
+	     * είναι {@code null}
+	     * @return {@code true} εάν ο δανειζόμενος μπορεί
+	     * να δανειστεί κάποιο αντίτυπο.
+	     */
+	 
+	 /**
+	     * Επιστρέφει τον αριθμό των εκκρεμών αντιτύπων του δανειζομένου.
+	     * Είναι ο αριθμός αντιτύπων που έχει δανειστεί ο δανειζόμενος 
+	     * και δεν έχει επιστρέψει.
+	     * @return Ο αριθμός των αντιτύπων που δεν έχουν επιστραφεί.
+	     */
+	    private int countPendingEpopteies() {
+	    	//poses einai oi epopteies
+	        return epopteia.size();
+	    }
+	    
+	    public boolean canEpopteusei() {
+	        int pendingEpopteies;
+
+	        if (getCategory() == null)
+	            return false;
+	        pendingEpopteies = countPendingEpopteies();
+	        return getCategory().canEpopteusei(pendingEpopteies);
+	    }
+	    
 	 
 	/*public Set<Epopteia> getEpopteies()
 	{
@@ -242,7 +287,61 @@ public class Epoptis {
 			return false;
 		return true;
 	}*/
+	    public EpoptisState getState()
+	    {
+	    	return state;
+	    }
+	    
+	    //den mporei o opoiosdipote na allaksei tin katastasi tou epopti
+	    protected void setState(EpoptisState state)
+	    {
+	    	this.state = state;
+	    }
+	    
 
+	    //elegxei gia to an ginetai na ekxwrithei i epopteia stin arxi tis methodou
+	    public Epopteia ekxwrhshEpopteias(Epopteia epopteia)
+	    {
+	    	//edwses epopti?
+	    	if (epopteia == null)
+	    		return null;
+	    	//ehie diathesimes epopteies wste na tou dwsoume auti?
+	    	if (!canEpopteusei())
+	    		return null;
+	    	//einai diathesimos?
+	    	if (getState() == EpoptisState.UNAVAILABLE)
+	    		return null;
+	    	
+	    	//dws tou tin epopteia
+	    	epopteia.addEpopti(this);
+	    	addEpopteia(epopteia);
+	    	
+	    	//an meta apo auti tin ekxwrhsh epopteias, to synolo epopteiwn tou epoptis einai iso me to MAX, tote set him/her as UNAVAILABLE
+	    	if (canEpopteusei() == false)
+	    		setState(EpoptisState.UNAVAILABLE);
+	    	
+	    	//updated epopteia me epopti!
+	    	return epopteia;
+	    	
+	    }
+	    /**
+	     * Αλλάζει την κατάσταση του αντιτύπου σε διαθέσιμο ({@code AVAILABLE}).
+	     */
+	    public void available() {
+	        if (getState().equals(EpoptisState.UNAVAILABLE)) {
+	            throw new EpoptisException();
+	        }
+
+	        setState(EpoptisState.AVAILABLE);
+	    }
+	    
+	    public void unavailable()
+	    {
+	    	if (getState().equals(EpoptisState.AVAILABLE))
+	    		throw new EpoptisException();
+	    	
+	    	setState(EpoptisState.UNAVAILABLE);
+	    }
 	@Override
 	public String toString() {
 		return "Epoptis [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password=" 

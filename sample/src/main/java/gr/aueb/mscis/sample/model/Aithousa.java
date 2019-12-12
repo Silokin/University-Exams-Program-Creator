@@ -17,7 +17,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+/**
+ * Οι αίθουσες μιας Σχολής
+ * @author MscIS-AlexGianTas
+ */
 @Entity
 @Table(name = "aithousa")
 public class Aithousa {
@@ -123,8 +126,16 @@ public class Aithousa {
 
 	public void addEpopteia(Epopteia epopteia) {
 	        if (epopteia != null) {
+	        	//elegxoume an sumpimptoun duo epopteies
+	        	boolean check = false;
+	        	for (Epopteia teia : getEpopteies()) {
+	        		check=teia.interval(epopteia);
+	        		if(check == true) break;	
+	        	}
+	        	if(check==true) {
 	            epopteia.friendAithousa().add(this);
 	            this.epopteies.add(epopteia);
+	        	}
 	        }
 	}
 	 

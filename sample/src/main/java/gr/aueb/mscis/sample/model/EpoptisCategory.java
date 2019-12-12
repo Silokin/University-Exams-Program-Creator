@@ -9,16 +9,15 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Columns;
 
-import gr.aueb.mscis.sample.util.Money;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 /**
-* Η κατηγορία δανειζομένου.
-* @author Νίκος Διαμαντίδης
+* Η κατηγορία επόπτη.
+* @authorMscIS-AlexGianTas
 *
 */
 @Entity
-@Table(name="epoptiscategories")
+@Table(name="epoptiscategory")
 public class EpoptisCategory {
 
     @Id
@@ -97,8 +96,15 @@ public class EpoptisCategory {
      * που έχουν δανειστεί και δεν έχουν επιστραφεί.
      * @return {@code true} εάν μπορεί να δανειστεί κάποιο αντίτυπο.
      */
-    public boolean canBorrow(int pendingEpopteies) {
+    public boolean canEpopteusei(int pendingEpopteies) {
         return maxEpopteies > pendingEpopteies;
     }
     
+//    //prwta
+//    epoptis.available();
+//    //kathe fora pou ginetai set mias epopteias elegxw
+//    if (canEpopteusei && epoptis.getState() != EpoptisState.UNAVAILABLE)
+//    	epopteia.add(epoptis)
+//    else
+//    	epoptis.unavailable()	
 }

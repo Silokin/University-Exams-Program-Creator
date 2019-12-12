@@ -9,11 +9,12 @@ import javax.persistence.Query;
 
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.model.Aithousa;
+import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
 import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.Movie;
-import gr.aueb.mscis.sample.model.ProgramExe;
+import gr.aueb.mscis.sample.model.Program;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 import gr.aueb.mscis.sample.util.SystemDate;
 
@@ -22,8 +23,8 @@ public class Initializer  {
 
 
     /**
-     * Remove all data from database.
-     * The functionality must be executed within the bounds of a transaction
+     * Διαγραφή όλων των δεδομένων της βάσης.
+     * Η λειτουργικότητα θα φανεί από την αρχικοποίηση δεδομένων που δίνουμε εμείς
      */
     public void  eraseData() {
         EntityManager em = JPAUtil.getCurrentEntityManager();
@@ -32,28 +33,34 @@ public class Initializer  {
         tx.begin();
         Query query = null;
 
+
+        query = em.createNativeQuery("delete from epopteia_epoptis");
+        query.executeUpdate();
+        query = em.createNativeQuery("delete from epopteia_aithousa");
+        query.executeUpdate();
         query = em.createNativeQuery("delete from aithousa");
         query.executeUpdate();
-        query = em.createNativeQuery("delete from epopteia");
-        query.executeUpdate();
         query = em.createNativeQuery("delete from epoptis");
+        query.executeUpdate();
+        query = em.createNativeQuery("delete from epopteia");
         query.executeUpdate();
         query = em.createNativeQuery("delete from mathima");
         query.executeUpdate();
         query = em.createNativeQuery("delete from program");
         query.executeUpdate();
-        query = em.createNativeQuery("delete from epoptiscategories");
+        query = em.createNativeQuery("delete from epoptiscategory");
         query.executeUpdate();
-        query = em.createNativeQuery("delete from epopteia_aithousa");
-        query.executeUpdate();
-        query = em.createNativeQuery("delete from epopteia_epoptis");
-        query.executeUpdate();
+//        query = em.createNativeQuery("delete from epoptes_dates");
+//        query.executeUpdate();
         
         tx.commit();
-        em.close();
+     //   em.close();
     }
     
-
+    /**
+    * Αρχικοποίηση των δεδομένων της βάσης
+    *
+    */
     public void prepareData() {
 
         eraseData();                      
@@ -67,19 +74,20 @@ public class Initializer  {
         Mathima crypto = new Mathima("Κρυπτογραφία",5,"Μαριάς");
         Mathima biology = new Mathima("Βιολογία",2,"Πικράκης");
         
-        ProgramExe exe19_20 = new ProgramExe(new SimpleCalendar(2020,1,20,8,15),new SimpleCalendar(2020,2,20,20,15));
+        Program exe19_20 = new Program(new SimpleCalendar(2020,1,20,8,15),new SimpleCalendar(2020,2,20,20,15));
         
         EpoptisCategory proswpiko = new EpoptisCategory("Προσωπικό Τμήματος",5);
         EpoptisCategory ypopsifios_didaktor = new EpoptisCategory("Υποψήφιος Διδάκτωρ",3);
         
-        Epoptis alex =  new Epoptis(1, "Alex", "Ath", new EmailAddress("testAlex@aueb.gr"),null,"1234");
+        Epoptis alex =  new Epoptis("Alex", "Ath", new EmailAddress("testAlex@aueb.gr"),null,"1234");
         alex.setCategory(ypopsifios_didaktor);
         
-        Epoptis giannis =  new Epoptis(2, "Giannis", "Nik", new EmailAddress("testGiannis@aueb.gr"),null,"1234");
+        Epoptis giannis =  new Epoptis("Giannis", "Nik", new EmailAddress("testGiannis@aueb.gr"),null,"1234");
         giannis.setCategory(proswpiko);
         
-        Epoptis tasos =  new Epoptis(3, "Tasos", "Kouk", new EmailAddress("testTasos@aueb.gr"),null,"1234");
+        Epoptis tasos =  new Epoptis("Tasos", "Kouk", new EmailAddress("testTasos@aueb.gr"),null,"1234");
         tasos.setCategory(proswpiko);
+        
         
         EntityManager em = JPAUtil.getCurrentEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -104,10 +112,16 @@ public class Initializer  {
         
         //leipei na valoume orismenes meres ANOIXTES??
         //gia epopteia
+        Epopteia epopteia1 = new Epopteia(new SimpleCalendar(11,1,20,13,15),new SimpleCalendar(11,1,20,15,15));
+        epopteia1.addAithousa(miltiades);
+        epopteia1.addEpopti(tasos);
+        //tasos.addEpopteia(epopteia1);
         
+        em.persist(epopteia1);
         //edw apothikeuontai
         tx.commit();
-        em.close();
+        //em.close();
     
     }
 }
+
