@@ -132,7 +132,7 @@ public class Aithousa {
 	        		check=teia.interval(epopteia);
 	        		if(check == true) break;	
 	        	}
-	        	if(check==true) {
+	        	if(check==false) {
 	            epopteia.friendAithousa().add(this);
 	            this.epopteies.add(epopteia);
 	        	}

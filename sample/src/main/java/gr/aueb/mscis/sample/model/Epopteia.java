@@ -79,10 +79,6 @@ public class Epopteia {
 		this.ends = ends;
 	
 	}
-//	
-//	public void setProgram(ProgramExe programe)
-//	{
-//	}
 	
 	public Program getProgram()
 	{
@@ -107,18 +103,28 @@ public class Epopteia {
 	//orizw mathima gia ti sugkekrimeni epopteia
 	public void setMathima(Mathima mathima)
 	{
-		if (mathima!= null)
+		if (mathima!= null) {
 			this.mathima = mathima;
-		/*if (mathima!=null)
-			mathima.setEpopteia(this);*/
+			mathima.setEpopteia(this);
+		}
 	}
 	
-//	
-//	public void removeMathima(Mathima mathima)
-//	{
-//		if (mathima!=null)
-//			this.mathima = null;
-//	}
+	
+	public void removeMathimaDirect()
+	{
+		if (this.mathima!=null)
+			this.mathima.removeEpopteiaIndirect();
+			this.mathima = null;
+			
+	}
+	
+	public void removeMathimaIndirect()
+	{
+		if (this.mathima!=null)
+			this.mathima = null;
+			
+	}
+	
 	
 	public Set<Aithousa> getAithouses() {
 	        return new HashSet<Aithousa>(aithousa);
@@ -135,7 +141,7 @@ public class Epopteia {
 	        		check=interval(teia);
 	        		if(check == true) break;	
 	        	}
-	        	if(check==true) {
+	        	if(check==false) {
 	        	aithousa.friendEpopteia().add(this);
 	            this.aithousa.add(aithousa);
 	        	}
@@ -160,16 +166,24 @@ public class Epopteia {
 	//elexe omws mipws eisai full? (elegxos1)
 	//elexe an yparxei idi o epoptis? (elegxos2)
 	public void addEpopti(Epoptis epopti) {
-        if (epopti != null) {
-        	boolean check = false;
-        	for (Epopteia teia : epopti.getEpopteies()) {
-        		check=interval(teia);
-        		if(check == true) break;	
-        	}
-        	if(check==true) {
-        	epopti.friendEpopteia().add(this);
-            this.epoptis.add(epopti);
-        	}
+        if (epopti != null && epopti.getEpopteies().size()<epopti.getCategory().getMaxEpopteies()) {
+	        	boolean check = false;
+	        	for(SimpleCalendar md : epopti.getMiDiathesimotita()) {
+	        		if(md.getYear()==getStarts().getYear() 
+	        		   && md.getMonth()==getStarts().getMonth()
+	        		   && md.getDayOfMonth()==getStarts().getDayOfMonth()) {
+	        			check = true;
+	        			break;
+	        		}		
+	        	}
+	        	for (Epopteia teia : epopti.getEpopteies()) {
+	        		check=interval(teia);
+	        		if(check == true) break;	
+	        	}
+	        	if(check==false) {
+	        	epopti.friendEpopteia().add(this);
+	            this.epoptis.add(epopti);
+	        	}
         }
 	}
 	
@@ -205,13 +219,15 @@ public class Epopteia {
 		if (this.program != null) {
             this.program.friendEpopteies().remove(this);
         }
-        this.program = programe;
         
+        this.program = programe;
+		
         if (this.program != null) {
             this.program.friendEpopteies().add(this);
         }
 	}
 	
+
 	public boolean interval (Epopteia epopteia) {
 		if((getStarts().compareTo(epopteia.getStarts())>=0&&getStarts().compareTo(epopteia.getEnds())<0) 
 				||(epopteia.getStarts().compareTo(getStarts())>=0&&epopteia.getStarts().compareTo(getEnds())<0)  

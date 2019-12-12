@@ -2,6 +2,7 @@ package gr.aueb.mscis.sample.model;
 
 import gr.aueb.mscis.sample.contacts.*;
 import gr.aueb.mscis.sample.exceptions.EpoptisException;
+import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -76,11 +77,11 @@ public class Epoptis {
     @JoinColumn(name="categoryid")
     private EpoptisCategory category;
     
-//    @JoinTable(name="epoptes_dates",
-//    	    joinColumns = {@JoinColumn(name="epop_id", nullable = false)},
-//   	    inverseJoinColumns = {@JoinColumn(name="date", nullable = false)})
-//    private Set<String> mi_diathesimotita = new HashSet<String>();
-//    
+    @JoinTable(name="epoptes_dates",
+    	    joinColumns = {@JoinColumn(name="epop_id", nullable = false)},
+   	    inverseJoinColumns = {@JoinColumn(name="date", nullable = false)})
+    private Set<SimpleCalendar> mi_diathesimotita = new HashSet<SimpleCalendar>();
+    
     //polloi epoptes exoun, pithanon, polles hmeres mh diathesimotitas 
     @ManyToMany(mappedBy="epoptis",fetch=FetchType.LAZY, 
             cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -168,37 +169,52 @@ public class Epoptis {
 //	//auti ti lista tin ehei o GRAMMATEAS
 //	//gia na tin parei arkei na ?????????????
 //	//brei ton sugkekrimeno epopti pou thelei mesw tou antikeimenou kai ystera auti ti method
-//	public Set<Date> getMiDiathesimotita() {
-//        return new HashSet<Date>(mi_diathesimotita); //ayto einai antigrafo tis arxikis listas
-//    }
+	public Set<SimpleCalendar> getMiDiathesimotita() {
+        return new HashSet<SimpleCalendar>(mi_diathesimotita); //ayto einai antigrafo tis arxikis listas
+    }
 //
 //    /**
 //     * Απομακρύνει μια ημερομηνία από τη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
 //     * @param date Η ημερομηνία
 //     */
-//    public void removeMiDiatheismotita(Date date) {
-//        if (date != null)
-//            this.mi_diathesimotita.remove(date);
-//    }
+    public void removeMiDiatheismotita(SimpleCalendar date) {
+        if (date != null)
+            this.mi_diathesimotita.remove(date);
+    }
 //    
 //    /**
 //     * Προσθέτει μια ημερομηνία στη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
 //     * @param date Η ημερομηνία
 //     */
-//	public void addMiDiathesimotita(Date date) {
-//        if (date != null)
-//        	this.mi_diathesimotita.add(date); //sti mi diathesimotita autou tou epopti vale auti tin imerominia
-//    }
+	public void addMiDiathesimotita(SimpleCalendar date) {
+        if (date != null)
+        	this.mi_diathesimotita.add(date); //sti mi diathesimotita autou tou epopti vale auti tin imerominia
+    }
 	
 	public Set<Epopteia> getEpopteies() {
 	        return new HashSet<Epopteia>(epopteia);
 	}
 	
 	public void addEpopteia(Epopteia epopteia) {
-	        if (epopteia != null) {
-	            epopteia.friendEpoptis().add(this);
-	            this.epopteia.add(epopteia);
-	        }
+        if (epopteia != null && getEpopteies().size()<getCategory().getMaxEpopteies()) {
+	        	boolean check = false;
+	        	for(SimpleCalendar md : getMiDiathesimotita()) {
+	        		if(md.getYear()==epopteia.getStarts().getYear() 
+	        		   && md.getMonth()==epopteia.getStarts().getMonth()
+	        		   && md.getDayOfMonth()==epopteia.getStarts().getDayOfMonth()) {
+	        			check = true;
+	        			break;
+	        		}		
+	        	}
+	        	for (Epopteia teia : getEpopteies()) {
+	        		check=teia.interval(epopteia);
+	        		if(check == true) break;	
+	        	}
+	        	if(check==false) {
+		        	epopteia.friendEpoptis().add(this);
+		            this.epopteia.add(epopteia);
+	        	}
+       }
 	}
 	 
 	public void removeEpopteia(Epopteia epopteia) {

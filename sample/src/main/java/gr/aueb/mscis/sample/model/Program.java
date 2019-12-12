@@ -70,6 +70,7 @@ public class Program {
 	//mia epopteia theloume na prostethei sto programma eksetatistikis
 	public void addEpopteia(Epopteia epopteia) {
         if (epopteia != null)
+        	this.epopteies.add(epopteia);
             epopteia.setProgram(this);
         
     }
@@ -79,7 +80,7 @@ public class Program {
 	{
 		if (epopteia != null)
 			epopteia.setProgram(null);
-		}
+	}
 	
 	public Integer getId()
 	{

@@ -74,6 +74,26 @@ public class Mathima {
 	public void setTeacher(String teacher) {
 		this.teacher = teacher ;
 	}
+	
+	public void setEpopteia(Epopteia epopteia) {
+		if (epopteia!= null) {
+			this.epopteia = epopteia;
+			epopteia.setMathima(this);
+		}
+	}
+	
+	public void removeEpopteiaDirect() {
+		if (this.epopteia!= null) {
+			this.epopteia.removeMathimaIndirect();
+			this.epopteia = null;
+		}
+	}
+	
+	public void removeEpopteiaIndirect() {
+		if (this.epopteia!= null) {
+			this.epopteia = null;
+		}
+	}
 
 	//mono se mia ek twn duo me many to ... sxesi
 	@Override
