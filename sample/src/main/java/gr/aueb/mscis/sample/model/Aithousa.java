@@ -125,7 +125,7 @@ public class Aithousa {
 	}
 
 	public void addEpopteia(Epopteia epopteia) {
-	        if (epopteia != null) {
+	        if (epopteia != null && this.epopteies.contains(epopteia)==false) {
 	        	//elegxoume an sumpimptoun duo epopteies
 	        	boolean check = false;
 	        	for (Epopteia teia : getEpopteies()) {

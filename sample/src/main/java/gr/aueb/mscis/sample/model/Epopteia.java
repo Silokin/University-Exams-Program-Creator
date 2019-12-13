@@ -135,7 +135,7 @@ public class Epopteia {
 	//prosoxi na ginete add aithousa (elegxos) mono AN DEN YPARXEI idi
 	//elegxei pws h ai8ousa einai dia8esimh 
 	public void addAithousa(Aithousa aithousa) {
-	        if (aithousa != null) {
+	        if (aithousa != null && this.aithousa.contains(aithousa)==false) {
 	        	boolean check = false;
 	        	for (Epopteia teia : aithousa.getEpopteies()) {
 	        		check=interval(teia);
