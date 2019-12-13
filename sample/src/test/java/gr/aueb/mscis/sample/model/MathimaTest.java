@@ -182,8 +182,9 @@ public class MathimaTest {
 	 @Test
 	    public void testToString()
 	    {
-	        Mathima mathima = new Mathima();	        
-	        assertFalse(mathima.equals(mathima.toString()));
+	        Mathima mathima = new Mathima();	
+	        String expected = "Mathima [id=0, title=null, semester=0, teacher=null, epopteia=null]";
+	        assertTrue(mathima.toString().equals(expected));
 	    }
 
 
