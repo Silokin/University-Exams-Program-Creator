@@ -1,21 +1,16 @@
 package gr.aueb.mscis.sample.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
-import com.mgiandia.library.domain.Borrower;
 
 import gr.aueb.mscis.sample.exceptions.EpoptisException;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
-import gr.aueb.mscis.sample.model.Mathima;
-import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 
 public class EpopteiaService {
@@ -28,20 +23,22 @@ public class EpopteiaService {
 	}
 	
 	//create h update
-		public void saveEpopteia(Epopteia epopteia) {
+	public Epopteia saveEpopteia(Epopteia epopteia) {
 
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			if (epopteia.getId() != null) {
-				em.merge(epopteia);
+				epopteia = em.merge(epopteia);
 			} else {
 				em.persist(epopteia);
 			}
 			tx.commit();
+			
+			return epopteia;
 		}
 		
 		//delete
-		public boolean deleteEpopteia(Epopteia epopteia) {
+	public boolean deleteEpopteia(Epopteia epopteia) {
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			if (epopteia != null) {
@@ -145,11 +142,11 @@ public class EpopteiaService {
 		boolean epoptisFound = findEpoptis(epoptis_id);
 
 		if (!epoptisFound) {
-			throw new EpoptisException("Borrower with id " + epoptis_id + "  does not exist.");
+			throw new EpoptisException("Epoptis with id " + epoptis_id + "  den yparxei.");
 		}
 		
 		if (anathesiEpopteias(epoptis_id,epopteia_id) == null){
-			throw new EpoptisException("Epoptis with id " + epoptis_id + " den mporei na epopteusei tin sugkekrimeni epopteia.");
+			throw new EpoptisException("Epoptis with id " + epoptis_id + " den mporei na epopteusei tin sugkekrimeni epopteia");
 		}
 	}
 	
