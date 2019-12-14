@@ -27,8 +27,8 @@ public class EpoptisCategoryService {
 		tx.commit();
 	}
 	
-	//delete
-	public boolean deleteEpopteia(EpoptisCategory category) {
+//delete
+	public boolean deleteCategory(EpoptisCategory category) {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		if (category != null) {
