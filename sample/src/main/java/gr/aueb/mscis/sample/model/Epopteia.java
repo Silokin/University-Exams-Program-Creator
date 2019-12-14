@@ -49,8 +49,9 @@ public class Epopteia {
             fetch=FetchType.LAZY)
     @JoinTable(name="epopteia_aithousa", 
             joinColumns = {@JoinColumn(name="epopteia_id")},
-            inverseJoinColumns = {@JoinColumn(name="aithousa_id")}) 
+            inverseJoinColumns = {@JoinColumn(name="aithousa_id")})
     private Set<Aithousa> aithousa = new HashSet<Aithousa>();
+	
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
             fetch=FetchType.LAZY)
@@ -61,7 +62,7 @@ public class Epopteia {
 	
 	
 	//leei ti mathima ehei pou epopteyei I KATHE EPOPTEIA POU EPEKSERGAZOMASTE
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="mathimaid")
     private Mathima mathima;
 
@@ -79,6 +80,10 @@ public class Epopteia {
 		this.ends = ends;
 	
 	}
+//	
+//	public void setProgram(ProgramExe programe)
+//	{
+//	}
 	
 	public Program getProgram()
 	{
@@ -101,36 +106,37 @@ public class Epopteia {
 	}
 	
 	//orizw mathima gia ti sugkekrimeni epopteia
-	public void setMathimaDirect(Mathima mathima)
+	public void setMathima(Mathima mathima)
 	{
-		if(this.mathima!=null)
-			this.mathima.removeEpopteiaIndirect();
-		this.mathima = mathima;
-		if(mathima!=null)
-			this.mathima.setEpopteiaIndirect(this);		
+		if (mathima!= null)
+			this.mathima = mathima;
+		/*if (mathima!=null)
+			mathima.setEpopteia(this);*/
 	}
 	
-	public void setMathimaIndirect(Mathima mathima) {
-		if(this.mathima!=null)
-			this.mathima.removeEpopteiaIndirect();
-		this.mathima = mathima;
-	}
-	
-	
-	public void removeMathimaDirect()
+	public Mathima getMathima()
 	{
-		if (this.mathima!=null)
-			this.mathima.removeEpopteiaIndirect();
-			this.mathima = null;		
+		return mathima;
 	}
-	
-	public void removeMathimaIndirect()
-	{
-		if (this.mathima!=null)
-			this.mathima = null;
-			
-	}
-	
+//	public void removeMathima(Mathima mathima)
+//	{
+//		if (mathima!=null)
+//			this.mathima = null;
+//	}
+//	public void removeMathimaDirect()
+//	{
+//		if (this.mathima!=null)
+//			this.mathima.removeEpopteiaIndirect();
+//			this.mathima = null;
+//			
+//	}
+//	
+//	public void removeMathimaIndirect()
+//	{
+//		if (this.mathima!=null)
+//			this.mathima = null;
+//			
+//	}
 	
 	public Set<Aithousa> getAithouses() {
 	        return new HashSet<Aithousa>(aithousa);
@@ -139,19 +145,22 @@ public class Epopteia {
 	//vale aithouses gia multiple different epopteiess
 	//dld gia epopteia 20/2/20 vale 2-3 diaforetikes aithouses
 	//prosoxi na ginete add aithousa (elegxos) mono AN DEN YPARXEI idi
-	//elegxei pws h ai8ousa einai dia8esimh 
+	
+	
+	//elegxei pws i atihousa einai diathesimi
 	public void addAithousa(Aithousa aithousa) {
-	        if (aithousa != null && this.aithousa.contains(aithousa)==false) {
+			if (aithousa != null) {
 	        	boolean check = false;
 	        	for (Epopteia teia : aithousa.getEpopteies()) {
 	        		check=interval(teia);
 	        		if(check == true) break;	
 	        	}
 	        	if(check==false) {
-	        	aithousa.friendEpopteia().add(this);
-	            this.aithousa.add(aithousa); 
+	        		aithousa.friendEpopteia().add(this);
+	        		this.aithousa.add(aithousa);
 	        	}
-	        }
+			}
+	        
 	}
 	
 	//vgale aithousa (elegxos) MONO an yparxei idi
@@ -162,6 +171,8 @@ public class Epopteia {
 	            this.aithousa.remove(aithousa);
 	        }
 	 }
+	
+	
  
 	Set<Aithousa> friendAithousa() {
 	    return aithousa;
@@ -172,48 +183,35 @@ public class Epopteia {
 	//elexe omws mipws eisai full? (elegxos1)
 	//elexe an yparxei idi o epoptis? (elegxos2)
 	public void addEpopti(Epoptis epopti) {
-        if (epopti != null && epopti.getEpopteies().size()<epopti.getCategory().getMaxEpopteies()) {
-	        	boolean check = false;
-	        	for(SimpleCalendar md : epopti.getMiDiathesimotita()) {
-	        		if(md.getYear()==getStarts().getYear() 
-	        		   && md.getMonth()==getStarts().getMonth()
-	        		   && md.getDayOfMonth()==getStarts().getDayOfMonth()) {
-	        			check = true;
-	        			break;
-	        		}		
-	        	}
-	        	for (Epopteia teia : epopti.getEpopteies()) {
-	        		check=interval(teia);
-	        		if(check == true) break;	
-	        	}
-	        	if(check==false) {
+		//an o epoptis yparxei kai mporei na epopteusei (2nd check for canEpopteusei)
+		if (epopti != null && epopti.canEpopteusei()) {
+        	boolean check = false;
+        	//gia tis imeres pou den mporei na epopteusei
+        	for(MiDiathesimotita md : epopti.getMiDiathesimotita()) {
+        		//an isodynamoun me tin sugkekrimeni epopteia pou paei na tou ekxwrithei
+        		//tote check = true
+        		if(md.getDate().getYear()==getStarts().getYear() 
+        		   && md.getDate().getMonth()==getStarts().getMonth()
+        		   && md.getDate().getDayOfMonth()==getStarts().getDayOfMonth()) {
+        			check = true;
+        			break;
+        		}		
+        	}
+        	//pare tis epopteies tou sigkekrimenou epopti
+        	//
+        	for (Epopteia teia : epopti.getEpopteies()) {
+        		check=interval(teia);
+        		if(check == true) break;	
+        	}
+        	//an check = false, ara mporei, tote dwstuo tin epopteia
+        	if(check==false) {
 	        	epopti.friendEpopteia().add(this);
 	            this.epoptis.add(epopti);
-	        	}
-        }
+        	}
+		}
 	}
 	
-	//kane remove epopti apo epopteia
-	//elexe omws mipws den yparxei kaneis? (elegxos1)
-	//mipws den yphrxe pote o sugkekrimenos epoptis? (elegxos2)
-	public void removeEpopti(Epoptis epopti) {
-	        if (epopti != null) {
-	        	epopti.friendEpopteia().remove(this);
-	            this.epoptis.remove(epopti);
-	        }
-	 }
- 
-	Set<Epoptis> friendEpoptis() {
-	    return epoptis;
-	}
-	
-
-	public Set<Epoptis> getEpoptes() {
-	        return new HashSet<Epoptis>(epoptis);
-	}
-	
-
-public boolean doNotExceedMaxNumOfEpoptesInAithousa()
+	public boolean doNotExceedMaxNumOfEpoptesInAithousa()
 	{
 		int max =0;
 		for (Aithousa aithousa: getAithouses())
@@ -269,7 +267,28 @@ public boolean doNotExceedMaxNumOfEpoptesInAithousa()
     	return epoptis;
     	
     }
+    
+	//kane remove epopti apo epopteia
+	//elexe omws mipws den yparxei kaneis? (elegxos1)
+	//mipws den yphrxe pote o sugkekrimenos epoptis? (elegxos2)
+	public void removeEpopti(Epoptis epopti) {
+	        if (epopti != null) {
+	        	epopti.friendEpopteia().remove(this);
+	            this.epoptis.remove(epopti);
+	        }
+	 }
+ 
+	Set<Epoptis> friendEpoptis() {
+	    return epoptis;
+	}
 	
+
+	public Set<Epoptis> getEpoptes() {
+	        return new HashSet<Epoptis>(epoptis);
+	}
+	
+
+
 	@Override
 	public String toString() {
 		return "Epopteia [id=" + id + ", starts=" + starts + ", ends=" + ends + "]";
@@ -281,15 +300,13 @@ public boolean doNotExceedMaxNumOfEpoptesInAithousa()
 		if (this.program != null) {
             this.program.friendEpopteies().remove(this);
         }
-        
         this.program = programe;
-		
+        
         if (this.program != null) {
             this.program.friendEpopteies().add(this);
         }
-	} 
+	}
 	
-
 	public boolean interval (Epopteia epopteia) {
 		if((getStarts().compareTo(epopteia.getStarts())>=0&&getStarts().compareTo(epopteia.getEnds())<0) 
 				||(epopteia.getStarts().compareTo(getStarts())>=0&&epopteia.getStarts().compareTo(getEnds())<0)  
