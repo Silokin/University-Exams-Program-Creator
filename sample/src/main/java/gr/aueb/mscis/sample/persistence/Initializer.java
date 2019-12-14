@@ -34,6 +34,8 @@ public class Initializer  {
         Query query = null;
 
 
+        query = em.createNativeQuery("delete from midiathesimotita");
+        query.executeUpdate();
         query = em.createNativeQuery("delete from epopteia_epoptis");
         query.executeUpdate();
         query = em.createNativeQuery("delete from epopteia_aithousa");
@@ -124,4 +126,3 @@ public class Initializer  {
     
     }
 }
-
