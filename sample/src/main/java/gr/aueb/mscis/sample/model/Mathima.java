@@ -22,7 +22,7 @@ public class Mathima {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Column(name = "title", length = 512, nullable = false)
 	private String title;
@@ -47,7 +47,7 @@ public class Mathima {
 	}
 
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

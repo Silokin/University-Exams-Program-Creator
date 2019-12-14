@@ -1,4 +1,4 @@
-package gr.aueb.mscis.sample.model;
+ package gr.aueb.mscis.sample.model;
 
 import java.util.Set;
 

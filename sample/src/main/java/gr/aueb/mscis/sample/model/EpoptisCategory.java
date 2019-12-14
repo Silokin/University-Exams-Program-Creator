@@ -23,7 +23,7 @@ public class EpoptisCategory {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id; 
+    private Integer id; 
     
     @Column(name="description", length = 50, nullable = false)
     private String description;
@@ -52,7 +52,7 @@ public class EpoptisCategory {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     
