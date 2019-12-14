@@ -1,4 +1,4 @@
- package gr.aueb.mscis.sample.model;
+package gr.aueb.mscis.sample.model;
 
 import java.util.Set;
 
@@ -32,9 +32,15 @@ public class MiDiathesimotita {
 	public MiDiathesimotita()
 	{}
 	
-	public MiDiathesimotita(SimpleCalendar date)
+	public MiDiathesimotita(SimpleCalendar date, Epoptis epoptis)
 	{
 		this.date = date;
+		this.epoptis = epoptis;
+	}
+	
+	public Integer getId()
+	{
+		return id;
 	}
 	
 	public Epoptis getEpoptis() {
