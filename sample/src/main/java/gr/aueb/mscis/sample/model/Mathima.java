@@ -1,6 +1,5 @@
 package gr.aueb.mscis.sample.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,8 +33,7 @@ public class Mathima {
 	@Column(name = "teacher", length = 100, nullable = false)
 	private String teacher;
 	
-	@OneToOne(mappedBy="mathima",fetch=FetchType.LAZY, 
-            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToOne(mappedBy="mathima")
 	private Epopteia epopteia;
 	
 	public Mathima() {
@@ -77,30 +75,27 @@ public class Mathima {
 		this.teacher = teacher ;
 	}
 	
-	public void setEpopteiaDirect(Epopteia epopteia) {
-		if(this.epopteia!=null)
-			this.epopteia.removeMathimaIndirect();
+//	public void removeEpopteiaDirect() {
+//		if (this.epopteia!= null) {
+//			this.epopteia.removeMathimaIndirect();
+//			this.epopteia = null;
+//		}
+//	}
+//	
+//	public void removeEpopteiaIndirect() {
+//		if (this.epopteia!= null) {
+//			this.epopteia = null;
+//		}
+//	}
+	
+	public void setEpopteia(Epopteia epopteia)
+	{
 		this.epopteia = epopteia;
-		if(epopteia!=null)
-			this.epopteia.setMathimaIndirect(this);
 	}
 	
-	public void setEpopteiaIndirect(Epopteia epopteia) {
-		if(this.epopteia!=null)
-			this.epopteia.removeMathimaIndirect();
-		this.epopteia = epopteia;
-	}
-	
-	public void removeEpopteiaDirect() {
-		if (this.epopteia!= null) {
-			this.epopteia.removeMathimaIndirect();
-			this.epopteia = null;
-		}
-	}
-	
-	public void removeEpopteiaIndirect() {
-		if (this.epopteia!= null) 
-			this.epopteia = null;
+	public Epopteia getEpopteia()
+	{
+		return epopteia;
 	}
 
 	//mono se mia ek twn duo me many to ... sxesi
