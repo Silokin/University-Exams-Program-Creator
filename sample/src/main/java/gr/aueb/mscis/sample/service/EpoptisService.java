@@ -69,4 +69,46 @@ public class EpoptisService {
 
 		return results;
 	}
+	
+	
+	public void saveMiDiathesimotita(MiDiathesimotita midiathesimotita)
+	{
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		if (midiathesimotita.getId() != null) {
+			em.merge(midiathesimotita);
+		} else {
+			em.persist(midiathesimotita);
+		}
+		tx.commit();
+		//midiathesimotita.setEpoptis(epoptis.getId());
+	}
+	
+	
+	//delete
+		public boolean deleteMiDiathesimotita(MiDiathesimotita midiathesimotita) {
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			if (midiathesimotita != null) {
+				em.remove(midiathesimotita);
+				return true;
+			}
+			tx.commit();
+			return false;
+
+		}
+		
+		//find
+		@SuppressWarnings("unchecked")
+		public List<MiDiathesimotita> findMiDiathesimotitaByEpoptisId(Integer epoptis_id) {
+
+			List<MiDiathesimotita> results = null;
+			results = em.createQuery("select m from MiDiathesimotita m where m.epoptisid = :id")
+					.setParameter("id",epoptis_id).getResultList();
+			
+			return results;
+		}
+		
+		
+
 }
