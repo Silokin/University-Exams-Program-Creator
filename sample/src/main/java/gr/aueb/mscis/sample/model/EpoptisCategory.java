@@ -29,7 +29,7 @@ public class EpoptisCategory {
     private String description;
     
     @Column(name="epopteies")
-    private Integer maxEpopteies;
+    private int maxEpopteies;
     
     /**
      * Ο προκαθορισμένος κατασκευαστής.
@@ -52,7 +52,7 @@ public class EpoptisCategory {
     }
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
     
@@ -83,7 +83,7 @@ public class EpoptisCategory {
         return maxEpopteies;
     }
     
-    public void setMaxEpopteies(Integer maxEpopteies)
+    public void setMaxEpopteies(int maxEpopteies)
     {
     	this.maxEpopteies = maxEpopteies;
     }

@@ -206,6 +206,7 @@ public class Epoptis {
 	        			break;
 	        		}		
 	        	}
+	        	//tsekarei oti dn sumpiptoun oi epopties
 	        	for (Epopteia teia : getEpopteies()) {
 	        		check=teia.interval(epopteia);
 	        		if(check == true) break;	

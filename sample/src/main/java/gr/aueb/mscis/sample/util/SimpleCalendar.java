@@ -21,8 +21,7 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
      */
     public SimpleCalendar(int year, int month, int day, int hour, int minutes) {
         date = Calendar.getInstance();
-        date.set(year, month - 1, day, hour, minutes);
-       
+        date.set(year, month - 1, day, hour, minutes); 
     }
 
     /**

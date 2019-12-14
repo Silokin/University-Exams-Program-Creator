@@ -103,9 +103,11 @@ public class Epopteia {
 	//orizw mathima gia ti sugkekrimeni epopteia
 	public void setMathima(Mathima mathima)
 	{
-		if (mathima!= null) {
-			this.mathima = mathima;
-			mathima.setEpopteia(this);
+		if (this.mathima!= null) {
+			this.mathima.setEpopteia(null);
+		this.mathima = mathima;
+		if(mathima!=null)
+			this.mathima.setEpopteia(this);
 		}
 	}
 	

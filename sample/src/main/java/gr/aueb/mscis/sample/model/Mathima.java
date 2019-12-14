@@ -1,5 +1,6 @@
 package gr.aueb.mscis.sample.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,8 @@ public class Mathima {
 	@Column(name = "teacher", length = 100, nullable = false)
 	private String teacher;
 	
-	@OneToOne
+	@OneToOne(mappedBy="mathima",fetch=FetchType.LAZY, 
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Epopteia epopteia;
 	
 	public Mathima() {
