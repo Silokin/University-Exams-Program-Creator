@@ -59,17 +59,16 @@ public class EpoptisService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Epoptis> findEpoptisByMail(EmailAddress mail) {
+	public Epoptis findEpoptisByMail(EmailAddress mail) {
 
-		List<Epoptis> results = null;
-		results = em
+		List<Epoptis> epoptis = null;
+		epoptis = em
 				.createQuery(
-						"select email from Epoptis e where e.email = :mail ")
+						"select e from Epoptis e where e.email = :mail ")
 				.setParameter("mail", mail).getResultList();
 
-		return results;
+		return epoptis.get(0);
 	}
-	
 	
 	public void saveMiDiathesimotita(MiDiathesimotita midiathesimotita)
 	{
