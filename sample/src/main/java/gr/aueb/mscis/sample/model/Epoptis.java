@@ -2,7 +2,6 @@ package gr.aueb.mscis.sample.model;
 
 import gr.aueb.mscis.sample.contacts.*;
 import gr.aueb.mscis.sample.exceptions.EpoptisException;
-import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -58,7 +58,7 @@ public class Epoptis {
             type="gr.aueb.mscis.sample.persistence.TelphoneNumberCustomType")
     @Column(name="telephone")
     private TelephoneNumber telephone;
-     
+    
     @org.hibernate.annotations.Type(
             type="gr.aueb.mscis.sample.persistence.EMailCustomType")
     @Column(name="email")
@@ -77,10 +77,10 @@ public class Epoptis {
     @JoinColumn(name="categoryid")
     private EpoptisCategory category;
     
-    @JoinTable(name="epoptes_dates",
-    	    joinColumns = {@JoinColumn(name="epop_id", nullable = false)},
-   	    inverseJoinColumns = {@JoinColumn(name="date", nullable = false)})
-    private Set<SimpleCalendar> mi_diathesimotita = new HashSet<SimpleCalendar>();
+    
+   @OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE},
+		   mappedBy="epoptis", fetch=FetchType.LAZY)
+   private Set<MiDiathesimotita> midiathesimotita = new HashSet<MiDiathesimotita>();
     
     //polloi epoptes exoun, pithanon, polles hmeres mh diathesimotitas 
     @ManyToMany(mappedBy="epoptis",fetch=FetchType.LAZY, 
@@ -163,10 +163,15 @@ public class Epoptis {
     	return category;
     }
     
-public Set<MiDiathesimotita> getMiDiathesimotita() {
+	//epistrefei antigrafo kai oxi to original. auto symbainei dioti theloume na apokleisoume to gegonos
+	//na ginoun allages stin lista me ti mi diathesimotita me kostos tin apwleia dedomenwn
+	
+	//auti ti lista tin ehei o GRAMMATEAS
+	//gia na tin parei arkei na ?????????????
+	//brei ton sugkekrimeno epopti pou thelei mesw tou antikeimenou kai ystera auti ti method
+	public Set<MiDiathesimotita> getMiDiathesimotita() {
         return new HashSet<MiDiathesimotita>(midiathesimotita); //ayto einai antigrafo tis arxikis listas
     }
-
     /**
      * Απομακρύνει μια ημερομηνία από τη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
      * @param date Η ημερομηνία
@@ -185,31 +190,16 @@ public Set<MiDiathesimotita> getMiDiathesimotita() {
         	this.midiathesimotita.add(date); //sti mi diathesimotita autou tou epopti vale auti tin imerominia
     }
 	
+	
 	public Set<Epopteia> getEpopteies() {
 	        return new HashSet<Epopteia>(epopteia);
 	}
 	
 	public void addEpopteia(Epopteia epopteia) {
-        if (epopteia != null && getEpopteies().size()<getCategory().getMaxEpopteies()) {
-	        	boolean check = false;
-	        	for(SimpleCalendar md : getMiDiathesimotita()) {
-	        		if(md.getYear()==epopteia.getStarts().getYear() 
-	        		   && md.getMonth()==epopteia.getStarts().getMonth()
-	        		   && md.getDayOfMonth()==epopteia.getStarts().getDayOfMonth()) {
-	        			check = true;
-	        			break;
-	        		}		
-	        	}
-	        	//tsekarei oti dn sumpiptoun oi epopties
-	        	for (Epopteia teia : getEpopteies()) {
-	        		check=teia.interval(epopteia);
-	        		if(check == true) break;	
-	        	}
-	        	if(check==false) {
-		        	epopteia.friendEpoptis().add(this);
-		            this.epopteia.add(epopteia);
-	        	}
-       }
+	        if (epopteia != null) {
+	            epopteia.friendEpoptis().add(this);
+	            this.epopteia.add(epopteia);
+	        }
 	}
 	 
 	public void removeEpopteia(Epopteia epopteia) {
@@ -253,51 +243,9 @@ public Set<MiDiathesimotita> getMiDiathesimotita() {
 	        if (getCategory() == null)
 	            return false;
 	        pendingEpopteies = countPendingEpopteies();
-	        return getCategory().canEpopteusei(pendingEpopteies);
+	        return getCategory().canEpopteuseiBasedOnMaxEpopteies(pendingEpopteies);
 	    }
-	     
-	 
-	/*public Set<Epopteia> getEpopteies()
-	{
-		return new HashSet<Epopteia>(epopteies);
-	}*/
-
-	/*@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((epoptis == null) ? 0 : epoptis.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + semester;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		
-		Epoptis other = (Epoptis) obj;
-		
-		if (teacher == null) {
-			if (other.teacher != null)
-				return false;
-		} else if (!teacher.equals(other.teacher))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
-			return false;
-		if (semester != other.semester)
-			return false;
-		return true;
-	}*/
+	   
 	    public EpoptisState getState()
 	    {
 	    	return state;
@@ -308,7 +256,7 @@ public Set<MiDiathesimotita> getMiDiathesimotita() {
 	    {
 	    	this.state = state;
 	    }
-	   
+	    
 	    /**
 	     * Αλλάζει την κατάσταση του αντιτύπου σε διαθέσιμο ({@code AVAILABLE}).
 	     */
@@ -327,7 +275,8 @@ public Set<MiDiathesimotita> getMiDiathesimotita() {
 	    	
 	    	setState(EpoptisState.UNAVAILABLE);
 	    }
-	@Override 
+	    
+	@Override
 	public String toString() {
 		return "Epoptis [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password=" 
 	+ password + ", telephone=" + telephone + "]";
