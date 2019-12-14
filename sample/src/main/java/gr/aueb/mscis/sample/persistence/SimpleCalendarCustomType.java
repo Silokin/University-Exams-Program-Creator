@@ -30,7 +30,7 @@ public class SimpleCalendarCustomType implements UserType {
     public boolean equals(Object x, Object y) throws HibernateException {
         if ( x == y) return true;
         if ( x== null || y==null) return false;
-        return x.equals(y);
+        return x.equals(y); 
     }
 
     public int hashCode(Object value) throws HibernateException {
@@ -52,7 +52,7 @@ public class SimpleCalendarCustomType implements UserType {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time.getTime());        
         return new SimpleCalendar(calendar);        
-    }
+    } 
 
     public void nullSafeSet(PreparedStatement statement, Object value, int index) throws HibernateException, SQLException {
         if (value == null) {

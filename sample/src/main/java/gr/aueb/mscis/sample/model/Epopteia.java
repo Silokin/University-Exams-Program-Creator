@@ -49,7 +49,7 @@ public class Epopteia {
             fetch=FetchType.LAZY)
     @JoinTable(name="epopteia_aithousa", 
             joinColumns = {@JoinColumn(name="epopteia_id")},
-            inverseJoinColumns = {@JoinColumn(name="aithousa_id")})
+            inverseJoinColumns = {@JoinColumn(name="aithousa_id")}) 
     private Set<Aithousa> aithousa = new HashSet<Aithousa>();
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
@@ -145,7 +145,7 @@ public class Epopteia {
 	        	}
 	        	if(check==false) {
 	        	aithousa.friendEpopteia().add(this);
-	            this.aithousa.add(aithousa);
+	            this.aithousa.add(aithousa); 
 	        	}
 	        }
 	}
@@ -227,7 +227,7 @@ public class Epopteia {
         if (this.program != null) {
             this.program.friendEpopteies().add(this);
         }
-	}
+	} 
 	
 
 	public boolean interval (Epopteia epopteia) {

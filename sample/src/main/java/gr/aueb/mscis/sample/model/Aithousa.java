@@ -46,7 +46,7 @@ public class Aithousa {
 	private String ktirio;
 	
 	
-	@ManyToMany(mappedBy="aithousa",fetch=FetchType.LAZY, 
+	@ManyToMany(mappedBy="aithousa",fetch=FetchType.LAZY,  
 	            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Epopteia> epopteies = new HashSet<Epopteia>();
 	 
@@ -137,13 +137,13 @@ public class Aithousa {
 	            this.epopteies.add(epopteia);
 	        	}
 	        }
-	}
-	 
+	} 
+	  
 	public void removeEpopteia(Epopteia epopteia) {
 	        if (epopteia != null) {
 	            epopteia.friendAithousa().remove(this);
 	            this.epopteies.remove(epopteia);
-	        }
+	        } 
 	 }
 	 
 	 public Set<Epopteia> friendEpopteia()

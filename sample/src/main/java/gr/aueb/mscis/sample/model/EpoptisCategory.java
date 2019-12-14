@@ -36,7 +36,7 @@ public class EpoptisCategory {
      */
     public EpoptisCategory() { }
 
-    /**
+    /** 
      * Βοηθητικός κατασκευαστής.
      * Aρχικοποιεί τα βασικά στοιχεία της κατηγορίας δανειζομένου.
      * @param description Περιγραφή κατηγορίας
@@ -47,7 +47,7 @@ public class EpoptisCategory {
      */
     public EpoptisCategory(String description, int maxEpopteies) {
 
-    	this.description = description;
+    	this.description = description; 
         this.maxEpopteies = maxEpopteies;
     }
 

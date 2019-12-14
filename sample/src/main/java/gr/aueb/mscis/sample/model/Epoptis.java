@@ -58,7 +58,7 @@ public class Epoptis {
             type="gr.aueb.mscis.sample.persistence.TelphoneNumberCustomType")
     @Column(name="telephone")
     private TelephoneNumber telephone;
-    
+     
     @org.hibernate.annotations.Type(
             type="gr.aueb.mscis.sample.persistence.EMailCustomType")
     @Column(name="email")
@@ -261,7 +261,7 @@ public class Epoptis {
 	        pendingEpopteies = countPendingEpopteies();
 	        return getCategory().canEpopteusei(pendingEpopteies);
 	    }
-	    
+	     
 	 
 	/*public Set<Epopteia> getEpopteies()
 	{
@@ -359,7 +359,7 @@ public class Epoptis {
 	    	
 	    	setState(EpoptisState.UNAVAILABLE);
 	    }
-	@Override
+	@Override 
 	public String toString() {
 		return "Epoptis [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password=" 
 	+ password + ", telephone=" + telephone + "]";
