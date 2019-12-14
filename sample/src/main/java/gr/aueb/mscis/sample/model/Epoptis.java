@@ -314,33 +314,7 @@ public class Epoptis {
 	    {
 	    	this.state = state;
 	    }
-	    
-
-	    //elegxei gia to an ginetai na ekxwrithei i epopteia stin arxi tis methodou
-	    public Epopteia ekxwrhshEpopteias(Epopteia epopteia)
-	    {
-	    	//edwses epopti?
-	    	if (epopteia == null)
-	    		return null;
-	    	//ehie diathesimes epopteies wste na tou dwsoume auti?
-	    	if (!canEpopteusei())
-	    		return null;
-	    	//einai diathesimos?
-	    	if (getState() == EpoptisState.UNAVAILABLE)
-	    		return null;
-	    	
-	    	//dws tou tin epopteia
-	    	epopteia.addEpopti(this);
-	    	addEpopteia(epopteia);
-	    	
-	    	//an meta apo auti tin ekxwrhsh epopteias, to synolo epopteiwn tou epoptis einai iso me to MAX, tote set him/her as UNAVAILABLE
-	    	if (canEpopteusei() == false)
-	    		setState(EpoptisState.UNAVAILABLE);
-	    	
-	    	//updated epopteia me epopti!
-	    	return epopteia;
-	    	
-	    }
+	   
 	    /**
 	     * Αλλάζει την κατάσταση του αντιτύπου σε διαθέσιμο ({@code AVAILABLE}).
 	     */
