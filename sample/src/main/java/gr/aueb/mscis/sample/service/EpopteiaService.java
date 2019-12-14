@@ -1,18 +1,15 @@
-package gr.aueb.mscis.sample.service; 
+ package gr.aueb.mscis.sample.service; 
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
-import gr.aueb.mscis.sample.exceptions.EpoptisException;
 import gr.aueb.mscis.sample.model.Epopteia;
-import gr.aueb.mscis.sample.model.Epoptis;
-import gr.aueb.mscis.sample.util.SimpleCalendar;
+
 
 
 public class EpopteiaService {
 
-	private Epoptis epoptis;
 	private EntityManager em;
 
 	public EpopteiaService(EntityManager em) {
@@ -46,7 +43,7 @@ public class EpopteiaService {
 	}
 	
 	//find
-	public Epopteia findEpopteia(int id) {
+	public Epopteia findEpopteiaById(int id) {
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -59,6 +56,5 @@ public class EpopteiaService {
 		}
 		return epopteia;
 	}
-
 
 }

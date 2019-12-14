@@ -13,7 +13,6 @@ import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
 import gr.aueb.mscis.sample.model.Mathima;
-import gr.aueb.mscis.sample.model.Movie;
 import gr.aueb.mscis.sample.model.Program;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 import gr.aueb.mscis.sample.util.SystemDate;
