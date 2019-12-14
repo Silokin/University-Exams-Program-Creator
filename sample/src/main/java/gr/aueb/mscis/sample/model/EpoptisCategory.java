@@ -96,7 +96,7 @@ public class EpoptisCategory {
      * που έχουν δανειστεί και δεν έχουν επιστραφεί.
      * @return {@code true} εάν μπορεί να δανειστεί κάποιο αντίτυπο.
      */
-    public boolean canEpopteusei(int pendingEpopteies) {
+    public boolean canEpopteuseiBasedOnMaxEpopteies(int pendingEpopteies) {
         return maxEpopteies > pendingEpopteies;
     }
     
