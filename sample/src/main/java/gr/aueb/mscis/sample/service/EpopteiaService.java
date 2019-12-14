@@ -56,5 +56,19 @@ public class EpopteiaService {
 		}
 		return epopteia;
 	}
+	
+			//lista me to synolo
+	@SuppressWarnings("unchecked")
+	public List<Epopteia> findAllEpopteiesForACertainProgramExe(Integer programid)
+	{
+		List<Epopteia> results = null;
+		results = em.createQuery("select e from Epopteia e where e.exetastikiid = :id")
+						.setParameter("id",programid).getResultList();
+			
+		return results;
+			
+			
+	}
+		
 
 }
