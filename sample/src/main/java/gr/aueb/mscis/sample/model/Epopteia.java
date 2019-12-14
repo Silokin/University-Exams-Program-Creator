@@ -101,14 +101,19 @@ public class Epopteia {
 	}
 	
 	//orizw mathima gia ti sugkekrimeni epopteia
-	public void setMathima(Mathima mathima)
+	public void setMathimaDirect(Mathima mathima)
 	{
-		if (this.mathima!= null) {
-			this.mathima.setEpopteia(null);
+		if(this.mathima!=null)
+			this.mathima.removeEpopteiaIndirect();
 		this.mathima = mathima;
 		if(mathima!=null)
-			this.mathima.setEpopteia(this);
-		}
+			this.mathima.setEpopteiaIndirect(this);		
+	}
+	
+	public void setMathimaIndirect(Mathima mathima) {
+		if(this.mathima!=null)
+			this.mathima.removeEpopteiaIndirect();
+		this.mathima = mathima;
 	}
 	
 	
@@ -116,8 +121,7 @@ public class Epopteia {
 	{
 		if (this.mathima!=null)
 			this.mathima.removeEpopteiaIndirect();
-			this.mathima = null;
-			
+			this.mathima = null;		
 	}
 	
 	public void removeMathimaIndirect()

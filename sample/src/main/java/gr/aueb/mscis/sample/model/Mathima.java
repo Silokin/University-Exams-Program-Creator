@@ -77,11 +77,18 @@ public class Mathima {
 		this.teacher = teacher ;
 	}
 	
-	public void setEpopteia(Epopteia epopteia) {
-		if (epopteia!= null) {
-			this.epopteia = epopteia;
-			epopteia.setMathima(this);
-		}
+	public void setEpopteiaDirect(Epopteia epopteia) {
+		if(this.epopteia!=null)
+			this.epopteia.removeMathimaIndirect();
+		this.epopteia = epopteia;
+		if(epopteia!=null)
+			this.epopteia.setMathimaIndirect(this);
+	}
+	
+	public void setEpopteiaIndirect(Epopteia epopteia) {
+		if(this.epopteia!=null)
+			this.epopteia.removeMathimaIndirect();
+		this.epopteia = epopteia;
 	}
 	
 	public void removeEpopteiaDirect() {
@@ -92,9 +99,8 @@ public class Mathima {
 	}
 	
 	public void removeEpopteiaIndirect() {
-		if (this.epopteia!= null) {
+		if (this.epopteia!= null) 
 			this.epopteia = null;
-		}
 	}
 
 	//mono se mia ek twn duo me many to ... sxesi
