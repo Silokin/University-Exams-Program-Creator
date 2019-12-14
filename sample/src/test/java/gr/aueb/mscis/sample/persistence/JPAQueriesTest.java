@@ -82,12 +82,12 @@ public class JPAQueriesTest {
         Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
     }
     
-    //select epoptis where aithousa epopteias miltiades
+    //perimenw 1 epopti giati ehw ekxwrhsie mono 1 epopteia genikotera
     @Test
-    public void innerJoin2() {
+    public void queryFromJoinTable() {
         int EXPECTED_ITEM_NUMBER = 1;
         EntityManager em = JPAUtil.getCurrentEntityManager();
-        Query query = em.createQuery("select e from Epoptis e, EpopteiaAithousa epa where epa.aithousa.name ='Miltiades'");        
+        Query query = em.createNativeQuery("select epoptis_id from epopteia_epoptis");        
         Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
     }
     
