@@ -172,12 +172,24 @@ public class Epopteia {
 	}
 	
 
-	//prosthese epopti stin epopteia
+	/*//prosthese epopti stin epopteia
 	//elexe omws mipws eisai full? (elegxos1)
 	//elexe an yparxei idi o epoptis? (elegxos2)
 	public void addEpopti(Epoptis epopti) {
 		//an o epoptis yparxei kai mporei na epopteusei (2nd check for canEpopteusei)
 		if (epopti != null && epopti.canEpopteusei() && epopti.canAddEpopteia(this)) {
+	        	epopti.friendEpopteia().add(this);
+	            this.epoptis.add(epopti);
+        }
+	}*/
+	//ta comments elegxontai kateytheian stin ekxwrhshEpopteias..
+	//i methodos epopti prepei apla na kanei add Epopti..
+	//efoson einai void emeis den tha mathoume POTE an egine add i oxi
+	//sunepws tiss synthikes autes tis elegxoume shtn ennoiaia EKXWRHSH EPOPTEIAS
+	//i opoia epitrefei thn updated Epopteia alliws NULL
+	public void addEpopti(Epoptis epopti) {
+		//an o epoptis yparxei kai mporei na epopteusei (2nd check for canEpopteusei)
+		if (epopti != null) {// && epopti.canEpopteusei() && epopti.canAddEpopteia(this)) {
 	        	epopti.friendEpopteia().add(this);
 	            this.epoptis.add(epopti);
         }
@@ -203,6 +215,47 @@ public class Epopteia {
 	
 	
 	 //elegxei gia to an ginetai na ekxwrithei i epopteia stin arxi tis methodou
+    public Epopteia ekxwrhshEpopteias(Epoptis epoptis)
+    {
+    	//edwses epopti?
+    	if (epoptis == null)
+    		return null;
+    	//ehie diathesimes epopteies wste na tou dwsoume auti?
+    	if (!epoptis.canEpopteusei())
+    		return null;
+    	//einai diathesimos?
+    	if (epoptis.getState() == EpoptisState.UNAVAILABLE)
+    		return null;
+    	
+    	
+    	//posoi epoptes prepei na einai se mia aithousa == posoi epoptes yparxoun stin sugkekrimeni epopteia 
+//    	if (epopteia.getAithouses().size()>0)
+//    		if (epopteia.getAithouses(). == epopteia.getEpoptes().size())
+//    			return null;
+    	
+    	if (!epoptis.canAddEpopteia(this))
+    		return null;
+    	
+    	//dws tou tin epopteia
+		if (doNotExceedMaxNumOfEpoptesInAithousa())
+    	{
+			epoptis.addEpopteia(this);
+			addEpopti(epoptis);
+    	}
+		else
+			return null;
+    	
+    	//an meta apo auti tin ekxwrhsh epopteias,
+		//to synolo epopteiwn tou epoptis einai iso me to MAX, 
+		///tote set him/her as UNAVAILABLE
+    	if (!epoptis.canEpopteusei())
+    		epoptis.setState(EpoptisState.UNAVAILABLE);
+    	
+    	//updated epopteia me epopti!
+    	return this;
+    	
+    }
+/*	 //elegxei gia to an ginetai na ekxwrithei i epopteia stin arxi tis methodou
     public Epoptis ekxwrhshEpopteias(Epoptis epoptis)
     {
     	//edwses epopti?
@@ -239,7 +292,7 @@ public class Epopteia {
     	//updated epopteia me epopti!
     	return epoptis;
     	
-    }
+    }*/
     
 	//kane remove epopti apo epopteia
 	//elexe omws mipws den yparxei kaneis? (elegxos1)
