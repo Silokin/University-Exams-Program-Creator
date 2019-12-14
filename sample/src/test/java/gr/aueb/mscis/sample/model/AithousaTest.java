@@ -35,8 +35,8 @@ public class AithousaTest {
         assertTrue(aithousa.getName().equals("mes"));
 
     }
- 
-	@Test
+  
+	@Test  
     public void testOrofos() {
 
         aithousa.setOrofos("des");

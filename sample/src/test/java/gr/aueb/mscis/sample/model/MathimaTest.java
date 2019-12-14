@@ -41,7 +41,7 @@ public class MathimaTest {
 
     }
 	 
-	@Test
+	@Test 
     public void testTeacher() {
 
 		 mathima.setTitle("kot");
