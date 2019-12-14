@@ -163,32 +163,26 @@ public class Epoptis {
     	return category;
     }
     
-//	//epistrefei antigrafo kai oxi to original. auto symbainei dioti theloume na apokleisoume to gegonos
-//	//na ginoun allages stin lista me ti mi diathesimotita me kostos tin apwleia dedomenwn
-//	
-//	//auti ti lista tin ehei o GRAMMATEAS
-//	//gia na tin parei arkei na ?????????????
-//	//brei ton sugkekrimeno epopti pou thelei mesw tou antikeimenou kai ystera auti ti method
-	public Set<SimpleCalendar> getMiDiathesimotita() {
-        return new HashSet<SimpleCalendar>(mi_diathesimotita); //ayto einai antigrafo tis arxikis listas
+public Set<MiDiathesimotita> getMiDiathesimotita() {
+        return new HashSet<MiDiathesimotita>(midiathesimotita); //ayto einai antigrafo tis arxikis listas
     }
-//
-//    /**
-//     * Απομακρύνει μια ημερομηνία από τη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
-//     * @param date Η ημερομηνία
-//     */
-    public void removeMiDiatheismotita(SimpleCalendar date) {
+
+    /**
+     * Απομακρύνει μια ημερομηνία από τη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
+     * @param date Η ημερομηνία
+     */
+    public void removeMiDiathesimotita(MiDiathesimotita date) {
         if (date != null)
-            this.mi_diathesimotita.remove(date);
+            this.midiathesimotita.remove(date);
     }
-//    
-//    /**
-//     * Προσθέτει μια ημερομηνία στη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
-//     * @param date Η ημερομηνία
-//     */
-	public void addMiDiathesimotita(SimpleCalendar date) {
+    
+    /**
+     * Προσθέτει μια ημερομηνία στη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
+     * @param date Η ημερομηνία
+     */
+	public void addMiDiathesimotita(MiDiathesimotita date) {
         if (date != null)
-        	this.mi_diathesimotita.add(date); //sti mi diathesimotita autou tou epopti vale auti tin imerominia
+        	this.midiathesimotita.add(date); //sti mi diathesimotita autou tou epopti vale auti tin imerominia
     }
 	
 	public Set<Epopteia> getEpopteies() {
