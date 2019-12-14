@@ -1,5 +1,6 @@
 package gr.aueb.mscis.sample.model;
 
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -8,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-
 import gr.aueb.mscis.sample.model.Epopteia;
+
 import gr.aueb.mscis.sample.model.Aithousa;
 
 public class AithousaTest {
@@ -67,16 +68,30 @@ public class AithousaTest {
          assertTrue(aithousa.getKtirio().equals("fes"));
 
         }
-         
+        
+ 
     @Test
     public void testToString()
     {
-        Aithousa aithousa = new Aithousa();	        
-        assertFalse(aithousa.equals(aithousa.toString()));
+        Aithousa aithousa = new Aithousa();	
+        String expected = "Aithousa [id=0, name=null, orofos=null, noThesewn=0, noEpoptes=0, ktirio=null]";
+        assertFalse(aithousa.toString().equals(expected));
     }
     
+ //   @Test
+ //   public void addingSameAithousaIntoTwoEpopteies() {
+
+        
+//	        epopteia.addAithousa(aithousa);
+//        Assert.assertEquals(aithousa, aithousa.getEpopteies());
+//
+//       }
+  
     
-	
+//    private void successfullAdditionofEpopteia(Aithousa aithousa, Epopteia epopteia){
+//        Assert.assertTrue(aithousa.getEpopteies().contains(epopteia));
+ //       Assert.assertSame(aithousa, epopteia.getAithousa());
+ //   }
 }
 
 

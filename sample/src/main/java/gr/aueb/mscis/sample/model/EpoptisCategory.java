@@ -29,14 +29,14 @@ public class EpoptisCategory {
     private String description;
     
     @Column(name="epopteies")
-    private Integer maxEpopteies;
+    private int maxEpopteies;
     
     /**
      * Ο προκαθορισμένος κατασκευαστής.
      */
     public EpoptisCategory() { }
 
-    /**
+    /** 
      * Βοηθητικός κατασκευαστής.
      * Aρχικοποιεί τα βασικά στοιχεία της κατηγορίας δανειζομένου.
      * @param description Περιγραφή κατηγορίας
@@ -47,12 +47,12 @@ public class EpoptisCategory {
      */
     public EpoptisCategory(String description, int maxEpopteies) {
 
-    	this.description = description;
+    	this.description = description; 
         this.maxEpopteies = maxEpopteies;
     }
 
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
     
@@ -83,7 +83,7 @@ public class EpoptisCategory {
         return maxEpopteies;
     }
     
-    public void setMaxEpopteies(Integer maxEpopteies)
+    public void setMaxEpopteies(int maxEpopteies)
     {
     	this.maxEpopteies = maxEpopteies;
     }

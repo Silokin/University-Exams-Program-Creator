@@ -14,7 +14,7 @@ import gr.aueb.mscis.sample.util.SimpleCalendar;
 public class EpopteiaTest {
 	
 	@Test
-	public void testAithousa() {
+	public void testAithousa() { 
 		//tsekarw add aithousa keno set
 		Aithousa aithousa = new Aithousa ("gor","lami",200,2,"spike");
 		Epopteia epopteia = new Epopteia (new SimpleCalendar(2020,1,12,18,0),new SimpleCalendar(2020,1,12,20,0));
@@ -29,8 +29,8 @@ public class EpopteiaTest {
 		epopteia.addAithousa(aithousa1);
 		Assert.assertTrue(epopteia.getAithouses().contains(aithousa1));
 		Assert.assertEquals(epopteia.getAithouses().size(),2);
-		
-		//add same item
+		 
+		//add same item 
 		epopteia.addAithousa(aithousa);
 		Assert.assertNotEquals(epopteia.getAithouses().size(),3);
 		
@@ -42,7 +42,7 @@ public class EpopteiaTest {
 		Assert.assertEquals(epopteia.getAithouses().size(),2);	
 	}
 	
-	@Test
+	@Test 
 	public void testEpoptis() {
 		//testaroume an bhke o epoptis sthn epopteia kai to antistrofo
 		Epopteia epopteia = new Epopteia();
@@ -55,5 +55,6 @@ public class EpopteiaTest {
 		//testaroume an 3eperasoume tous dia8esimous epoptes mia epopteias ti ginetai 
 		
 	}
+
 
 }

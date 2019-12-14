@@ -24,7 +24,7 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
         date.set(year, month - 1, day, hour, minutes);
        
     }
-
+ 
     /**
      * Κατασκευάζει μία ημερομηνία λαμβάνοντας.
      * ως παράμετρο αντικείμενο της κλάσης {@code Calendar}
@@ -33,7 +33,7 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
     public SimpleCalendar(Calendar date) {
         this.date = Calendar.getInstance();
         this.date.setTimeInMillis(date.getTimeInMillis());
-        //trimToDays(this.date);
+        //trimToDays(this.date); 
     }
 
     //agnohsh ths wras, emeis den to xreiazomaste giati mas endiaferei i wra
@@ -43,7 +43,7 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
         javaDate.set(Calendar.SECOND, 0);
         javaDate.set(Calendar.MILLISECOND, 0);
     }
-
+ 
 //    /**
 //     * Η διάρκεια σε ημέρες σε σχέση με μία άλλη ημερομηνία.
 //     * @param other Η δεύτερη ημερομηνία για την οποία
@@ -191,38 +191,38 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
         return date == null ? 0 : date.hashCode();
     }
 
-	public static boolean isValid(int year, int month, int day, int hour, int minute) {
-	    if (year < 0) return false;
-	    if ((month < 1) || (month > 12)) return false;
-	    if ((day < 1) || (day > 31)) return false;
-	    if ((hour < 0) || (hour > 24)) return false;
-	    if ((minute < 0) || (minute > 60)) return false;
-	    switch (month) {
-	        case 1: return true;
-	        case 2: return (isLeap(year) ? day <= 29 : day <= 28);
-	        case 3: return true;
-	        case 4: return day < 31;
-	        case 5: return true;
-	        case 6: return day < 31;
-	        case 7: return true;
-	        case 8: return true;
-	        case 9: return day < 31;
-	        case 10: return true;
-	        case 11: return day < 31;
-	        default: return true;
-	    }
-	}
-
-	public static boolean isLeap(int year) {
-	    if (year % 4 != 0) {
-	      return false;
-	    } else if (year % 400 == 0) {
-	      return true;
-	    } else if (year % 100 == 0) {
-	      return false;
-	    } else {
-	      return true;
-	    }        
-	}    
+//	public static boolean isValid(int year, int month, int day, int hour, int minute) {
+//	    if (year < 0) return false;
+//	    if ((month < 1) || (month > 12)) return false;
+//	    if ((day < 1) || (day > 31)) return false;
+//	    if ((hour < 0) || (hour > 24)) return false;
+//	    if ((minute < 0) || (minute > 60)) return false;
+//	    switch (month) {
+//	        case 1: return true;
+//	        case 2: return (isLeap(year) ? day <= 29 : day <= 28);
+//	        case 3: return true;
+//	        case 4: return day < 31;
+//	        case 5: return true;
+//	        case 6: return day < 31;
+//	        case 7: return true;
+//	        case 8: return true;
+//	        case 9: return day < 31;
+//	        case 10: return true;
+//	        case 11: return day < 31;
+//	        default: return true;
+//	    }
+//	}
+//
+//	public static boolean isLeap(int year) {
+//	    if (year % 4 != 0) {
+//	      return false;
+//	    } else if (year % 400 == 0) {
+//	      return true;
+//	    } else if (year % 100 == 0) {
+//	      return false;
+//	    } else {
+//	      return true;
+//	    }        
+//	}    
 
 }

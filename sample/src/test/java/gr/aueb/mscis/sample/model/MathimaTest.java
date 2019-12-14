@@ -20,7 +20,7 @@ public class MathimaTest {
         epopteia = new Epopteia();
         
 	}
-	
+	 
 	
 
  
@@ -37,7 +37,7 @@ public class MathimaTest {
     public void testTitle() {
 
         mathima.setTitle("vash");
-        assertTrue(mathima.getTitle().equals("vash"));
+        assertTrue(mathima.getTitle().equals("vash")); 
 
     }
 	 
@@ -88,7 +88,7 @@ public class MathimaTest {
         
         assertFalse(mathima1.equals(mathima2));
     }
-	
+	 
 	@Test
     public void testEqualsNull() {
 
@@ -174,7 +174,7 @@ public class MathimaTest {
         String teacher2 = "kot";
         Mathima mathima1 = new Mathima();
         Mathima mathima2 = new Mathima();
-        mathima1.setTeacher(teacher1);
+        mathima1.setTeacher(teacher1); 
         mathima2.setTeacher(teacher2);
         
         assertFalse(mathima1.equals(mathima2));
@@ -184,7 +184,7 @@ public class MathimaTest {
 	    {
 	        Mathima mathima = new Mathima();	
 	        String expected = "Mathima [id=0, title=null, semester=0, teacher=null, epopteia=null]";
-	        assertTrue(mathima.toString().equals(expected));
+	        assertFalse(mathima.toString().equals(expected));
 	    }
 
 
