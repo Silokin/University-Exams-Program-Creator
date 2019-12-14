@@ -213,7 +213,63 @@ public class Epopteia {
 	}
 	
 
-
+public boolean doNotExceedMaxNumOfEpoptesInAithousa()
+	{
+		int max =0;
+		for (Aithousa aithousa: getAithouses())
+			{
+			//max epoptes based on aithousa
+				max=aithousa.getNoEpoptes();
+				//epoptes gia ti sugkkerimeni epopteia
+				//an to sunolo twn epoptwn gia auti tin epopteia
+				//sugkekrimenes wres
+				//einai to max gia kapoia aithousa
+				if (getEpoptes().size() != max)
+					return true;
+			}
+		return false;
+	}
+	
+	
+	 //elegxei gia to an ginetai na ekxwrithei i epopteia stin arxi tis methodou
+    public Epoptis ekxwrhshEpopteias(Epoptis epoptis)
+    {
+    	//edwses epopti?
+    	if (epoptis == null)
+    		return null;
+    	//ehie diathesimes epopteies wste na tou dwsoume auti?
+    	if (!epoptis.canEpopteusei())
+    		return null;
+    	//einai diathesimos?
+    	if (epoptis.getState() == EpoptisState.UNAVAILABLE)
+    		return null;
+    	
+    	
+    	//posoi epoptes prepei na einai se mia aithousa == posoi epoptes yparxoun stin sugkekrimeni epopteia 
+//    	if (epopteia.getAithouses().size()>0)
+//    		if (epopteia.getAithouses(). == epopteia.getEpoptes().size())
+//    			return null;
+    	
+    	//dws tou tin epopteia
+		if (doNotExceedMaxNumOfEpoptesInAithousa())
+    	{
+			epoptis.addEpopteia(this);
+			addEpopti(epoptis);
+    	}
+		else
+			return null;
+    	
+    	//an meta apo auti tin ekxwrhsh epopteias,
+		//to synolo epopteiwn tou epoptis einai iso me to MAX, 
+		///tote set him/her as UNAVAILABLE
+    	if (!epoptis.canEpopteusei())
+    		epoptis.setState(EpoptisState.UNAVAILABLE);
+    	
+    	//updated epopteia me epopti!
+    	return epoptis;
+    	
+    }
+	
 	@Override
 	public String toString() {
 		return "Epopteia [id=" + id + ", starts=" + starts + ", ends=" + ends + "]";
