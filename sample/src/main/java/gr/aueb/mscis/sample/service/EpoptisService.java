@@ -1,9 +1,12 @@
 package gr.aueb.mscis.sample.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
+import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.model.Epoptis;
 
 public class EpoptisService {
@@ -53,5 +56,17 @@ public class EpoptisService {
 			tx.rollback();
 		}
 		return epoptis;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Epoptis> findEpoptisByMail(EmailAddress mail) {
+
+		List<Epoptis> results = null;
+		results = em
+				.createQuery(
+						"select email from Epoptis e where e.email = :mail ")
+				.setParameter("mail", mail).getResultList();
+
+		return results;
 	}
 }

@@ -201,7 +201,7 @@ public class Epoptis {
 	}
 	
 	public void addEpopteia(Epopteia epopteia) {
-	        if (epopteia != null) {
+	        if (epopteia != null && canEpopteusei() && canAddEpopteia(epopteia)) {
 	            epopteia.friendEpoptis().add(this);
 	            this.epopteia.add(epopteia);
 	        }
@@ -249,6 +249,28 @@ public class Epoptis {
 	            return false;
 	        pendingEpopteies = countPendingEpopteies();
 	        return getCategory().canEpopteuseiBasedOnMaxEpopteies(pendingEpopteies);
+	    }
+	    
+	    public boolean canAddEpopteia(Epopteia epopteia) {
+        	boolean check = true;
+        	//gia tis imeres pou den mporei na epopteusei
+        	for(MiDiathesimotita md : getMiDiathesimotita()) {
+        		//an isodynamoun me tin sugkekrimeni epopteia pou paei na tou ekxwrithei
+        		//tote check = true
+        		if(md.getDate().getYear()==epopteia.getStarts().getYear() 
+        		   && md.getDate().getMonth()==epopteia.getStarts().getMonth()
+        		   && md.getDate().getDayOfMonth()==epopteia.getStarts().getDayOfMonth()) {
+        			check = false;
+        			break;
+        		}		
+        	}
+        	//pare tis epopteies tou sigkekrimenou epopti
+        	//
+        	for (Epopteia teia : getEpopteies()) {
+        		check=epopteia.interval(teia);
+        		if(check == false) break;	
+        	}
+        	return check;
 	    }
 	   
 	    public EpoptisState getState()

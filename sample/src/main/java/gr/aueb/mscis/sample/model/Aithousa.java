@@ -125,19 +125,20 @@ public class Aithousa {
 	}
 
 	public void addEpopteia(Epopteia epopteia) {
-	        if (epopteia != null && this.epopteies.contains(epopteia)==false) {
-	        	//elegxoume an sumpimptoun duo epopteies
-	        	boolean check = false;
-	        	for (Epopteia teia : getEpopteies()) {
-	        		check=teia.interval(epopteia);
-	        		if(check == true) break;	
-	        	}
-	        	if(check==false) {
+	        if (epopteia != null && this.epopteies.contains(epopteia)==false && canAddEpopteia(epopteia)) {
 	            epopteia.friendAithousa().add(this);
 	            this.epopteies.add(epopteia);
-	        	}
 	        }
-	} 
+	}
+	
+	public boolean canAddEpopteia(Epopteia epopteia) {
+    	boolean check = true;
+    	for (Epopteia teia : getEpopteies()) {
+    		check=teia.interval(epopteia);
+    		if(check == false) break;	
+    	}
+    	return check;
+	}
 	  
 	public void removeEpopteia(Epopteia epopteia) {
 	        if (epopteia != null) {

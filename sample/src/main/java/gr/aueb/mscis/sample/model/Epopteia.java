@@ -149,16 +149,9 @@ public class Epopteia {
 	
 	//elegxei pws i atihousa einai diathesimi
 	public void addAithousa(Aithousa aithousa) {
-			if (aithousa != null) {
-	        	boolean check = false;
-	        	for (Epopteia teia : aithousa.getEpopteies()) {
-	        		check=interval(teia);
-	        		if(check == true) break;	
-	        	}
-	        	if(check==false) {
+			if (aithousa != null && aithousa.canAddEpopteia(this)) {
 	        		aithousa.friendEpopteia().add(this);
 	        		this.aithousa.add(aithousa);
-	        	}
 			}
 	        
 	}
@@ -184,32 +177,12 @@ public class Epopteia {
 	//elexe an yparxei idi o epoptis? (elegxos2)
 	public void addEpopti(Epoptis epopti) {
 		//an o epoptis yparxei kai mporei na epopteusei (2nd check for canEpopteusei)
-		if (epopti != null && epopti.canEpopteusei()) {
-        	boolean check = false;
-        	//gia tis imeres pou den mporei na epopteusei
-        	for(MiDiathesimotita md : epopti.getMiDiathesimotita()) {
-        		//an isodynamoun me tin sugkekrimeni epopteia pou paei na tou ekxwrithei
-        		//tote check = true
-        		if(md.getDate().getYear()==getStarts().getYear() 
-        		   && md.getDate().getMonth()==getStarts().getMonth()
-        		   && md.getDate().getDayOfMonth()==getStarts().getDayOfMonth()) {
-        			check = true;
-        			break;
-        		}		
-        	}
-        	//pare tis epopteies tou sigkekrimenou epopti
-        	//
-        	for (Epopteia teia : epopti.getEpopteies()) {
-        		check=interval(teia);
-        		if(check == true) break;	
-        	}
-        	//an check = false, ara mporei, tote dwstuo tin epopteia
-        	if(check==false) {
+		if (epopti != null && epopti.canEpopteusei() && epopti.canAddEpopteia(this)) {
 	        	epopti.friendEpopteia().add(this);
 	            this.epoptis.add(epopti);
-        	}
-		}
+        }
 	}
+
 	
 	public boolean doNotExceedMaxNumOfEpoptesInAithousa()
 	{
@@ -312,8 +285,8 @@ public class Epopteia {
 				||(epopteia.getStarts().compareTo(getStarts())>=0&&epopteia.getStarts().compareTo(getEnds())<0)  
 				||(getStarts().compareTo(epopteia.getStarts())>=0&&getEnds().compareTo(epopteia.getEnds())<=0)
 				||(epopteia.getStarts().compareTo(getStarts())>=0&&epopteia.getEnds().compareTo(getEnds())<=0))
-			return true;
-		return false;
+			return false;
+		return true;
 	}
 
 }
