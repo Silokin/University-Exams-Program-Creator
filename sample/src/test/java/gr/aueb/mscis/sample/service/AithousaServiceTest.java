@@ -29,4 +29,9 @@ public class AithousaServiceTest extends GrammateiaServiceTest {
 		assertNotNull("Expected non null aithousa", a);
 	}
 
+	@Test
+	public void findAithousaByOrofos()
+	{}
+	
+	
 }

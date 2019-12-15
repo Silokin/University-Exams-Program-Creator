@@ -2,11 +2,13 @@
 
 import java.util.List;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
-
 import gr.aueb.mscis.sample.model.Aithousa;
+import gr.aueb.mscis.sample.model.Mathima;
 
 public class AithousaService {
 	private EntityManager em;
@@ -25,7 +27,7 @@ public class AithousaService {
 		} else {
 			em.persist(aithousa);
 		}
-		tx.commit();
+		tx.commit(); 
 	}
 	
 	//delete
