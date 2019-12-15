@@ -98,7 +98,7 @@ public class EpopteiaService {
 		if (epoptis == null) {
 			throw new EpoptisException();
 		}
-		if (!epoptis.canEpopteusei()) {
+		if (!epoptis.canEpopteusei()) { 
 			return null;
 		}
 
@@ -148,6 +148,16 @@ public class EpopteiaService {
 		if (anathesiEpopteias(epoptis_id,epopteia_id) == null){
 			throw new EpoptisException("Epoptis with id " + epoptis_id + " den mporei na epopteusei tin sugkekrimeni epopteia");
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Epopteia> findEpoptesByEpopteiaId(Integer epopteia_id)
+	{
+		List<Epopteia> results = null;
+		results = em.createQuery("select e from Epoptis e where e.id = :epopteia")
+				.setParameter("epopteia",epopteia_id).getResultList();
+		
+		return results;
 	}
 	
 	
