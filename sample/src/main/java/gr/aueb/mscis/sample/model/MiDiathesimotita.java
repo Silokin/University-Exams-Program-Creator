@@ -32,10 +32,9 @@ public class MiDiathesimotita {
 	public MiDiathesimotita()
 	{}
 	
-	public MiDiathesimotita(SimpleCalendar date, Epoptis epoptis)
+	public MiDiathesimotita(SimpleCalendar date)
 	{
 		this.date = date;
-		this.epoptis = epoptis;
 	}
 	
 	public Integer getId()
