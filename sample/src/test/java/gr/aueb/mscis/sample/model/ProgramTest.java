@@ -62,7 +62,17 @@ public class ProgramTest {
 
     }
 	
-
+	@Test
+	public void testSetStart() {
+		program.setStart(new SimpleCalendar(2020,1,12,11,0));
+		assertEquals(new SimpleCalendar(2020,1,12,11,0),program.getStart());
+	}
+	
+	@Test
+	public void testSetEnd() {
+		program.setEnd(new SimpleCalendar(2020,1,12,11,0));
+		assertEquals(new SimpleCalendar(2020,1,12,11,0),program.getEnd());
+	}
 }
 
 

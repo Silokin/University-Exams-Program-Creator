@@ -86,6 +86,22 @@ public class Program {
 	{
 		return id;
 	}
+	
+	public SimpleCalendar getStart() {
+		return this.starts;
+	}
+	
+	public void setStart(SimpleCalendar s) {
+		this.starts = s;
+	}
+	
+	public SimpleCalendar getEnd() {
+		return this.ends;
+	}
+	
+	public void setEnd(SimpleCalendar s) {
+		this.ends = s;
+	}
 }
 
 
