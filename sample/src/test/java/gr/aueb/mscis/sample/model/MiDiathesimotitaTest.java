@@ -46,26 +46,32 @@ public class MiDiathesimotitaTest {
  
 	@Test 
     public void testEpoptis() {
-         
+		EmailAddress email = new EmailAddress("vas@gmail.com");
+	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
+	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
 		 miDiathesimotita.setEpoptis(epoptis);
-	     assertTrue(miDiathesimotita.getEpoptis().equals(epoptis));
+	     assertNotNull(miDiathesimotita.getEpoptis());
 
     }
  
-	@Test
-    public void testMiDiathesimotita2() {
-		
-		SimpleCalendar simpleCalendar = new SimpleCalendar(2020,1,12,19,0);
-        miDiathesimotita.setDate(simpleCalendar);
-        assertNotNull(epopteia.getEpoptes());
-		
-    }
+//	@Test
+//    public void testMiDiathesimotita2() {
+//		
+//		SimpleCalendar simpleCalendar = new SimpleCalendar(2020,1,12,19,0);
+//        miDiathesimotita.setDate(simpleCalendar);
+//        miDiathesimotita.
+//        epopteia.setProgram(programe);
+//
+//        assertNotNull(epopteia.getEpoptes());
+//		
+//    }
  
 	@Test
     public void testMiDiathesimotita3() {
 		
 		SimpleCalendar simpleCalendar = new SimpleCalendar(2020,1,12,19,0);
         miDiathesimotita.setDate(simpleCalendar);
+        
         assertNotNull(miDiathesimotita.getDate());
 		
     }

@@ -7,7 +7,7 @@ import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.contacts.TelephoneNumber;
 import gr.aueb.mscis.sample.model.*;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
-import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 public class EpoptisTest {
@@ -106,6 +106,19 @@ public class EpoptisTest {
 		miDiathesimotita = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,2),epoptis); 
         epoptis.addMiDiathesimotita(miDiathesimotita);
         assertNotNull(epoptis.getMiDiathesimotita());
+
+    } 
+	
+	@Test
+    public void testcanAddEpopteia() {
+		EmailAddress email = new EmailAddress("vas@gmail.com");
+	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
+	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
+	 	
+        Epopteia epopteia = new Epopteia (new SimpleCalendar(2020,1,12,11,0),new SimpleCalendar(2020,1,12,15,0));
+	 	epoptis.canAddEpopteia(epopteia);
+        
+        assertNotNull(epoptis.canAddEpopteia(epopteia));
 
     } 
 }
