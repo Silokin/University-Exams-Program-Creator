@@ -1,10 +1,12 @@
 package gr.aueb.mscis.sample.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
-
 import gr.aueb.mscis.sample.model.Aithousa;
+import gr.aueb.mscis.sample.model.Mathima;
 
 public class AithousaService {
 	private EntityManager em;
@@ -23,7 +25,7 @@ public class AithousaService {
 		} else {
 			em.persist(aithousa);
 		}
-		tx.commit();
+		tx.commit(); 
 	}
 	
 	//delete
@@ -53,4 +55,26 @@ public class AithousaService {
 		}
 		return aithousa;
 	}
+	
+	public List<Aithousa> findAllAithouses()
+	{
+		List<Aithousa> results = null;
+
+		results = em.createQuery("select a from Aithousa a", Aithousa.class)
+						.getResultList();
+
+		return results;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Aithousa> findAithousaByOrofos(String orofos)
+	{
+		List<Aithousa> results = null;
+		results = em.createQuery("select a from Aithousa a where a.orofos = :orofos")
+				.setParameter("orofos", orofos).getResultList();
+				
+
+		return results;
+	}
+	
 }
