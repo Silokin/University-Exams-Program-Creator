@@ -30,8 +30,12 @@ public class AithousaServiceTest extends GrammateiaServiceTest {
 	}
 
 	@Test
-	public void findAithousaByOrofos()
-	{}
+	public void findAithousaByOrofos(){
+		AithousaService as = new AithousaService(em);
+		List<Aithousa> al = as.findAithousaByOrofos("2");
+		Assert.assertEquals(1, al.size());
+		Assert.assertEquals("Πλειάδες", al.get(0).getName());
+	}
 	
 	
 }
