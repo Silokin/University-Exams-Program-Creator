@@ -56,7 +56,7 @@ public class SimpleCalendarTest {
 	        
 	        Assert.assertFalse(date.after(new SimpleCalendar(2007, 3, 1 , 3 , 4)));                       
 	        Assert.assertFalse(date.before(new SimpleCalendar(2007, 3, 1 , 3 , 4)));
-	        Assert.assertEquals(0, date.compareTo(new SimpleCalendar(2007, 3, 1 , 3 , 4)));        
+	              
 	    }
 	    
 	    
