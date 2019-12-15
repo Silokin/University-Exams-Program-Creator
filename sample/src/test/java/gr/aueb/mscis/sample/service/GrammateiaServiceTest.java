@@ -18,7 +18,6 @@ import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisState;
 import gr.aueb.mscis.sample.model.MiDiathesimotita;
-import gr.aueb.mscis.sample.model.Movie;
 import gr.aueb.mscis.sample.model.Program;
 import gr.aueb.mscis.sample.persistence.Initializer;
 import gr.aueb.mscis.sample.persistence.JPAUtil;
