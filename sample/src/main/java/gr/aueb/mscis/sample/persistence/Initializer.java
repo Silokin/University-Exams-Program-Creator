@@ -13,6 +13,8 @@ import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
 import gr.aueb.mscis.sample.model.Mathima;
+import gr.aueb.mscis.sample.model.MiDiathesimotita;
+import gr.aueb.mscis.sample.model.Movie;
 import gr.aueb.mscis.sample.model.Program;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 import gr.aueb.mscis.sample.util.SystemDate;
@@ -66,6 +68,8 @@ public class Initializer  {
 
         eraseData();                      
 
+        Program exe19_20 = new Program(new SimpleCalendar(20,1,20,8,15),new SimpleCalendar(22,2,20,20,15));
+        
         Aithousa pleiades = new Aithousa("Πλειάδες", "1", 80, 2, "Ευελπίδων 1");
         Aithousa miltiades = new Aithousa("Μιλτιάδης", "1", 120, 4, "Κεντρικό");
         Aithousa kwstadopoulos = new Aithousa("Κωνσταντόπουλος", "2", 60, 1, "Τροίας 2");
@@ -74,8 +78,6 @@ public class Initializer  {
         Mathima statistics = new Mathima("Στατιστική",3,"Τασούλας");
         Mathima crypto = new Mathima("Κρυπτογραφία",5,"Μαριάς");
         Mathima biology = new Mathima("Βιολογία",2,"Πικράκης");
-        
-        Program exe19_20 = new Program(new SimpleCalendar(2020,1,20,8,15),new SimpleCalendar(2020,2,20,20,15));
         
         EpoptisCategory proswpiko = new EpoptisCategory("Προσωπικό Τμήματος",5);
         EpoptisCategory ypopsifios_didaktor = new EpoptisCategory("Υποψήφιος Διδάκτωρ",3);
@@ -87,8 +89,13 @@ public class Initializer  {
         giannis.setCategory(proswpiko);
         
         Epoptis tasos =  new Epoptis("Tasos", "Kouk", new EmailAddress("testTasos@aueb.gr"),null,"1234");
-        tasos.setCategory(proswpiko);
+        tasos.setCategory(proswpiko); 
         
+        Epopteia epopteia1 = new Epopteia(new SimpleCalendar(21,1,20,13,15),new SimpleCalendar(21,1,20,15,15));
+        Epopteia epopteia2 = new Epopteia(new SimpleCalendar(22,1,20,13,15),new SimpleCalendar(22,1,20,15,15));
+        Epopteia epopteia3 = new Epopteia(new SimpleCalendar(22,2,20,13,15),new SimpleCalendar(22,2,20,15,15));
+        
+        MiDiathesimotita mi = new MiDiathesimotita(new SimpleCalendar(21,1,20,0,0));	
         
         EntityManager em = JPAUtil.getCurrentEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -96,7 +103,8 @@ public class Initializer  {
         tx.begin();
         //edw arxizoun oi transactions
         
-        
+
+        em.persist(exe19_20);
         em.persist(pleiades);
         em.persist(miltiades);
         em.persist(kwstadopoulos);
@@ -104,21 +112,17 @@ public class Initializer  {
         em.persist(statistics);
         em.persist(crypto);
         em.persist(biology);
-        em.persist(exe19_20);
         em.persist(proswpiko);
         em.persist(ypopsifios_didaktor);
         em.persist(alex);
         em.persist(giannis);
         em.persist(tasos);
-        
-        //leipei na valoume orismenes meres ANOIXTES??
-        //gia epopteia
-        Epopteia epopteia1 = new Epopteia(new SimpleCalendar(11,1,20,13,15),new SimpleCalendar(11,1,20,15,15));
-        epopteia1.addAithousa(miltiades);
-        epopteia1.addEpopti(tasos);
-        //tasos.addEpopteia(epopteia1);
-        
         em.persist(epopteia1);
+        em.persist(epopteia2);
+        em.persist(epopteia3);
+        em.persist(mi);
+        
+
         //edw apothikeuontai
         tx.commit();
         //em.close();
