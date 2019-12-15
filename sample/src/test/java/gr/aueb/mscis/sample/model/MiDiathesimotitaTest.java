@@ -27,7 +27,7 @@ public class MiDiathesimotitaTest {
 		EmailAddress email = new EmailAddress("vas@gmail.com");
 	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
 	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
-        miDiathesimotita = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,2),epoptis); 
+        miDiathesimotita = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,2)); 
 	}
 	
 	
@@ -39,7 +39,7 @@ public class MiDiathesimotitaTest {
 	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
 	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
         epoptis.getMiDiathesimotita();
-        MiDiathesimotita expected = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,0),epoptis);
+        MiDiathesimotita expected = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,0));
         assertFalse(epoptis.getMiDiathesimotita().contains(expected));
 
     }

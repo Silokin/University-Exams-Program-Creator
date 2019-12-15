@@ -10,7 +10,6 @@ import org.junit.Test;
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
-import gr.aueb.mscis.sample.model.Movie;
 import gr.aueb.mscis.sample.persistence.Initializer;
 import gr.aueb.mscis.sample.persistence.JPAUtil;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
@@ -57,7 +56,7 @@ public class GrammateiaServiceTest {
 		
 	}
 	
-	@Test
+	@Test 
 	public void testAnathesi()
 	{
 		

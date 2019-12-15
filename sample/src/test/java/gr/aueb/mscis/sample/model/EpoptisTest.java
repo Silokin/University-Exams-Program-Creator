@@ -93,7 +93,7 @@ public class EpoptisTest {
 		EmailAddress email = new EmailAddress("vas@gmail.com");
 	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
 	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
-		miDiathesimotita = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,2),epoptis); 
+		miDiathesimotita = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,2)); 
         epoptis.removeMiDiathesimotita(miDiathesimotita);
         assertNotNull(epoptis.getMiDiathesimotita());
 
@@ -103,7 +103,7 @@ public class EpoptisTest {
 		EmailAddress email = new EmailAddress("vas@gmail.com");
 	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
 	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
-		miDiathesimotita = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,2),epoptis); 
+		miDiathesimotita = new MiDiathesimotita(new SimpleCalendar(2020,1,12,11,2)); 
         epoptis.addMiDiathesimotita(miDiathesimotita);
         assertNotNull(epoptis.getMiDiathesimotita());
 
@@ -119,6 +119,16 @@ public class EpoptisTest {
 	 	epoptis.canAddEpopteia(epopteia);
         
         assertNotNull(epoptis.canAddEpopteia(epopteia));
+
+    } 
+	
+	@Test
+    public void testavailable() {
+		EmailAddress email = new EmailAddress("vas@gmail.com");
+	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
+	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
+	 	epoptis.setState(EpoptisState.AVAILABLE);
+        assertTrue(epoptis.getState().equals(EpoptisState.AVAILABLE));
 
     } 
 }
