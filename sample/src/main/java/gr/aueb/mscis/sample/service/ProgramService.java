@@ -1,9 +1,12 @@
 package gr.aueb.mscis.sample.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
+import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.Program;
 
 public class ProgramService {
@@ -53,6 +56,15 @@ public class ProgramService {
 			tx.rollback();
 		}
 		return program;
+	}
+	
+	public List<Program> findAllPrograms() {
+		List<Program> results = null;
+
+		results = em.createQuery("select p from Program p", Program.class)
+				.getResultList();
+
+		return results;
 	}
 
 

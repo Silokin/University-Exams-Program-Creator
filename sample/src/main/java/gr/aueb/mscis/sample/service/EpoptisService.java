@@ -12,6 +12,7 @@ import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
 import gr.aueb.mscis.sample.model.EpoptisState;
+import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.MiDiathesimotita;
 
 public class EpoptisService {
@@ -143,5 +144,14 @@ public class EpoptisService {
 					.setParameter("epoptis",epoptis.getId()).getResultList();
 			
 			return results.get(0);
+		}
+		
+		public List<Epoptis> findAllEpoptes() {
+			List<Epoptis> results = null;
+
+			results = em.createQuery("select e from Epoptis e", Epoptis.class)
+					.getResultList();
+
+			return results;
 		}
 }

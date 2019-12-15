@@ -34,7 +34,7 @@ public class AithousaServiceTest extends GrammateiaServiceTest {
 		AithousaService as = new AithousaService(em);
 		List<Aithousa> al = as.findAithousaByOrofos("2");
 		Assert.assertEquals(1, al.size());
-		Assert.assertEquals("Πλειάδες", al.get(0).getName());
+		Assert.assertEquals("Κωνσταντόπουλος", al.get(0).getName());
 	}
 	
 	
