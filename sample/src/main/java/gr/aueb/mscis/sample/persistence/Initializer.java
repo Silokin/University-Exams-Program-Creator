@@ -95,7 +95,6 @@ public class Initializer  {
         Epopteia epopteia2 = new Epopteia(new SimpleCalendar(22,1,20,13,15),new SimpleCalendar(22,1,20,15,15));
         Epopteia epopteia3 = new Epopteia(new SimpleCalendar(22,2,20,13,15),new SimpleCalendar(22,2,20,15,15));
         
-        MiDiathesimotita mi = new MiDiathesimotita(new SimpleCalendar(21,1,20,0,0));	
         
         EntityManager em = JPAUtil.getCurrentEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -103,7 +102,7 @@ public class Initializer  {
         tx.begin();
         //edw arxizoun oi transactions
         
-
+        //em.persist(mi);
         em.persist(exe19_20);
         em.persist(pleiades);
         em.persist(miltiades);
@@ -120,7 +119,7 @@ public class Initializer  {
         em.persist(epopteia1);
         em.persist(epopteia2);
         em.persist(epopteia3);
-        em.persist(mi);
+        
         
 
         //edw apothikeuontai
