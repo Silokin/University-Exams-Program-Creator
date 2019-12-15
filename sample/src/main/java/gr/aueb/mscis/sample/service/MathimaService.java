@@ -57,13 +57,14 @@ public class MathimaService {
 			return mathima;
 		}
 		
+		
 		@SuppressWarnings("unchecked")
 		public List<Mathima> findMathimaBySemester(int semester) {
 
 			List<Mathima> results = null;
 			results = em
 					.createQuery(
-							"select title from Mathima m where m.semester = :semester ")
+							"select m from Mathima m where m.semester = :semester ")
 					.setParameter("semester", semester).getResultList();
 
 			return results;
@@ -75,7 +76,7 @@ public class MathimaService {
 			List<Mathima> results = null;
 			results = em
 					.createQuery(
-							"select title from Mathima m where m.title = :title ")
+							"select m from Mathima m where m.title = :title ")
 					.setParameter("title", title).getResultList();
 
 			return results;

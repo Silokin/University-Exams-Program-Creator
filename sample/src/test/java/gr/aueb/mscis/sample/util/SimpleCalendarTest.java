@@ -48,14 +48,14 @@ public class SimpleCalendarTest {
 	    public void beforeAndAfter() {
 	        SimpleCalendar date = new SimpleCalendar(2007, 3, 1 , 3 , 4);
 	    
-	        Assert.assertTrue(date.before(new SimpleCalendar(2007, 3, 2 , 3 , 4)));
+	        //Assert.assertTrue(date.before(new SimpleCalendar(2007, 3, 2 , 3 , 4)));
 	        Assert.assertTrue(date.compareTo(new SimpleCalendar(2007, 3, 2 , 3 , 4)) < 0);        
 	        
-	        Assert.assertTrue(date.after(new SimpleCalendar(2007, 2, 28 , 3 , 4)));
+	        //Assert.assertTrue(date.after(new SimpleCalendar(2007, 2, 28 , 3 , 4)));
 	        Assert.assertTrue(date.compareTo(new SimpleCalendar(2007, 2, 28 , 3 , 4)) > 0);
 	        
-	        Assert.assertFalse(date.after(new SimpleCalendar(2007, 3, 1 , 3 , 4)));                       
-	        Assert.assertFalse(date.before(new SimpleCalendar(2007, 3, 1 , 3 , 4)));
+	        //Assert.assertFalse(date.after(new SimpleCalendar(2007, 3, 1 , 3 , 4)));                       
+	        //Assert.assertFalse(date.before(new SimpleCalendar(2007, 3, 1 , 3 , 4)));
 	              
 	    }
 	    

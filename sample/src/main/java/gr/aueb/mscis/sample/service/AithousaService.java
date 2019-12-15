@@ -1,4 +1,6 @@
-package gr.aueb.mscis.sample.service;
+ package gr.aueb.mscis.sample.service;
+
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -53,4 +55,25 @@ public class AithousaService {
 		}
 		return aithousa;
 	}
+	
+	public List<Aithousa> findAllAithouses()
+    {
+        List<Aithousa> results = null;
+
+        results = em.createQuery("select a from Aithousa a", Aithousa.class)
+                        .getResultList();
+
+        return results;
+    }
+	
+	@SuppressWarnings("unchecked")
+    public List<Aithousa> findAithousaByOrofos(String orofos)
+    {
+        List<Aithousa> results = null;
+        results = em.createQuery("select a from Aithousa a where a.orofos = :orofos")
+                .setParameter("orofos", orofos).getResultList();
+
+
+        return results;
+    }
 }
