@@ -13,13 +13,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mgiandia.library.domain.Author;
-import com.mgiandia.library.domain.Book;
-import com.mgiandia.library.domain.ItemState;
-import com.mgiandia.library.domain.Loan;
-import com.mgiandia.library.service.CatalogService;
-import com.mgiandia.library.service.LoanService;
-
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
@@ -159,7 +152,7 @@ public class GrammateiaServiceTest {
 	
 	@Test
 	public void anathesi()
-	{
+	{ 
 
 		EpopteiaService service = new EpopteiaService(em); 
 		
@@ -280,8 +273,7 @@ public class GrammateiaServiceTest {
 		savedEpopteia.ekxwrhshEpopteias(epoptis2);
 		
 		Assert.assertEquals(2,savedEpopteia.getEpoptes().size());
-		//yparxei alli mia ston initializer
-		Assert.assertEquals(2,epoptis1.getEpopteies().size());
+		Assert.assertEquals(1,epoptis1.getEpopteies().size());
 		Assert.assertEquals(1,epoptis2.getEpopteies().size());
 		
 		
