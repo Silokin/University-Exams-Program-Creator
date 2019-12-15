@@ -123,12 +123,24 @@ public class EpoptisTest {
     } 
 	
 	@Test
-    public void testavailable() {
+    public void testUnAvailable() {
+		EmailAddress email = new EmailAddress("vas@gmail.com");
+	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
+	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
+	 	epoptis.setState(EpoptisState.UNAVAILABLE);
+	 	epoptis.unavailable();
+        assertTrue(epoptis.getState().equals(EpoptisState.UNAVAILABLE));
+    } 
+	
+	@Test
+    public void testavailable2() {
 		EmailAddress email = new EmailAddress("vas@gmail.com");
 	    TelephoneNumber telephone = new TelephoneNumber("6944587456");
 	 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
 	 	epoptis.setState(EpoptisState.AVAILABLE);
+	 	epoptis.available();
         assertTrue(epoptis.getState().equals(EpoptisState.AVAILABLE));
-
     } 
+
+	
 }
