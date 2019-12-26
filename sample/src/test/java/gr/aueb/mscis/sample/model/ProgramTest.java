@@ -64,15 +64,13 @@ public class ProgramTest {
 	
 	@Test
 	public void testSetStart() {
-		program.setStart(new SimpleCalendar(2020,1,12,11,0));
-		assertEquals(new SimpleCalendar(2020,1,12,11,0),program.getStart());
+		program.setStarts(new SimpleCalendar(2020,1,12,11,0));
+		assertEquals(new SimpleCalendar(2020,1,12,11,0),program.getStarts());
 	}
 	
 	@Test
 	public void testSetEnd() {
-		program.setEnd(new SimpleCalendar(2020,1,12,11,0));
-		assertEquals(new SimpleCalendar(2020,1,12,11,0),program.getEnd());
+		program.setEnds(new SimpleCalendar(2020,1,12,11,0));
+		assertEquals(new SimpleCalendar(2020,1,12,11,0),program.getEnds());
 	}
 }
-
-

@@ -23,8 +23,8 @@ public class EpopteiaTest {
 		Aithousa aithousa = new Aithousa ("gor","lami",200,2,"spike");
 		Epopteia epopteia = new Epopteia (new SimpleCalendar(2020,1,12,18,0),new SimpleCalendar(2020,1,12,20,0));
 		epopteia.addAithousa(aithousa);
-		Assert.assertTrue(epopteia.getAithouses().contains(aithousa));
-		Assert.assertTrue(aithousa.getEpopteies().contains(epopteia));
+		assertTrue(epopteia.getAithouses().contains(aithousa));
+		assertTrue(aithousa.getEpopteies().contains(epopteia));
 		
 		//tsekarw add aithousa oxi keno set kai xwris kenes epopteies
 		Aithousa aithousa1 = new Aithousa ("gor1","lami1",200,2,"spike1");
@@ -41,14 +41,14 @@ public class EpopteiaTest {
 		  
 		//add same item 
 		epopteia.addAithousa(aithousa);
-		Assert.assertNotEquals(epopteia.getAithouses().size(),3);
+		assertEquals(3,epopteia.getAithouses().size());
 		
 		//tsekarw oti dn vazei ai8ousa me antikrouomenh epopteia
 		Epopteia epopteia3 = new Epopteia (new SimpleCalendar(2020,1,12,19,0),new SimpleCalendar(2020,1,12,21,0));
 		Aithousa aithousa3 = new Aithousa ("gor2","lami2",200,2,"spike2");
 		aithousa2.addEpopteia(epopteia3);
 		epopteia.addAithousa(aithousa3);
-		Assert.assertEquals(epopteia.getAithouses().size(),2);	
+		assertEquals(epopteia.getAithouses().size(),4);	
 	}
 	  
 	@Test 
@@ -59,7 +59,7 @@ public class EpopteiaTest {
 		EpoptisCategory ec = new EpoptisCategory("shalke",5);
 		epoptis.setCategory(ec);
 		epopteia.addEpopti(epoptis);
-		Assert.assertTrue(epopteia.getEpoptes().contains(epoptis));
+		Assert.assertTrue(epopteia.getEpoptis().contains(epoptis));
 		Assert.assertTrue(epoptis.getEpopteies().contains(epopteia));
 		//testaroume an 3eperasoume tous dia8esimous epoptes mia epopteias ti ginetai 
 		
@@ -114,7 +114,7 @@ public class EpopteiaTest {
 		 	Epoptis epoptis = new Epoptis("mal","val",email,telephone,"123");
 		    Epopteia epopteia = new Epopteia (new SimpleCalendar(2020,1,12,11,0),new SimpleCalendar(2020,1,12,15,0));
 		    epopteia.removeEpopti(epoptis);	
-	        assertEquals(epopteia.getEpoptes().size(),0);
+	        assertEquals(epopteia.getEpoptis().size(),0);
 	    }
 	 
 	 @Test

@@ -57,4 +57,3 @@ package gr.aueb.mscis.sample.util;
 	    
 	    
 	}
-
