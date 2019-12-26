@@ -17,7 +17,7 @@ public class EmailAddress {
      */
     public String getAddress() {
         return value;
-    } 
+    }
 
     /**
      * Επαληθεύει την ορθότητα της διεύθυνσης ηλεκτρονικού ταχυδρομείου.

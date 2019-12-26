@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 /**
 * Τα μαθήματα εξεταστικής
-* @authorMscIS-AlexGianTas
+* @author MscIS-AlexGianTas
 *
 */
 @Entity
@@ -98,7 +98,18 @@ public class Mathima {
 		return epopteia;
 	}
 
-
+//	//mono se mia ek twn duo me many to ... sxesi
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((epopteia == null) ? 0 : epopteia.hashCode());
+//		result = prime * result + id;
+//		result = prime * result + semester;
+//		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+//		result = prime * result + ((title == null) ? 0 : title.hashCode());
+//		return result;
+//	}
 
 	//se oles tis klaseis
 	@Override

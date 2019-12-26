@@ -34,7 +34,7 @@ public class EMailCustomType implements UserType {
 	public int hashCode(Object value) throws HibernateException {
 		return value.hashCode();
 	}
- 
+
 	public boolean isMutable() {
 		return false;
 	}

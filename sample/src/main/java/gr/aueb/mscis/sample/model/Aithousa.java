@@ -18,7 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Οι αίθουσες μιας Σχολής
+ * Οι αίθουσες μιας σχολής
  * @author MscIS-AlexGianTas
  */
 @Entity
@@ -28,7 +28,7 @@ public class Aithousa {
 	@Id //primary key
     @Column(name="id") //onoma column
     @GeneratedValue(strategy = GenerationType.AUTO) //generate automatically
-    private int id;
+    private Integer id;
 	
 	@Column(name="name", length=50, nullable = false)
 	private String name;
@@ -36,9 +36,11 @@ public class Aithousa {
 	@Column(name="orofos", length=50, nullable = false)
 	private String orofos;
 	
+	//posi einai i xwritikotita tis aithousas
 	@Column(name="noThesewn", nullable = false)
 	private Integer noThesewn;
 	
+	//posoi epoptes xreiazontai
 	@Column(name="noEpoptes", nullable = false)
 	private Integer noEpoptes;
 	
@@ -46,10 +48,10 @@ public class Aithousa {
 	private String ktirio;
 	
 	
-	@ManyToMany(mappedBy="aithousa",fetch=FetchType.LAZY,  
+	//poses epopteies yparxoun
+	@ManyToMany(mappedBy="aithousa",fetch=FetchType.LAZY, 
 	            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Set<Epopteia> epopteies = new HashSet<Epopteia>();
-	 
+	private Set<Epopteia> epopteia = new HashSet<Epopteia>();	 
 	
 	public Aithousa() {}
 	
@@ -119,18 +121,18 @@ public class Aithousa {
 	{
 		this.ktirio = ktirio;
 	}
-	
+//	
 	public Set<Epopteia> getEpopteies() {
-	        return new HashSet<Epopteia>(epopteies);
+	        return new HashSet<Epopteia>(epopteia);
 	}
 
+
 	public void addEpopteia(Epopteia epopteia) {
-	        if (epopteia != null && this.epopteies.contains(epopteia)==false && canAddEpopteia(epopteia)) {
-	            epopteia.friendAithousa().add(this);
-	            this.epopteies.add(epopteia);
-	        }
-	}
-	
+        if (epopteia != null && this.epopteia.contains(epopteia)==false && canAddEpopteia(epopteia)) {
+            epopteia.friendAithousa().add(this);
+            this.epopteia.add(epopteia);
+        }
+}
 	public boolean canAddEpopteia(Epopteia epopteia) {
     	boolean check = true;
     	for (Epopteia teia : getEpopteies()) {
@@ -139,17 +141,16 @@ public class Aithousa {
     	}
     	return check;
 	}
-	  
 	public void removeEpopteia(Epopteia epopteia) {
 	        if (epopteia != null) {
 	            epopteia.friendAithousa().remove(this);
-	            this.epopteies.remove(epopteia);
-	        } 
+	            this.epopteia.remove(epopteia);
+	        }
 	 }
 	 
 	 public Set<Epopteia> friendEpopteia()
 	 {
-		 return epopteies;
+		 return epopteia;
 	 }
 
 	 @Override

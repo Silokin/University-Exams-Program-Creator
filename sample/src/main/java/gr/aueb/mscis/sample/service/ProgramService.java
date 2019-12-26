@@ -1,13 +1,17 @@
 package gr.aueb.mscis.sample.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
+
+import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.Program;
+import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 public class ProgramService {
 	
@@ -18,7 +22,7 @@ public class ProgramService {
 	}
 	
 	//create h update
-	public void saveProgram(Program program) {
+	public Program saveProgram(Program program) { 
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -28,6 +32,7 @@ public class ProgramService {
 			em.persist(program);
 		}
 		tx.commit();
+		return program;
 	}
 	
 	//delete
@@ -57,7 +62,44 @@ public class ProgramService {
 		}
 		return program;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Epopteia> getListOfEpopteiesForAnExetastiki(Program p)
+	{
+		List<Epopteia> results = null;
+		
+		results =  em.createQuery("select e from Epopteia e where e.program = :program")
+				.setParameter("program", p).getResultList();
+		
+		return results;
+	}
 	
+//	@SuppressWarnings({ "unchecked", "null" })
+//	public List<Epoptis> getListOfEpoptesInAnExetastiki(Program p)
+//	{
+//		List<Epopteia> results = null;
+//		
+//		results =  em.createQuery("select e from Epopteia e where e.program= :program")
+//				.setParameter("program", p).getResultList();
+//		
+//		List<Epoptis> results2 = null;
+////		if (results != null)
+////		{
+////			for (Epopteia e: results)
+////		{
+////			for (Epoptis ep: e.getEpoptes())
+////				{
+////				if (ep != null)
+////					results2.add(ep);
+////				}
+////		}
+////		
+////		return results2;
+////		}
+////		else
+//			return results;
+//	}
+//	
 	public List<Program> findAllPrograms() {
 		List<Program> results = null;
 
@@ -67,5 +109,13 @@ public class ProgramService {
 		return results;
 	}
 
-
+	@SuppressWarnings("unchecked")
+	public List<Program> findProgramByStartDate(SimpleCalendar starts)
+	{
+		List<Program> results = null;	
+		results =  em.createQuery("select p from Program p where p.starts = :starts")
+				.setParameter("starts", starts).getResultList();
+		return results;
+	}
+	
 }

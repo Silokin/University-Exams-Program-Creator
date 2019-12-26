@@ -1,5 +1,7 @@
 package gr.aueb.mscis.sample.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
@@ -14,8 +16,9 @@ public class EpoptisCategoryService {
 		this.em = em;
 	}
 	
+	
 	//create h update
-	public void saveEpoptisCategory(EpoptisCategory category) {
+	public EpoptisCategory saveEpoptisCategory(EpoptisCategory category) {
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -25,10 +28,11 @@ public class EpoptisCategoryService {
 			em.persist(category);
 		}
 		tx.commit();
+		return category;
 	}
 	
-//delete
-	public boolean deleteCategory(EpoptisCategory category) {
+	//delete
+	public boolean deleteEpoptisCategory(EpoptisCategory category) {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		if (category != null) {
@@ -54,4 +58,14 @@ public class EpoptisCategoryService {
 		}
 		return category;
 	}
+	
+	public List<EpoptisCategory> findAllEpoptisCategories()
+	{
+		List<EpoptisCategory> results = null;
+
+		results = em.createQuery("select ec from EpoptisCategory ec", EpoptisCategory.class)
+						.getResultList();
+		return results;
+	}
+	
 }

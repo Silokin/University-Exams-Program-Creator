@@ -25,8 +25,8 @@ public class TelephoneNumber {
 
     public String getTelephoneNumber() {
         return phonenumber;
-    } 
- 
+    }
+
     /**
      * Επαληθεύει την ορθότητα του αριθμού τηλεφώνου.
      * @return {@code true} εάν ο αριθμός τηλεφώνου είναι ορθός

@@ -31,7 +31,7 @@ public class TelphoneNumberCustomType implements UserType{
 		if ( x == y) return true;
 		if ( x== null || y==null) return false;
 		return x.equals(y);
-	} 
+	}
 
 	public int hashCode(Object value) throws HibernateException {
 		return value.hashCode();

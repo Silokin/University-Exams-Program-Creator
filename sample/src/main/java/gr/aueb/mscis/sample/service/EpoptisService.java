@@ -6,13 +6,13 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
 import gr.aueb.mscis.sample.model.EpoptisState;
-import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.MiDiathesimotita;
 
 public class EpoptisService {
@@ -25,7 +25,7 @@ public class EpoptisService {
 	}
 	
 	//create h update
-	public void saveEpoptis(Epoptis epoptis) {
+	public Epoptis saveEpoptis(Epoptis epoptis) {
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -35,6 +35,7 @@ public class EpoptisService {
 			em.persist(epoptis);
 		}
 		tx.commit();
+		return epoptis;
 	}
 	
 	//delete
@@ -77,7 +78,8 @@ public class EpoptisService {
 		return epoptis.get(0);
 	}
 	
-	public void saveMiDiathesimotita(MiDiathesimotita midiathesimotita)
+	
+	public MiDiathesimotita saveMiDiathesimotita(MiDiathesimotita midiathesimotita)
 	{
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -87,6 +89,7 @@ public class EpoptisService {
 			em.persist(midiathesimotita);
 		}
 		tx.commit();
+		return midiathesimotita;
 		//midiathesimotita.setEpoptis(epoptis.getId());
 	}
 	
@@ -106,47 +109,27 @@ public class EpoptisService {
 		
 		//find
 		@SuppressWarnings("unchecked")
-		public List<MiDiathesimotita> findMiDiathesimotitaByEpoptisId(Integer epoptis_id) {
+		public List<MiDiathesimotita> findMiDiathesimotitaOfEpoptis(Epoptis epoptis) {
 
 			List<MiDiathesimotita> results = null;
-			results = em.createQuery("select m from MiDiathesimotita m where m.epoptisid = :id")
-					.setParameter("id",epoptis_id).getResultList();
-			
-			return results;
-		}
-		
-		@SuppressWarnings("unchecked")
-		public List<Epopteia> findEpopteiesByEpoptisId(Epoptis epoptis)
-		{
-			List<Epopteia> results = null;
-			results = em.createQuery("select e from Epopteia e where e.epoptis = :epoptis")
+			results = em.createQuery("select m from MiDiathesimotita m where m.epoptis = :epoptis")
 					.setParameter("epoptis",epoptis).getResultList();
 			
 			return results;
 		}
 		
-
 		@SuppressWarnings("unchecked")
-		public EpoptisState findState(Epoptis epoptis)
+		public List<Epopteia> findEpopteiesEpopti(Epoptis epoptis)
 		{
-			List<EpoptisState> results = null;
-			results = em.createQuery("select e from Epoptis e where e.epoptisstate = :epoptis")
-					.setParameter("epoptis",epoptis.getState()).getResultList();
+			List<Epopteia> results = null;
+			results = em.createNativeQuery("select epopteia from epopteia_epoptis where epoptis = :epoptis")
+					.setParameter("epoptis",epoptis).getResultList();
 			
-			return results.get(0);
-		}
-		
-		@SuppressWarnings("unchecked")
-		public EpoptisCategory findCategoryOfEpoptis(Epoptis epoptis)
-		{
-			List<EpoptisCategory> results = null;
-			results = em.createQuery("select categoryid from Epoptis e where e.id = :epoptis")
-					.setParameter("epoptis",epoptis.getId()).getResultList();
-			
-			return results.get(0);
+			return results;
 		}
 		
 		public List<Epoptis> findAllEpoptes() {
+			// TODO Auto-generated method stub
 			List<Epoptis> results = null;
 
 			results = em.createQuery("select e from Epoptis e", Epoptis.class)
@@ -154,4 +137,24 @@ public class EpoptisService {
 
 			return results;
 		}
+
+//		@SuppressWarnings("unchecked")
+//		public EpoptisState findState(Epoptis epoptis)
+//		{
+//			List<EpoptisState> results = null;
+//			results = em.createQuery("select e from Epoptis e where e.epoptisstate = :epoptis")
+//					.setParameter("epoptis",epoptis.getState()).getResultList();
+//			
+//			return results.get(0);
+//		}
+//		
+//		@SuppressWarnings("unchecked")
+//		public EpoptisCategory findCategoryOfEpoptis(Integer id)
+//		{
+//			List<EpoptisCategory> results = null;
+//			results = em.createQuery("select categoryid from Epoptis e where e.id = :epoptis")
+//					.setParameter("epoptis",id).getResultList();
+//			
+//			return results.get(0);
+//		}
 }

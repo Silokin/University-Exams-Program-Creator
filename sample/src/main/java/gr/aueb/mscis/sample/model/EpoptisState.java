@@ -7,12 +7,12 @@ package gr.aueb.mscis.sample.model;
 public enum EpoptisState {
 	
 	/**
-     * Η εποπτεία είναι διαθέσιμη για να βρει επόπτη
+     * Ο επόπτης είναι διαθέσιμος
      */
 	AVAILABLE,
 
 	/**
-     * Την εποπτεία την έχει άλλος
+     * Ο επόπτης δεν είναι διαθέσιμος
      */
 	UNAVAILABLE
 

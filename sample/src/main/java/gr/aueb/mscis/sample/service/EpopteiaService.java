@@ -11,6 +11,8 @@ import javax.persistence.NoResultException;
 import gr.aueb.mscis.sample.exceptions.EpoptisException;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
+import gr.aueb.mscis.sample.model.Program;
+import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 
 public class EpopteiaService {
@@ -23,7 +25,7 @@ public class EpopteiaService {
 	}
 	
 	//create h update
-	public Epopteia saveEpopteia(Epopteia epopteia) {
+	public Epopteia saveEpopteia(Epopteia epopteia) { 
 
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
@@ -53,32 +55,19 @@ public class EpopteiaService {
 		
 		//lista me to synolo
 		@SuppressWarnings("unchecked")
-		public List<Epopteia> findAllEpopteiesForACertainProgramExe(Integer programid)
+		public List<Epopteia> findAllEpopteiesForACertainProgramExe(Program program)
 		{
 			List<Epopteia> results = null;
-			results = em.createQuery("select e from Epopteia e where e.exetastikiid = :id")
-							.setParameter("id",programid).getResultList();
+			results = em.createQuery("select e from Epopteia e where e.program = :program")
+							.setParameter("program",program).getResultList();
 			
 			return results;
 			
 			
 		}
 		
-		@SuppressWarnings("unchecked")
-		public Map<Epoptis,Epopteia> findEpopteiesEpoptwn(Integer programid)
-		{
-		@SuppressWarnings("rawtypes")
-		List results = null;//emfanise gia kathe epopti oles tis epopteies
-		results = em.createQuery("select e, ep from Epopteia e, Epoptis ep where e.exetastikiid = :id")
-				.setParameter("id",programid).getResultList();
-		
-		return (Map<Epoptis, Epopteia>) results;
-		
-		}
-		
-		
 		//find
-		public Epopteia findEpopteia(int id) {
+		public Epopteia findEpopteiaById(int id) {
 
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
@@ -92,74 +81,95 @@ public class EpopteiaService {
 			return epopteia;
 		}
 
+		//find
+		public List<Epopteia> findAllEpopteies() {
+
+			List<Epopteia> results = null;
+
+			results = em.createQuery("select e from Epopteia e", Epopteia.class)
+					.getResultList();
+
+			return results;
+		}
+
+		
+		@SuppressWarnings("unchecked")
+		public List<Epopteia> findEpopteiaByStartDate(SimpleCalendar date)
+		{
+			List<Epopteia> results = null;
+			results =  em.createQuery("select e from Epopteia e where e.starts = :date")
+					.setParameter("date",date).getResultList();
+	
+			return results;
+			
+		}
 		
 	
-	public String anathesiEpopteias(Integer epoptisid, Integer epopteia_id) {
-		if (epoptis == null) {
+	public Epopteia anathesiEpopteias(Epoptis epoptis0, Epopteia epopteia0) {
+		if (epoptis0 == null) {
 			throw new EpoptisException();
 		}
-		if (!epoptis.canEpopteusei()) { 
+		if (!epoptis0.canEpopteusei()) { 
 			return null;
 		}
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		
-		Epoptis epoptis = em.find(Epoptis.class,epoptisid);
-		Epopteia epopteia = em.find(Epopteia.class, epopteia_id);
+		Epoptis epoptis = em.find(Epoptis.class,epoptis0.getId());
+		Epopteia epopteia = em.find(Epopteia.class, epopteia0.getId());
 		epopteia = epopteia.ekxwrhshEpopteias(epoptis);
 		
-		em.merge(epopteia);
-		tx.commit();
-		if (epopteia != null)
-			return "Enarxi:" + epopteia.getStarts().toString() +", Lixi: " +  epopteia.getEnds().toString();
+		if (epopteia != null) {
+			em.merge(epopteia);
+			tx.commit();
+			return epopteia;
+			}
 		else
 			return null;
 
 	}
+
 	
-	public Boolean findEpoptis(Integer epoptis_id) {
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		try {
-			epoptis = em.find(Epoptis.class, epoptis_id);
-			tx.commit();
-		} catch (NoResultException ex) {
-			epoptis = null;
-			tx.rollback();
-		}
-
-		return epoptis != null;
-	}
-	/**
-	 * throws EpoptisException with the error message
-	 * @param epoptisid
-	 * @param epopteiaid
-	 * @return
-	 */
-	public void dwseEpopteia_Check(Integer epopteia_id, Integer epoptis_id) {
-
-		boolean epoptisFound = findEpoptis(epoptis_id);
-
-		if (!epoptisFound) {
-			throw new EpoptisException("Epoptis with id " + epoptis_id + "  den yparxei.");
-		}
-		
-		if (anathesiEpopteias(epoptis_id,epopteia_id) == null){
-			throw new EpoptisException("Epoptis with id " + epoptis_id + " den mporei na epopteusei tin sugkekrimeni epopteia");
-		}
-	}
+//	/**
+//	 * throws EpoptisException with the error message
+//	 * @param epoptisid
+//	 * @param epopteiaid
+//	 * @return
+//	 */
+//	public void dwseEpopteia_Check(Epoptis epoptis0, Epopteia epopteia0) {
+//
+//		EpoptisService es = new EpoptisService(em);
+//		Epoptis epoptis2 = null;
+//		boolean epoptisFound = false;
+//		//if (epoptis0 != null)
+//			epoptis2 = es.findEpoptisById(epoptis0.getId()); 
+//		
+//		if (epoptis2 != null)
+//			epoptisFound = true;
+//
+//		if (!epoptisFound) {
+//			throw new EpoptisException("Epoptis with id " + epoptis.getId() + "  den yparxei.");
+//		}
+//		
+//		if (anathesiEpopteias(epoptis0,epopteia0) == null){
+//			throw new EpoptisException("Epoptis with id " + epoptis.getId() + " den mporei na epopteusei tin sugkekrimeni epopteia");
+//		}
+//	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Epopteia> findEpoptesByEpopteiaId(Integer epopteia_id)
+	public List<Epoptis> findEpoptesOfEpopteia(Epopteia epopteia)
 	{
-		List<Epopteia> results = null;
-		results = em.createQuery("select e from Epoptis e where e.id = :epopteia")
-				.setParameter("epopteia",epopteia_id).getResultList();
+		List<Epoptis> results = null;
+		results = em.createNativeQuery("select epoptis from epopteia_epoptis where epopteia = :epopteia")
+				.setParameter("epopteia",epopteia).getResultList();
 		
 		return results;
 	}
 	
+//	@Test
+//	public List<MiDiathesimotita> findMiDiathesimotitaOfEpoptis()
+//	{}
 	
 	
 }
