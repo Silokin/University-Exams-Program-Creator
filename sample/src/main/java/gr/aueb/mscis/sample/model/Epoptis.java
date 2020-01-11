@@ -25,12 +25,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
-//epishs prepei na vroume akri me tis meres mi diathesimotitas
-//epishs prepei na ginetai ADD ena epoptis se epopteia
-//MONO an den einai FULL, me vasi to category
-//kai na mi sympeftei me tis meres mi diathesimotitas??
-
-
 /**
  * Οι επόπτες που αναλαμβάνουν εποπτείες μαθημάτων
  * @author MscIS-AlexGianTas
@@ -50,6 +44,7 @@ public class Epoptis {
 	@Column(name="surname", length=50, nullable = false)
 	private String surname;
 
+	//tin katastasi tou epopti
 	@Enumerated(EnumType.STRING)
     @Column(name="epoptisstate")
     private EpoptisState state = EpoptisState.AVAILABLE;
@@ -73,24 +68,21 @@ public class Epoptis {
     @Column(name="password", length=25, nullable=false)
     private String password;
     
+    //i katigoria epopti
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY )
     @JoinColumn(name="categoryid")
     private EpoptisCategory category;
     
-    
+   //oi meres mi diathesimotitas
    @OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE},
 		   mappedBy="epoptis", fetch=FetchType.LAZY)
    private Set<MiDiathesimotita> midiathesimotita = new HashSet<MiDiathesimotita>();
     
-    //polloi epoptes exoun, pithanon, polles hmeres mh diathesimotitas 
+   //oi epopteies tou
     @ManyToMany(mappedBy="epoptis",fetch=FetchType.LAZY, 
             cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Set<Epopteia> epopteia = new HashSet<Epopteia>();
     
-    /*@ManyToMany(mappedBy="epoptis",fetch=FetchType.LAZY, 
-            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private Set<Epopteia> epopteies = new HashSet<Epopteia>();
-    //μεσω της γραμματειας θα κανει set και θα τις προσθετει στου αντιστοιχου εποπτη το set εποπτειες*/
     
 	public Epoptis() {
 	}
@@ -110,7 +102,6 @@ public class Epoptis {
 	{
 		return id;
 	}
-	
 	public String getName()
 	{
 		return name;
@@ -135,7 +126,7 @@ public class Epoptis {
     }
 
     /**
-     * Επιστρέφει τον αριθμό τηλεφώνου του δανειζομένου.
+     * Επιστρέφει τον αριθμό τηλεφώνου του επόπτη.
      * @return Ο αριθμός τηλεφώνου
      */
     public TelephoneNumber getTelephone() {
@@ -143,16 +134,16 @@ public class Epoptis {
     }
 
     /**
-     * Θέτει το e-mail του δανειζομένου.
-     * @param eMail Το e-mail του δανειζομένου
+     * Θέτει το e-mail του επόπτη.
+     * @param eMail Το e-mail του επόπτη
      */
     public void setEmail(EmailAddress email) {
         this.email = email;
     }
 
     /**
-     * Επιστρέφει το e-mail του δανειζομένου.
-     * @return Το e-mail του δανειζομένου
+     * Επιστρέφει το e-mail του επόπτη.
+     * @return Το e-mail του επόπτη
      */
     public EmailAddress getEmail() {
         return email;
@@ -181,10 +172,9 @@ public class Epoptis {
 	//na ginoun allages stin lista me ti mi diathesimotita me kostos tin apwleia dedomenwn
 	
 	//auti ti lista tin ehei o GRAMMATEAS
-	//gia na tin parei arkei na ?????????????
-	//brei ton sugkekrimeno epopti pou thelei mesw tou antikeimenou kai ystera auti ti method
 	public Set<MiDiathesimotita> getMiDiathesimotita() {
-        return new HashSet<MiDiathesimotita>(midiathesimotita); //ayto einai antigrafo tis arxikis listas
+        return new HashSet<MiDiathesimotita>(midiathesimotita); 
+        //ayto einai antigrafo tis arxikis listas
     }
     /**
      * Απομακρύνει μια ημερομηνία από τη συλλογή των μη διαθεσιμοτήτων του επόπτη.    
@@ -192,7 +182,10 @@ public class Epoptis {
      */
     public void removeMiDiathesimotita(MiDiathesimotita date) {
         if (date != null)
+        {
+        	date.setEpoptis(null);
             this.midiathesimotita.remove(date);
+        }
     }
     
     /**
@@ -201,7 +194,11 @@ public class Epoptis {
      */
 	public void addMiDiathesimotita(MiDiathesimotita date) {
         if (date != null)
-        	this.midiathesimotita.add(date); //sti mi diathesimotita autou tou epopti vale auti tin imerominia
+        {
+        	date.setEpoptis(this);
+        	this.midiathesimotita.add(date); 
+        }
+        //sti mi diathesimotita autou tou epopti vale auti tin imerominia
     }
 	
 	
@@ -210,7 +207,7 @@ public class Epoptis {
 	}
 	
 	public void addEpopteia(Epopteia epopteia) {
-	        if (epopteia != null && canEpopteusei() && canAddEpopteia(epopteia)) {
+	        if (epopteia != null) {
 	            epopteia.friendEpoptis().add(this);
 	            this.epopteia.add(epopteia);
 	        }
@@ -240,18 +237,21 @@ public class Epoptis {
 	     * να δανειστεί κάποιο αντίτυπο.
 	     */
 	 
-	 /**
-	     * Επιστρέφει τον αριθμό των εκκρεμών αντιτύπων του δανειζομένου.
-	     * Είναι ο αριθμός αντιτύπων που έχει δανειστεί ο δανειζόμενος 
-	     * και δεν έχει επιστρέψει.
-	     * @return Ο αριθμός των αντιτύπων που δεν έχουν επιστραφεί.
+	 	/**
+	     * Επιστρέφει τον αριθμό των εποπτειών του επόπτη.
+	     * @return Ο αριθμός των εποπτειών του επόπτη
 	     */
 	    private int countPendingEpopteies() {
 	    	//poses einai oi epopteies
 	        return epopteia.size();
 	    }
 	    
-	    public boolean canEpopteusei() {
+	    /**
+	     * Επιστρέφει {@code true} αν δεν εχει ξεπεράσει ο επόπτης το μέγιστο πλήθος εποπτειών 
+	     * με βάση τη κατηγορία του
+	     * @return {@code true} αν μπορεί να εποπτεύσει
+	     */
+	    public boolean canEpopteusei() { 
 	        int pendingEpopteies;
 
 	        if (getCategory() == null)
@@ -259,7 +259,12 @@ public class Epoptis {
 	        pendingEpopteies = countPendingEpopteies();
 	        return getCategory().canEpopteuseiBasedOnMaxEpopteies(pendingEpopteies);
 	    }
-	    
+	   
+	    /**
+	     * Επιστρέφει {@code true} αν η ημερομηνία εποπτείας δεν αντιστοιχεί με
+	     * ημέρα που έχει δηλώσει μη διαθεσιμότητα
+	     * @return {@code true} αν μπορεί να εποπτεύσει
+	     */
 	    public boolean canAddEpopteia(Epopteia epopteia) {
         	boolean check = true;
         	//gia tis imeres pou den mporei na epopteusei
@@ -274,36 +279,39 @@ public class Epoptis {
         		}		
         	}
         	//pare tis epopteies tou sigkekrimenou epopti
-        	//
+        	//kai check oti den sympeftei mekapoia alli epopteia
         	for (Epopteia teia : getEpopteies()) {
         		check=epopteia.interval(teia);
         		if(check == false) break;	
         	}
         	return check;
 	    }
-	   
+	    
 	    public EpoptisState getState()
 	    {
 	    	return state;
 	    }
 	    
 	    //den mporei o opoiosdipote na allaksei tin katastasi tou epopti
-	    protected void setState(EpoptisState state)
+	    public void setState(EpoptisState state)
 	    {
 	    	this.state = state;
 	    }
 	    
 	    /**
-	     * Αλλάζει την κατάσταση του αντιτύπου σε διαθέσιμο ({@code AVAILABLE}).
+	     * Αλλάζει την κατάσταση του επόπτη σε διαθέσιμο ({@code AVAILABLE}).
 	     */
 	    public void available() {
 	        if (getState().equals(EpoptisState.UNAVAILABLE)) {
 	            throw new EpoptisException();
 	        }
 
-	        setState(EpoptisState.AVAILABLE);
+	        setState(EpoptisState.AVAILABLE); 
 	    }
 	    
+	    /**
+	     * Αλλάζει την κατάσταση του επόπτη σε μη διαθέσιμο ({@code UNAVAILABLE}).
+	     */
 	    public void unavailable()
 	    {
 	    	if (getState().equals(EpoptisState.AVAILABLE))

@@ -64,11 +64,22 @@ public class JPAQueriesTest {
     //tasos has epopteia
     @Test
     public void innerJoin() {
-        int EXPECTED_ITEM_NUMBER = 1;
+        int EXPECTED_ITEM_NUMBER = 3;
         EntityManager em = JPAUtil.getCurrentEntityManager();
         Query query = em.createQuery("select e from Epoptis e join e.epopteia ep");        
         Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
     }
+    
+    
+    //perimenw 1 epopti giati ehw ekxwrhsie mono 1 epopteia genikotera
+    @Test
+    public void queryFromJoinTable() {
+        int EXPECTED_ITEM_NUMBER = 3;
+        EntityManager em = JPAUtil.getCurrentEntityManager();
+        Query query = em.createNativeQuery("select epoptis from epopteia_epoptis");        
+        Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
+    }
+    
     
     //yparxoun 3 epoptes..
     @SuppressWarnings("unchecked")
@@ -82,14 +93,6 @@ public class JPAQueriesTest {
         Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
     }
     
-    //perimenw 1 epopti giati ehw ekxwrhsie mono 1 epopteia genikotera
-    @Test
-    public void queryFromJoinTable() {
-        int EXPECTED_ITEM_NUMBER = 1;
-        EntityManager em = JPAUtil.getCurrentEntityManager();
-        Query query = em.createNativeQuery("select epoptis_id from epopteia_epoptis");        
-        Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
-    }
     
     
 }

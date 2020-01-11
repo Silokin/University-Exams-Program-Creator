@@ -23,31 +23,29 @@ public class EpoptisCategory {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id; 
+    private int id; 
     
     @Column(name="description", length = 50, nullable = false)
     private String description;
     
+    //poses epopteies mporei na kanei me basi tin epopteia 
     @Column(name="epopteies")
-    private int maxEpopteies;
+    private Integer maxEpopteies;
     
     /**
      * Ο προκαθορισμένος κατασκευαστής.
      */
     public EpoptisCategory() { }
 
-    /** 
+    /**
      * Βοηθητικός κατασκευαστής.
-     * Aρχικοποιεί τα βασικά στοιχεία της κατηγορίας δανειζομένου.
+     * Aρχικοποιεί τα βασικά στοιχεία της κατηγορίας επόπτη.
      * @param description Περιγραφή κατηγορίας
-     * @param maxLendingDays Μέγιστος αριθμός ημερών δανεισμού
-     * @param maxLendingItems Μέγιστος αριθμός αντιτύπων
-     * προς (ταυτόχρονο) δανεισμό
-     * @param dailyFine Ημερήσιο πρόστιμο καθυστέρησης
+     * @param maxEpopteies Μέγιστος αριθμός εποπτειών
      */
     public EpoptisCategory(String description, int maxEpopteies) {
 
-    	this.description = description; 
+    	this.description = description;
         this.maxEpopteies = maxEpopteies;
     }
 
@@ -58,16 +56,16 @@ public class EpoptisCategory {
     
     
     /**
-     * Θέτει την περιγραφή της κατηγορίας δανειζομένου.
-     * @param description Η περιγραφή της κατηγορίας δανειζομένου.
+     * Θέτει την περιγραφή της κατηγορίας επόπτη.
+     * @param description Η περιγραφή της κατηγορίας επόπτη.
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * Επιστρέφει την περιγραφή της κατηγορίας δανειζομένου.
-     * @return Η κατηγορία δανειζομένου.
+     * Επιστρέφει την περιγραφή της κατηγορίας επόπτη.
+     * @return Η κατηγορία επόπτη.
      */
     public String getDescription() {
         return description;
@@ -75,36 +73,27 @@ public class EpoptisCategory {
 
 
     /**
-     * Επιστρέφει τον μέγιστο αριθμό ημερών δανεισμού
-     * ενός αντιτύπου για την κατηγορία δανειζομένου.
-     * @return Ο μέγιστος αριθμός ημερών δανεισμού.
+     * Επιστρέφει τον μέγιστο αριθμό εποπτειών ανάλογα με ητν κατηγορία επόπτη
+     * @return Ο μέγιστος αριθμός εποπτειών
      */
     public int getMaxEpopteies() {
         return maxEpopteies;
     }
     
-    public void setMaxEpopteies(int maxEpopteies)
+    public void setMaxEpopteies(Integer maxEpopteies)
     {
     	this.maxEpopteies = maxEpopteies;
     }
 
     /**
-     * Επιστρέφει {@code true} εάν ο δανειζόμενος
-     * της συγκεκριμένης κατηγορίας δανειζομένου
-     * Μπορεί να δανειστεί κάποιο αντίτυπο.
-     * @param pendingItems Ο αριθμός των αντιτύπων
-     * που έχουν δανειστεί και δεν έχουν επιστραφεί.
-     * @return {@code true} εάν μπορεί να δανειστεί κάποιο αντίτυπο.
+     * Επιστρέφει {@code true} εάν ο επόπτης
+     * της συγκεκριμένης κατηγορίας επόπτη
+     * Μπορεί να εποπτεύσει.
+     * @param pendingEpopteies Ο αριθμός των εποπτειών που διαθέτει
+     * @return {@code true} εάν μπορεί να εποπτεύσει.
      */
     public boolean canEpopteuseiBasedOnMaxEpopteies(int pendingEpopteies) {
         return maxEpopteies > pendingEpopteies;
     }
     
-//    //prwta
-//    epoptis.available();
-//    //kathe fora pou ginetai set mias epopteias elegxw
-//    if (canEpopteusei && epoptis.getState() != EpoptisState.UNAVAILABLE)
-//    	epopteia.add(epoptis)
-//    else
-//    	epoptis.unavailable()	
 }

@@ -1,6 +1,4 @@
- package gr.aueb.mscis.sample.service;
-
-import java.util.List;
+package gr.aueb.mscis.sample.service;
 
 import java.util.List;
 
@@ -17,8 +15,8 @@ public class AithousaService {
 		this.em = em;
 	}
 	
-	//create h update
-	public void saveAithousa(Aithousa aithousa) {
+	//create h update aithousa
+	public Aithousa saveAithousa(Aithousa aithousa) {
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -28,6 +26,8 @@ public class AithousaService {
 			em.persist(aithousa);
 		}
 		tx.commit(); 
+		
+		return aithousa;
 	}
 	
 	//delete
@@ -39,6 +39,7 @@ public class AithousaService {
 			return true;
 		}
 		tx.commit();
+		
 		return false;
 
 	}
@@ -58,24 +59,53 @@ public class AithousaService {
 		return aithousa;
 	}
 	
+	//euresi olwn twn aithouswn
 	public List<Aithousa> findAllAithouses()
-    {
-        List<Aithousa> results = null;
+	{
+		List<Aithousa> results = null;
 
-        results = em.createQuery("select a from Aithousa a", Aithousa.class)
-                        .getResultList();
+		results = em.createQuery("select a from Aithousa a", Aithousa.class)
+						.getResultList();
 
-        return results;
-    }
+		return results;
+	}
 	
+	//eueresi twn aithouswn me vasi ton orofo
 	@SuppressWarnings("unchecked")
-    public List<Aithousa> findAithousaByOrofos(String orofos)
-    {
-        List<Aithousa> results = null;
-        results = em.createQuery("select a from Aithousa a where a.orofos = :orofos")
-                .setParameter("orofos", orofos).getResultList();
+	public List<Aithousa> findAithousaByOrofos(String orofos)
+	{
+		List<Aithousa> results = null;
+		results = em.createQuery("select a from Aithousa a where a.orofos = :orofos")
+				.setParameter("orofos", orofos).getResultList();
+				
 
+		return results;
+	}
+	
+	//eueresi twn aithouswn me vasi to onoma
+	@SuppressWarnings("unchecked")
+	public List<Aithousa> findAithousaByName(String name)
+	{
+		List<Aithousa> results = null;
+		results = em.createQuery("select a from Aithousa a where a.name = :name")
+				.setParameter("name", name).getResultList();
+				
 
-        return results;
-    }
+		return results;
+	}
+	
+	//eueresi twn aithouswn me vasi to ktirio
+	@SuppressWarnings("unchecked")
+	public List<Aithousa> findAithousaByKtirio(String ktirio)
+	{
+		List<Aithousa> results = null;
+		results = em.createQuery("select a from Aithousa a where a.ktirio = :ktirio")
+				.setParameter("ktirio", ktirio).getResultList();
+				
+
+		return results;
+	}
+	
+	
+	
 }

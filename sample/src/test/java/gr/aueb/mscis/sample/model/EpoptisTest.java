@@ -76,7 +76,7 @@ public class EpoptisTest {
 	public void testAddEpoptia() {
 		epoptis.addEpopteia(epopteia);
 		epopteia.addEpopti(epoptis);
-		assertTrue(epopteia.getEpoptes().contains(epoptis));
+		assertTrue(epopteia.getEpoptis().contains(epoptis));
 		
 	}
 	 
@@ -84,7 +84,7 @@ public class EpoptisTest {
 	public void testRemoveEpoptia() {
 		epoptis.removeEpopteia(epopteia);
 		epopteia.removeEpopti(epoptis);
-		assertFalse(epopteia.getEpoptes().contains(null));
+		assertFalse(epopteia.getEpoptis().contains(null));
 		
 	}
 	 

@@ -17,8 +17,9 @@ public class EpoptisCategoryService {
 		this.em = em;
 	}
 	
+	
 	//create h update
-	public void saveEpoptisCategory(EpoptisCategory category) {
+	public EpoptisCategory saveEpoptisCategory(EpoptisCategory category) {
 
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
@@ -28,10 +29,11 @@ public class EpoptisCategoryService {
 			em.persist(category);
 		}
 		tx.commit();
+		return category;
 	}
 	
-//delete
-	public boolean deleteCategory(EpoptisCategory category) {
+	//delete
+	public boolean deleteEpoptisCategory(EpoptisCategory category) {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		if (category != null) {
@@ -67,4 +69,15 @@ public class EpoptisCategoryService {
 
 		return results;
 	}
+
+	public List<EpoptisCategory> findAllEpoptisCategories()
+	{
+		List<EpoptisCategory> results = null;
+
+		results = em.createQuery("select ec from EpoptisCategory ec", EpoptisCategory.class)
+						.getResultList();
+		return results;
+	}
+	
+
 }

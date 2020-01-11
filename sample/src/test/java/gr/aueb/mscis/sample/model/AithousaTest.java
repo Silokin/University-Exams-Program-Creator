@@ -93,5 +93,3 @@ public class AithousaTest {
  //       Assert.assertSame(aithousa, epopteia.getAithousa());
  //   }
 }
-
-

@@ -56,8 +56,8 @@ public class Epopteia {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
             fetch=FetchType.LAZY)
     @JoinTable(name="epopteia_epoptis", 
-            joinColumns = {@JoinColumn(name="epopteia_id")},
-            inverseJoinColumns = {@JoinColumn(name="epoptis_id")})
+            joinColumns = {@JoinColumn(name="epopteia")},
+            inverseJoinColumns = {@JoinColumn(name="epoptis")})
     private Set<Epoptis> epoptis = new HashSet<Epoptis>();
 	
 	
@@ -68,7 +68,7 @@ public class Epopteia {
 
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="exetastikiid")
+	@JoinColumn(name="program")
 	private Program program;
 	
 	public Epopteia()
@@ -80,16 +80,23 @@ public class Epopteia {
 		this.ends = ends;
 	
 	}
-//	
-//	public void setProgram(ProgramExe programe)
-//	{
-//	}
 	
-	public Program getProgram()
-	{
+	public Program getProgram() {
 		return program;
 	}
-	
+
+	public void setProgram(Program programe) {
+		// TODO Auto-generated method stub
+
+		if (this.program != null) {
+            this.program.friendEpopteies().remove(this);
+        }
+        this.program = programe;
+        
+        if (this.program != null) {
+            this.program.friendEpopteies().add(this);
+        }
+	}
 	public Integer getId()
 	{
 		return id;
@@ -212,7 +219,7 @@ public class Epopteia {
 				//an to sunolo twn epoptwn gia auti tin epopteia
 				//sugkekrimenes wres
 				//einai to max gia kapoia aithousa
-				if (getEpoptes().size() != max)
+				if (getEpoptis().size() != max)
 					return true;
 			}
 		return false;
@@ -220,7 +227,7 @@ public class Epopteia {
 	
 	
 	 //elegxei gia to an ginetai na ekxwrithei i epopteia stin arxi tis methodou
-    public Epopteia ekxwrhshEpopteias(Epoptis epoptis)
+    public Epopteia ekxwrhshEpopteias(Epoptis epoptis) 
     {
     	//edwses epopti?
     	if (epoptis == null)
@@ -266,7 +273,7 @@ public class Epopteia {
 	}
 	
 
-	public Set<Epoptis> getEpoptes() {
+	public Set<Epoptis> getEpoptis() {
 	        return new HashSet<Epoptis>(epoptis);
 	}
 	
@@ -277,26 +284,40 @@ public class Epopteia {
 		return "Epopteia [id=" + id + ", starts=" + starts + ", ends=" + ends + "]";
 	}
 
-	public void setProgram(Program programe) {
-		// TODO Auto-generated method stub
 
-		if (this.program != null) {
-            this.program.friendEpopteies().remove(this);
-        }
-        this.program = programe;
-        
-        if (this.program != null) {
-            this.program.friendEpopteies().add(this);
-        }
-	}
 	
 	public boolean interval (Epopteia epopteia) {
+		
+		//an i epopteia pou pas na valeis den einai idia me tin wra pou arxizei mia alli
+		//13:30 - 15:30
+//		if (!getStarts().equals(epopteia.getStarts()))// && !getEnds().equals(epopteia.getEnds()))// != epopteia.getStarts())
+//			return true;
+
+		
+		//paw na sou valw 12:30 - 15:30 get
+		//kai eheis 13:30 - 15:30 epopteia.get
+		//ara den mporeis
+		
+		//2nd
+		//paw na sou vale 14:30-15:30 get
+		//kai eheis 13:30 - 15:30 epopteia.get
+//		//ara den mporeis
+//		if (getStarts().compareTo(epopteia.getStarts()) < 0)
+//			return false;
+//		if (getStarts().compareTo(epopteia.getStarts()) > 0)
+//			return false;
+		//an i epopteia pou pas na valeis den einai sto endiameso mias allis epopteias
+		
+		//an i epopteia pou pas na valeis den teleiwnei enw eheis kapoia alli epopteia
+		
+		
+		
 		if((getStarts().compareTo(epopteia.getStarts()) >=0 && getStarts().compareTo(epopteia.getEnds()) < 0) 
-				||(epopteia.getStarts().compareTo(getStarts())>=0 && epopteia.getStarts().compareTo(getEnds()) < 0)  
-				||(getStarts().compareTo(epopteia.getStarts())>=0 && getEnds().compareTo(epopteia.getEnds()) <= 0)
-				||(epopteia.getStarts().compareTo(getStarts())>=0 && epopteia.getEnds().compareTo(getEnds()) <= 0))
-			return true;
-		return false;
+		||(epopteia.getStarts().compareTo(getStarts()) >=0 && epopteia.getStarts().compareTo(getEnds()) < 0)  
+		||(getStarts().compareTo(epopteia.getStarts()) >=0 && getEnds().compareTo(epopteia.getEnds()) <= 0)
+		||(epopteia.getStarts().compareTo(getStarts()) >=0 && epopteia.getEnds().compareTo(getEnds()) <= 0))
+			return false;
+		return true;
 	}
 
 }

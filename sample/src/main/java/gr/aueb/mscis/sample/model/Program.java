@@ -1,6 +1,5 @@
 package gr.aueb.mscis.sample.model;
 
-import java.security.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,21 +30,25 @@ public class Program {
 	@GeneratedValue(strategy = GenerationType.AUTO) //generate automatically
     private Integer id;
 	
+	
+	//pote ksekina i eksetastiki
 	@org.hibernate.annotations.Type(
 	            type="gr.aueb.mscis.sample.persistence.SimpleCalendarCustomType")
 	@Column(name="starts")
     private SimpleCalendar starts;
     
+	//pote teleiwnei i eksetastiki
 	@org.hibernate.annotations.Type(
             type="gr.aueb.mscis.sample.persistence.SimpleCalendarCustomType")
     @Column(name="ends")
     private SimpleCalendar ends;
 	
+	//poses epopteies ehei i exetastiki
 	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, 
             mappedBy="program", fetch=FetchType.LAZY)
 	private Set<Epopteia> epopteies = new HashSet<Epopteia>();
 	
-	public Program()
+	public Program() 
 	{}
 	
 	
@@ -55,13 +58,34 @@ public class Program {
 		this.ends = ends;
 	}
 	
+	public Integer getId()
+	{
+		return id;
+	}
+	
+	public SimpleCalendar getStarts()
+	{
+		return starts;
+	}
+	
+	public void setStarts(SimpleCalendar s) {
+		this.starts = s;
+	}
+	
+	public SimpleCalendar getEnds() {
+		return this.ends;
+	}
+	
+	public void setEnds(SimpleCalendar s) {
+		this.ends = s;
+	}
 	
 	//epopteies ws antigrafo tou set tis klasis tou programa extatastikis
 	public Set<Epopteia> getEpopteies() {
         return new HashSet<Epopteia>(epopteies);
     }
 	
-	//lambanw tis epopteies pou yparxoun sto ptogramma exetastikis
+	//lambanw tis epopteies pou yparxoun sto programma exetastikis
 	public Set<Epopteia> friendEpopteies()
 	{
 		return epopteies;
@@ -69,39 +93,37 @@ public class Program {
 	
 	//mia epopteia theloume na prostethei sto programma eksetatistikis
 	public void addEpopteia(Epopteia epopteia) {
-        if (epopteia != null)
-        	this.epopteies.add(epopteia);
-            epopteia.setProgram(this);
-        
-    }
+	     if (epopteia != null) {
+	    	this.epopteies.add(epopteia);
+	     	epopteia.setProgram(this);
+	     }
+	}
+		
+//		//mia epopteia theloume na afairethei apo to programma exetastikis
+//		public void removeEpopteia(Epopteia epopteia)
+//		{
+//			if (epopteia != null)
+//				epopteia.setProgram(null);
+//		}
+//		
+//	//mia epopteia theloume na prostethei sto programma eksetatistikis
+//	public void addEpopteia(Epopteia epopteia) {
+//        if (epopteia != null)
+//            epopteia.setProgram(this);
+//        
+//    }
 	
 	//mia epopteia theloume na afairethei apo to programma exetastikis
 	public void removeEpopteia(Epopteia epopteia)
 	{
 		if (epopteia != null)
+		{
+			this.epopteies.remove(epopteia);
 			epopteia.setProgram(null);
+		}
 	}
 	
-	public Integer getId()
-	{
-		return id;
-	}
 	
-	public SimpleCalendar getStart() {
-		return this.starts;
-	}
-	
-	public void setStart(SimpleCalendar s) {
-		this.starts = s;
-	}
-	
-	public SimpleCalendar getEnd() {
-		return this.ends;
-	}
-	
-	public void setEnd(SimpleCalendar s) {
-		this.ends = s;
-	}
 }
 
 
