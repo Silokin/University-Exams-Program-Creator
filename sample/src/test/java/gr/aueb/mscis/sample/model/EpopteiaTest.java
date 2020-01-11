@@ -37,18 +37,18 @@ public class EpopteiaTest {
 		epopteia.addAithousa(aithousa2);
 		
 		assertNotNull(epopteia.getAithouses().contains(aithousa1));
-		//Assert.assertEquals(epopteia.getAithouses().size(),3);
+		//Assert.assertEquals(epopteia.getAithouses().size(),2);
 		  
 		//add same item 
 		epopteia.addAithousa(aithousa);
-		Assert.assertNotEquals(epopteia.getAithouses().size(),3);
+		Assert.assertNotEquals(4,epopteia.getAithouses().size());
 		
 		//tsekarw oti dn vazei ai8ousa me antikrouomenh epopteia
 		Epopteia epopteia3 = new Epopteia (new SimpleCalendar(2020,1,12,19,0),new SimpleCalendar(2020,1,12,21,0));
 		Aithousa aithousa3 = new Aithousa ("gor2","lami2",200,2,"spike2");
 		aithousa2.addEpopteia(epopteia3);
 		epopteia.addAithousa(aithousa3);
-		Assert.assertEquals(epopteia.getAithouses().size(),2);	
+		Assert.assertEquals(3,epopteia.getAithouses().size());	
 	}
 	  
 	@Test 

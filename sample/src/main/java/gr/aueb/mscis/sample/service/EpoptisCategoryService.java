@@ -1,9 +1,12 @@
 package gr.aueb.mscis.sample.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
+import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
 
 public class EpoptisCategoryService {
@@ -53,5 +56,15 @@ public class EpoptisCategoryService {
 			tx.rollback();
 		}
 		return category;
+	}
+	
+	//find all
+	public List<EpoptisCategory> findAllCat() {
+		List<EpoptisCategory> results = null;
+
+		results = em.createQuery("select c from EpoptisCategory c", EpoptisCategory.class)
+				.getResultList();
+
+		return results;
 	}
 }

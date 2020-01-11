@@ -158,6 +158,15 @@ public class Epoptis {
         return email;
     }
     
+    public String getPassword()
+	{
+		return password;
+	}
+	public void setPassword(String pass)
+	{
+		this.password = pass;
+	}
+    
     public void setCategory(EpoptisCategory category)
     {
     	this.category = category;
