@@ -60,15 +60,6 @@ public class EpoptisCategoryService {
 		return category;
 	}
 	
-	//find all
-	public List<EpoptisCategory> findAllCat() {
-		List<EpoptisCategory> results = null;
-
-		results = em.createQuery("select c from EpoptisCategory c", EpoptisCategory.class)
-				.getResultList();
-
-		return results;
-	}
 
 	public List<EpoptisCategory> findAllEpoptisCategories()
 	{

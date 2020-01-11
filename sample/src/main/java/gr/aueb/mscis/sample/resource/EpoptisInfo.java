@@ -10,6 +10,7 @@ import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.contacts.TelephoneNumber;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
+import gr.aueb.mscis.sample.service.EpoptisCategoryService;
 
 @XmlRootElement
 public class EpoptisInfo {
@@ -131,5 +132,34 @@ public class EpoptisInfo {
 
 		return epoptisInfoList;
 
+	}
+	
+	public Epoptis getEpoptis(EntityManager em) {
+
+		Epoptis epoptis = null;
+
+		if (id != null) {
+			epoptis = em.find(Epoptis.class, id);
+		} else {
+			epoptis = new Epoptis();
+		}
+
+		epoptis.setName(name);
+		epoptis.setSurName(surname);
+		epoptis.setTelephone(new TelephoneNumber(telephone));
+		epoptis.setEmail(new EmailAddress(email));
+		epoptis.setPassword(password);
+
+		EpoptisCategoryService ecs = new EpoptisCategoryService(em);
+		List<EpoptisCategory> lec = ecs.findAllEpoptisCategories();
+		
+		if(category.equals("ΠΠ")) {
+			epoptis.setCategory(lec.get(0));
+		}
+		if(category.equals("ΥΔ")) {
+			epoptis.setCategory(lec.get(1));
+		}
+		
+		return epoptis;
 	}
 }
