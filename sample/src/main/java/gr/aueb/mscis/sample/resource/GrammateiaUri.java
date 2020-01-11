@@ -63,7 +63,7 @@ public class GrammateiaUri {
 	}
 	
 	public static String epopteiesUri(String EpopteiaId){
-		return EPOPTEIES + "/" + epopteiaId;
+		return EPOPTEIES + "/" + EpopteiaId;
 	}
 
 }

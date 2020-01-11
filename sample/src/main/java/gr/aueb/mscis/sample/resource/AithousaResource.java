@@ -90,7 +90,7 @@ public class AithousaResource extends AbstractResource {
 
 		EntityManager em = getEntityManager();
 		AithousaService aithousaService = new AithousaService(em);
-		List<Aithousa> aithouses = aithousaService.(name);
+		List<Aithousa> aithouses = aithousaService.findAithousaByName(name);
 
 		List<AithousaInfo> aithousesInfo = AithousaInfo.wrap(aithouses);
 
@@ -108,7 +108,7 @@ public class AithousaResource extends AbstractResource {
 		Aithousa aithousa = aithousaInfo.getAithousa(em);
 
 		AithousaService aithousaService = new AithousaService(em);
-		aithousaService.saveAithousa(aithousa);
+		aithousa = aithousaService.saveAithousa(aithousa);
 
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 		URI newAithousaUri = ub.path(Integer.toString(aithousa.getId())).build();
@@ -136,7 +136,7 @@ public class AithousaResource extends AbstractResource {
 		Aithousa aithousa = aithousaInfo.getAithousa(em);
 
 		AithousaService aithousaService = new AithousaService(em);
-		aithousaService.saveAithousa(aithousa);
+		aithousa = aithousaService.saveAithousa(aithousa);
 
 		em.close();
 
@@ -145,12 +145,14 @@ public class AithousaResource extends AbstractResource {
 
 	@DELETE
 	@Path("{aithousaId:[0-9]*}")
-	public Response deleteBook(@PathParam("aithousaId") int aithousaId) {
+	public Response deleteAithousa(@PathParam("aithousaId") int aithousaId) {
 
 		EntityManager em = getEntityManager();
 		
 		AithousaService aithousaService = new AithousaService(em);
+		
 		Aithousa aithousa = aithousaService.findAithousaById(aithousaId);
+
 		boolean result = aithousaService.deleteAithousa(aithousa);
 		
 		if (!result) {
