@@ -1,29 +1,5 @@
 package gr.aueb.mscis.sample.resource;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import gr.aueb.mscis.sample.model.Aithousa;
-import gr.aueb.mscis.sample.util.SimpleCalendar;
-import gr.aueb.mscis.sample.model.*;
-import javax.persistence.EntityManager;
-import javax.xml.bind.annotation.XmlRootElement;
 
 public class GrammateiaUri {
 
@@ -44,7 +20,7 @@ public class GrammateiaUri {
 	 */
 	public static final String EPOPTES = "epoptes";
 
-	public static final String EPOPTES_SEARCH = "Epoptes/search";
+	public static final String EPOPTES_SEARCH = "epoptes/search";
 
 	/**
 	 * /aithousa/{id}, <br>
@@ -53,7 +29,15 @@ public class GrammateiaUri {
 	public static String aithousaIdUri(String id) {
 		return AITHOUSES + "/" + id;
 	}
-
+	
+	/**
+	 * /epoptes/{id}, <br>
+	 * e.g. /epoptes/1
+	 */
+	public static String epoptisIdUri(String id) {
+		return EPOPTES + "/" + id;
+	}
+ 
 	/**
 	 * /?name={name}, <br>
 	 * e.g. /aithousa?name=UML

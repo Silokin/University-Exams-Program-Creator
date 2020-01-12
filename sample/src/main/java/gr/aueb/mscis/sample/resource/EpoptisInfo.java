@@ -29,6 +29,9 @@ public class EpoptisInfo {
 	
 	private String category;
 	
+	public EpoptisInfo() {
+	}
+	
 	public EpoptisInfo(int id, String name, String surname, String telephone, String email, String password , String category) {
 		this(name, surname, telephone, email,password, category);
 		this.id = id;
@@ -61,6 +64,10 @@ public class EpoptisInfo {
 		return id;
 	}
 	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	public String getName()
 	{
 		return name;
@@ -70,52 +77,49 @@ public class EpoptisInfo {
 		this.name = name;
 	}
 	
-	public String getSurName()
+	public String getSurname()
 	{
 		return surname;
 	}
 	
-	public void setSurName(String surname)
+	public void setSurname(String surname)
 	{
 		this.surname = surname;
 	}
+	
+    public String getTelephone() {
+        return telephone;
+    }
 	
 	public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
-
-    public String getTelephone() {
-        return telephone;
+    public String getEmail() {
+        return email;
     }
-
-
+	
     public void setEmail(String email) {
         this.email = email;
     }
 
-
-    public String getEmail() {
-        return email;
-    }
-    
     public String getPassword()
 	{
 		return password;
 	}
-	public void setPassword(String pass)
+	public void setPassword(String password)
 	{
-		this.password = pass;
+		this.password = password;
 	}
-    
-    public void setCategory(String category)
-    {
-    	this.category = category;
-    }
     
     public String getCategory()
     {
     	return category;
+    }
+	
+    public void setCategory(String category)
+    {
+    	this.category = category;
     }
     
 	public static EpoptisInfo wrap(Epoptis e) {

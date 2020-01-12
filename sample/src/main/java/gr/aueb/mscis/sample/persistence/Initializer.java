@@ -6,6 +6,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import gr.aueb.mscis.sample.contacts.EmailAddress;
+import gr.aueb.mscis.sample.contacts.TelephoneNumber;
 import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
@@ -84,7 +85,7 @@ public class Initializer  {
         alex.setCategory(ypopsifios_didaktor);
         alex.addMiDiathesimotita(mi_diath1);
         
-        Epoptis giannis =  new Epoptis("Giannis", "Nik", new EmailAddress("testGiannis@aueb.gr"),null,"1234");
+        Epoptis giannis =  new Epoptis("Giannis", "Nik", new EmailAddress("testGiannis@aueb.gr"),new TelephoneNumber("6984796060"),"1234");
         giannis.setCategory(proswpiko);
         
         Epoptis tasos =  new Epoptis("Tasos", "Kouk", new EmailAddress("testTasos@aueb.gr"),null,"1234");

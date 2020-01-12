@@ -1,27 +1,12 @@
 package gr.aueb.mscis.sample.resource;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.util.List;
+
+
 
 import gr.aueb.mscis.sample.model.Aithousa;
-import gr.aueb.mscis.sample.util.SimpleCalendar;
-import gr.aueb.mscis.sample.model.*;
 import javax.persistence.EntityManager;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,7 +29,7 @@ public class AithousaInfo {
 	public AithousaInfo() {
 	}
 
-	public AithousaInfo(int id,String name, String orofos, Integer noThesewn, Integer noEpoptes, String ktirio) {
+	public AithousaInfo(Integer id,String name, String orofos, Integer noThesewn, Integer noEpoptes, String ktirio) {
 		this(name, orofos, noThesewn, noEpoptes, ktirio);
 		this.id = id;
 
@@ -60,6 +45,7 @@ public class AithousaInfo {
 	}
 
 	public AithousaInfo(Aithousa aithousa) {
+		id = aithousa.getId();
 		name = aithousa.getName();
 		orofos = aithousa.getOrofos();
 		noThesewn = aithousa.getNoThesewn();
@@ -67,7 +53,7 @@ public class AithousaInfo {
 		ktirio = aithousa.getKtirio();
 	}
 
-
+ 
 	public Integer getId() {
 		return id;
 	}
@@ -150,17 +136,17 @@ public class AithousaInfo {
 		} else {
 			aithousa = new Aithousa();
 		}
-
-		aithousa.setNoEpoptes(noEpoptes);
-		aithousa.setNoThesewn(noThesewn);
+		aithousa.setName(name); 
 		aithousa.setOrofos(orofos);
-
+		aithousa.setNoThesewn(noThesewn);
+		aithousa.setNoEpoptes(noEpoptes);
+		aithousa.setKtirio(ktirio);
 
 		return aithousa;
 	}
+	 
 	
-	
-}
+} 
 
 
 

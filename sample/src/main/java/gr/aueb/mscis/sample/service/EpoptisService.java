@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -40,6 +41,7 @@ public class EpoptisService {
 	
 	//delete
 	public boolean deleteEpoptis(Epoptis epoptis) {
+		
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		if (epoptis != null) {
@@ -50,6 +52,7 @@ public class EpoptisService {
 		return false;
 
 	}
+	
 	
 	//find
 	public Epoptis findEpoptisById(int id) {
