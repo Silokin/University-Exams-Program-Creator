@@ -1,6 +1,6 @@
 package gr.aueb.mscis.sample.resource;
 
-
+import gr.aueb.mscis.sample.util.SimpleCalendar;
 public class GrammateiaUri {
 
 	/**
@@ -21,6 +21,14 @@ public class GrammateiaUri {
 	public static final String EPOPTES = "epoptes";
 
 	public static final String EPOPTES_SEARCH = "epoptes/search";
+	
+	public static final String EPOPTES_ADD_MD = "epoptes/addDate";
+	/**
+	 * /Program
+	 */
+	public static final String PROGRAM = "program";
+
+	public static final String PROGRAM_SEARCH = "program/search";
 
 	/**
 	 * /aithousa/{id}, <br>
@@ -30,12 +38,16 @@ public class GrammateiaUri {
 		return AITHOUSES + "/" + id;
 	}
 	
-	/**
+		/**
 	 * /epoptes/{id}, <br>
 	 * e.g. /epoptes/1
 	 */
 	public static String epoptisIdUri(String id) {
 		return EPOPTES + "/" + id;
+	}
+	
+	public static String addMDUri (String mail , String pass) {
+		return EPOPTES_ADD_MD + "?email=" + mail +"&password=" + pass;
 	}
  
 	/**
@@ -49,9 +61,13 @@ public class GrammateiaUri {
 	public static String epopteiesUri(String EpopteiaId){
 		return EPOPTEIES + "/" + EpopteiaId;
 	}
-
-}
-
-
-
 	
+	public static String programIdUri(String id) {
+		return PROGRAM + "/" + id;
+	}
+	
+	public static String programSearchUri(SimpleCalendar date) {
+		return PROGRAM_SEARCH + "?date=" + date;
+	}
+
+}	

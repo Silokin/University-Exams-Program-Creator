@@ -36,6 +36,7 @@ public class AithousaService {
 		tx.begin();
 		if (aithousa != null) {
 			em.remove(aithousa);
+			tx.commit();
 			return true;
 		}
 		tx.commit();

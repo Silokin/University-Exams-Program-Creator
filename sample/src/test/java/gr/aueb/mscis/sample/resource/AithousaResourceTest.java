@@ -94,7 +94,7 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
 		List<Aithousa> foundAithouses = findAithousaByName("Πλειάδες");
-		Assert.assertNotEquals(0, foundAithouses.size());
+		Assert.assertEquals(0, foundAithouses.size());
 
 	}
 	

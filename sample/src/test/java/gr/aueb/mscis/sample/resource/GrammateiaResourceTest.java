@@ -13,7 +13,6 @@ import org.glassfish.jersey.test.spi.TestContainerFactory;
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.model.*;
 
-import gr.aueb.mscis.sample.resource.*;
 import gr.aueb.mscis.sample.persistence.*;
 import gr.aueb.mscis.sample.service.*;
 
@@ -42,7 +41,7 @@ public abstract class GrammateiaResourceTest extends JerseyTest {
 		dataHelper = new Initializer();
 		dataHelper.prepareData();
 	}
-
+	
 	public List<Mathima> listMathimata() {
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -66,6 +65,27 @@ public abstract class GrammateiaResourceTest extends JerseyTest {
 		return aithouses;
 	}
 	
+	public List<Program> listPrograms() {
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		
+		ProgramService service = new ProgramService(em);
+		List<Program> programs = service.findAllPrograms();
+		
+		
+		em.close(); 
+		return programs; 
+	}
+	
+	public List<Epopteia> listEpopteies() {
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		
+		EpopteiaService service = new EpopteiaService(em);
+		List<Epopteia> epopteies = service.findAllEpopteies();
+		
+		em.close(); 
+		return epopteies; 
+	}
+	
 	public Epoptis findEpoptisByMail(String mail) {
 		EntityManager em = JPAUtil.getCurrentEntityManager();
 		
@@ -76,6 +96,18 @@ public abstract class GrammateiaResourceTest extends JerseyTest {
 		
 		return epoptis;
 	}
+	
+	public Mathima findMathimaByName(String name) {
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		
+		MathimaService ms = new MathimaService(em);
+		List<Mathima> mathima = ms.findMathimaByTitle(name);
+		
+		em.close();
+		return mathima.get(0);
+	}
+	
+	
 
 //	protected List<Borrower> findBorrowerByLastName(String lastName) {
 //		EntityManager em = JPAUtil.getCurrentEntityManager();

@@ -107,9 +107,19 @@ public class Epopteia {
 		return starts;
 	}
 	
+	public void setStarts(SimpleCalendar starts)
+	{
+		this.starts=starts;
+	}
+	
 	public SimpleCalendar getEnds()
 	{
 		return ends;
+	}
+	
+	public void setEnds(SimpleCalendar ends)
+	{
+		this.ends=ends;
 	}
 	
 	//orizw mathima gia ti sugkekrimeni epopteia

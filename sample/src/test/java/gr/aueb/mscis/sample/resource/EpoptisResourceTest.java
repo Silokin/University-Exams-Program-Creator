@@ -1,10 +1,7 @@
 package gr.aueb.mscis.sample.resource;
 
-import java.util.List;
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -13,11 +10,11 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.Assert;
 import org.junit.Test;
 
-import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epoptis;
 
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.epoptisIdUri;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTES;
+import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTES_ADD_MD;
 
 
 public class EpoptisResourceTest extends GrammateiaResourceTest{
@@ -62,7 +59,6 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		Assert.assertEquals(200, response.getStatus());
 		Epoptis foundEpoptis = findEpoptisByMail("inikolis@aueb.gr");
 		Assert.assertEquals("inikolis@aueb.gr", foundEpoptis.getEmail().getAddress());
-
 	}
 
 	@Test
@@ -78,14 +74,41 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		Assert.assertNotNull(foundEpoptis.getEmail());
 
 	}
-//
-//	@Test
-//	public void testDeleteNonExistingBook() {
-//
-//		Response response = target(bookIdUri(Integer.toString(Integer.MAX_VALUE))).request().delete();
-//
-//		Assert.assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
-//
-//	}
 
+	@Test
+	public void testDeleteNonExistingEpoptis() {
+
+		Response response = target(epoptisIdUri(Integer.toString(Integer.MAX_VALUE))).request().delete();
+
+		Assert.assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
+
+	}
+
+	@Test
+	public void testAddMiDiathesimotita() {
+		
+		MiDiathesimotitaInfo mdi = new MiDiathesimotitaInfo(8,2,2020);
+		
+		Response response = target(EPOPTES_ADD_MD).queryParam("email","testGiannis@aueb.gr").queryParam("password", "1234").request().put(Entity.entity(mdi,MediaType.APPLICATION_JSON));
+		
+		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");
+		Assert.assertEquals(epoptis.getEmail().getAddress(),"testGiannis@aueb.gr");
+		
+		Assert.assertEquals(200, response.getStatus());
+		//Assert.assertEquals(epoptis.getMiDiathesimotita().isEmpty(),false);
+
+	}
+	
+	@Test
+	public void testAddMiDiathesimotitaWrong() {
+		
+		MiDiathesimotitaInfo mdi = new MiDiathesimotitaInfo(8,2,2020);
+		
+		Response response = target(EPOPTES_ADD_MD).queryParam("email","testGiannis@aueb.gr").queryParam("password", "5678").request().put(Entity.entity(mdi,MediaType.APPLICATION_JSON));
+		
+		Assert.assertEquals(401, response.getStatus());
+
+	}
+
+	
 }
