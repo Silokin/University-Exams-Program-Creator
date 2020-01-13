@@ -1,8 +1,11 @@
 package gr.aueb.mscis.sample.resource;
 
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTEIES;
+import static gr.aueb.mscis.sample.resource.GrammateiaUri.epopteiesAddClassUri;
+import static gr.aueb.mscis.sample.resource.GrammateiaUri.epopteiesUri;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
@@ -13,6 +16,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.Assert;
 import org.junit.Test;
 
+import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.Program;
@@ -41,7 +45,21 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		Assert.assertEquals(201, response.getStatus());
 		List<Epopteia> epopteies = listEpopteies();
 		Assert.assertEquals(4,epopteies.size());
-
 	}
-
+	
+	@Test
+	public void testAddAithousa() {
+		
+		List<Aithousa> aithousa = findAithousaByName("Πλειάδες");
+		List<Epopteia> epopteia = listEpopteies();
+		AithousaInfo aithousaInfo = new AithousaInfo(aithousa.get(0));
+		
+		//Assert.assertEquals("something",epopteiesAddClassUri(Integer.toString(epopteia.get(2).getId())));
+		
+		Response response = target(epopteiesAddClassUri(Integer.toString(epopteia.get(2).getId()))).request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
+		
+		Assert.assertEquals(200, response.getStatus());
+		Set<Aithousa> found = epopteia.get(2).getAithouses();
+		Assert.assertEquals(1,found.size());
+	}
 }

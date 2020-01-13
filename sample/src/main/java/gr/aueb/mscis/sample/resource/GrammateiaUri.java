@@ -14,7 +14,8 @@ public class GrammateiaUri {
 	 */
 	public static final String EPOPTEIES = "epopteies";
 
-	public static final String EPOPTEIS_SEARCH = "epopteies/search";
+	public static final String EPOPTEIES_SEARCH = "epopteies/search";
+
 	/**
 	 * /Epoptes
 	 */
@@ -61,6 +62,11 @@ public class GrammateiaUri {
 	public static String epopteiesUri(String EpopteiaId){
 		return EPOPTEIES + "/" + EpopteiaId;
 	}
+	
+	public static String epopteiesAddClassUri(String EpopteiaId){
+		return epopteiesUri(EpopteiaId) + "/addAithousa";
+	}
+	
 	
 	public static String programIdUri(String id) {
 		return PROGRAM + "/" + id;

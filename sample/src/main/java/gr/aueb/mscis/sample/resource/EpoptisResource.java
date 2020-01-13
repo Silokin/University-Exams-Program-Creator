@@ -108,8 +108,11 @@ public class EpoptisResource extends AbstractResource {
 		if (epoptis.getPassword().equals(pass)) {
 			MiDiathesimotita md = new MiDiathesimotita(new SimpleCalendar(mdi.getDay(),mdi.getMonth(),mdi.getYear(),0,0));
 			epoptis.addMiDiathesimotita(md);
+
 			epoptis = epoptisService.saveEpoptis(epoptis);
+			
 			em.close();
+
 			return Response.ok().build();
 		}
 				

@@ -89,6 +89,7 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		
 		MiDiathesimotitaInfo mdi = new MiDiathesimotitaInfo(8,2,2020);
 		
+		
 		Response response = target(EPOPTES_ADD_MD).queryParam("email","testGiannis@aueb.gr").queryParam("password", "1234").request().put(Entity.entity(mdi,MediaType.APPLICATION_JSON));
 		
 		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");

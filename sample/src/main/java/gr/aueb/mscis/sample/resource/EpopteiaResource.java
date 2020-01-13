@@ -3,7 +3,9 @@ package gr.aueb.mscis.sample.resource;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -39,6 +41,21 @@ public class EpopteiaResource extends AbstractResource{
 		em.close();
 
 		return Response.created(newEpopteiaUri).build();
+	}
+	
+	@PUT
+	@Path("{epopteiaId:[0-9]*}/addAithousa")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addAithousa(AithousaInfo aithousaInfo,@PathParam("epopteiaId") int id) {
+		
+		EntityManager em = getEntityManager();
+		
+		EpopteiaService epopteiaService = new EpopteiaService(em);
+		epopteiaService.addAithousa(id, aithousaInfo.getId());
+		
+		em.close();
+		
+		return Response.ok().build();
 	}
 	
 }

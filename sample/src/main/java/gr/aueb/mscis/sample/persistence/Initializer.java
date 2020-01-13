@@ -98,6 +98,7 @@ public class Initializer  {
         Epopteia epopteia2 = new Epopteia(new SimpleCalendar(22,1,20,13,15),new SimpleCalendar(22,1,20,15,15));
         epopteia2.setProgram(exe19_20);
         epopteia2.setMathima(crypto);
+        epopteia2.addAithousa(pleiades);
         
         Epopteia epopteia3 = new Epopteia(new SimpleCalendar(22,2,20,13,15),new SimpleCalendar(22,2,20,15,15));
         epopteia3.setProgram(exe19_20);
@@ -106,7 +107,6 @@ public class Initializer  {
 
         epopteia1.ekxwrhshEpopteias(alex);
         epopteia2.ekxwrhshEpopteias(giannis);
-        epopteia3.ekxwrhshEpopteias(tasos);
         
         
         EntityManager em = JPAUtil.getCurrentEntityManager();

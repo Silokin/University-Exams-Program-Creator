@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 
 
 import gr.aueb.mscis.sample.exceptions.EpoptisException;
+import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.Program;
@@ -165,6 +166,17 @@ public class EpopteiaService {
 				.setParameter("epopteia",epopteia).getResultList();
 		
 		return results;
+	}
+	
+	public void addAithousa(int idE,int idA) {
+		
+		Epopteia epopteia = findEpopteiaById(idE);
+		
+		AithousaService as = new AithousaService(em);
+		Aithousa aithousa = as.findAithousaById(idA);
+		
+		epopteia.addAithousa(aithousa);
+		epopteia = saveEpopteia(epopteia);	
 	}
 	
 //	@Test

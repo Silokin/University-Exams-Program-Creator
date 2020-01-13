@@ -51,7 +51,6 @@ public class Aithousa {
 	//poses epopteies yparxoun
 	@ManyToMany(mappedBy="aithousa",fetch=FetchType.LAZY, 
 	           cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	
 	private Set<Epopteia> epopteia = new HashSet<Epopteia>();	 
 	
 	public Aithousa() {}
