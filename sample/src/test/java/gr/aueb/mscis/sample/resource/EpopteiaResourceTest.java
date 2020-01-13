@@ -3,6 +3,7 @@ package gr.aueb.mscis.sample.resource;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTEIES;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.epopteiesAddClassUri;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.epopteiesUri;
+import static gr.aueb.mscis.sample.resource.GrammateiaUri.epopteiesAnathesiUri;
 
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import org.junit.Test;
 
 import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
+import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.Program;
 
@@ -54,12 +56,27 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		List<Epopteia> epopteia = listEpopteies();
 		AithousaInfo aithousaInfo = new AithousaInfo(aithousa.get(0));
 		
-		//Assert.assertEquals("something",epopteiesAddClassUri(Integer.toString(epopteia.get(2).getId())));
+		Assert.assertEquals("Πλειάδες",aithousaInfo.getName());
 		
-		Response response = target(epopteiesAddClassUri(Integer.toString(epopteia.get(2).getId()))).request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
+		Response response = target(epopteiesAddClassUri(Integer.toString(epopteia.get(0).getId()))).request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
 		
 		Assert.assertEquals(200, response.getStatus());
-		Set<Aithousa> found = epopteia.get(2).getAithouses();
+		Set<Aithousa> found = epopteia.get(0).getAithouses();
+		Assert.assertEquals(1,found.size());
+	}
+	
+	@Test
+	public void anathesiEpopteias() {
+		
+		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");
+		EpoptisInfo epoptisInfo = new EpoptisInfo(epoptis);
+		
+		List<Epopteia> epopteia = listEpopteies();
+		
+		Response response = target(epopteiesAnathesiUri(Integer.toString(epopteia.get(0).getId()))).request().put(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
+		
+		Assert.assertEquals(200, response.getStatus());
+		Set<Epoptis> found = epopteia.get(0).getEpoptis();
 		Assert.assertEquals(1,found.size());
 	}
 }

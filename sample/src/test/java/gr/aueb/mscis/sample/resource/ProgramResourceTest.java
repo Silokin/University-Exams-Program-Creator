@@ -59,7 +59,7 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 
 		List<ProgramInfo> programs = target(PROGRAM).request().get(new GenericType<List<ProgramInfo>>() {
 		});
-		Assert.assertNotEquals(1, programs.size());
+		Assert.assertEquals(1, programs.size());
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
-		List<Program> foundPrograms = findProgramById(1);
+		List<Program> foundPrograms = listPrograms();
 		Assert.assertNotEquals(1, foundPrograms.size());
 
 	}
@@ -86,12 +86,5 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 
 		Assert.assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
 
-	}
-	
-	private List<Program> findProgramById(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
+	}	
 }

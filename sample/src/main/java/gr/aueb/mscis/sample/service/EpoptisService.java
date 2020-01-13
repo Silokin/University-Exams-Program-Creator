@@ -140,7 +140,19 @@ public class EpoptisService {
 
 			return results;
 		}
-
+		
+		public boolean logIn(String usr,String pass) {
+			if(usr.equals("admin")) {
+				if(pass.equals("qwerty")) {
+					return true;
+				}
+			}else {
+				
+			}
+			
+		}
+		
+		
 //		@SuppressWarnings("unchecked")
 //		public EpoptisState findState(Epoptis epoptis)
 //		{

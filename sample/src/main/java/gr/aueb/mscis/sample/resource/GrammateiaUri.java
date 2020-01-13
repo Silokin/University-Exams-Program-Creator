@@ -67,6 +67,10 @@ public class GrammateiaUri {
 		return epopteiesUri(EpopteiaId) + "/addAithousa";
 	}
 	
+	public static String epopteiesAnathesiUri(String EpopteiaId){
+		return epopteiesUri(EpopteiaId) + "/addEpopti";
+	}
+	
 	
 	public static String programIdUri(String id) {
 		return PROGRAM + "/" + id;

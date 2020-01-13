@@ -96,7 +96,7 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		Assert.assertEquals(epoptis.getEmail().getAddress(),"testGiannis@aueb.gr");
 		
 		Assert.assertEquals(200, response.getStatus());
-		//Assert.assertEquals(epoptis.getMiDiathesimotita().isEmpty(),false);
+		Assert.assertEquals(epoptis.getMiDiathesimotita().isEmpty(),false);
 
 	}
 	
