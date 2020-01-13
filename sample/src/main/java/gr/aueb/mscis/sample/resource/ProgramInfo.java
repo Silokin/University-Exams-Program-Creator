@@ -16,26 +16,38 @@ public class ProgramInfo {
 	
 	private Integer id;
 	
-	private SimpleCalendar starts;
+	private int startD;
 	
-	private SimpleCalendar ends;
+	private int startM;
+	
+	private int startY;
+	
+	private int endD;
+	
+	private int endM;
+	
+	private int endY;
 	
 
 	public ProgramInfo() {
 	}
 	
 	
-	public ProgramInfo(Integer id , SimpleCalendar starts, SimpleCalendar ends) {
-		this(starts, ends);
+	public ProgramInfo(Integer id ,  int startD,int startM,int startY,int endD,int endM,int endY) {
+		this(startD,startM,startY,endD,endM,endY);
 		this.id = id;
 
 	}
 	
-	public ProgramInfo(SimpleCalendar starts, SimpleCalendar ends)
+	public ProgramInfo(int startD,int startM,int startY,int endD,int endM,int endY)
 	{
 		super();
-		this.starts = starts;
-		this.ends = ends;
+		this.startD=startD;
+		this.startM = startM;
+		this.startY=startY;
+		this.endD=endD;
+		this.endM = endM;
+		this.endY=endY;
 		
 	} 
 
@@ -43,8 +55,12 @@ public class ProgramInfo {
 
 	public ProgramInfo(Program program) {
 		id = program.getId(); 
-		starts = program.getStarts();
-		ends = program.getEnds();
+		this.startD= program.getStarts().getDayOfMonth();
+		this.startM = program.getStarts().getMonth();
+		this.startY= program.getStarts().getYear();
+		this.endD= program.getEnds().getDayOfMonth();
+		this.endM = program.getEnds().getMonth();
+		this.endY= program.getEnds().getYear();
 	}
 
 
@@ -64,31 +80,68 @@ public class ProgramInfo {
 
 
 
-	public SimpleCalendar getStarts() {
-		return starts;
-	}
 
-
-
-
-	public void setStarts(SimpleCalendar starts) {
-		this.starts = starts;
-	}
-
-
-
-
-	public SimpleCalendar getEnds() {
-		return ends;
-	}
-
-
-
-
-	public void setEnds(SimpleCalendar ends) {
-		this.ends = ends;
-	}
 	
+	public int getStartD() {
+		return startD;
+	}
+
+
+	public void setStartD(int startD) {
+		this.startD = startD;
+	}
+
+
+	public int getStartM() {
+		return startM;
+	}
+
+
+	public void setStartM(int startM) {
+		this.startM = startM;
+	}
+
+
+	public int getStartY() {
+		return startY;
+	}
+
+
+	public void setStartY(int startY) {
+		this.startY = startY;
+	}
+
+
+	public int getEndD() {
+		return endD;
+	}
+
+
+	public void setEndD(int endD) {
+		this.endD = endD;
+	}
+
+
+	public int getEndM() {
+		return endM;
+	}
+
+
+	public void setEndM(int endM) {
+		this.endM = endM;
+	}
+
+
+	public int getEndY() {
+		return endY;
+	}
+
+
+	public void setEndY(int endY) {
+		this.endY = endY;
+	}
+
+
 	public static ProgramInfo wrap(Program program) {
 		return new ProgramInfo(program);
 	}
@@ -114,8 +167,8 @@ public class ProgramInfo {
 		} else {
 			program = new Program();
 		}
-		program.setStarts(starts);
-		program.setEnds(ends);
+		program.setStarts(new SimpleCalendar(startD,startM,startY,0,0));
+		program.setEnds(new SimpleCalendar(endD,endM,endY,0,0));
 
 		return program;
 	}

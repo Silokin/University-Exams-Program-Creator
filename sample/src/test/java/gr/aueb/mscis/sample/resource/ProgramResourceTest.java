@@ -51,7 +51,7 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 		String firstProgramById = Integer.toString(programs.get(0).getId());
 		ProgramInfo program = target(programIdUri(firstProgramById)).request().get(ProgramInfo.class);
 		Assert.assertNotNull(program);
-		Assert.assertEquals(new SimpleCalendar(20,1,20,8,15) , program.getStarts());
+		Assert.assertEquals(20, program.getStartD());
 	}
 	 
 	@Test 
@@ -68,7 +68,7 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 		  
   
 		// Create a program info object and submit
-		ProgramInfo programInfo = new ProgramInfo(new SimpleCalendar(2020,1,12,11,0),new SimpleCalendar(2020,1,12,15,0));
+		ProgramInfo programInfo = new ProgramInfo(29,1,2020,13,2,2020);
 
 		Response response = target(PROGRAM).request().post(Entity.entity(programInfo, MediaType.APPLICATION_JSON));
 
