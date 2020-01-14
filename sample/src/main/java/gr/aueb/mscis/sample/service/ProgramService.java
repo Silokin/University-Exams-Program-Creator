@@ -118,4 +118,19 @@ public class ProgramService {
 		return results;
 	}
 	
+	public Program katartisiProgrammatos(Mathima mathima, Epopteia epopteia, Aithousa aithousa, Program p)
+	{
+		epopteia.setMathima(mathima);
+		epopteia.addAithousa(aithousa);
+		epopteia.setProgram(p);
+		
+//		EpopteiaService ep = new EpopteiaService(em);
+//		ep.saveEpopteia(epopteia);
+
+		p.addEpopteia(epopteia);
+		saveProgram(p);
+		
+		return p;
+		
+	}
 }
