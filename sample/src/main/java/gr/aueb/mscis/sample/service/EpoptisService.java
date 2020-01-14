@@ -141,6 +141,7 @@ public class EpoptisService {
 			return results;
 		}
 		
+		//giannis version
 		public boolean logIn(String usr,String pass) {
 			if(usr.equals("admin")) {
 				if(pass.equals("qwerty")) {
@@ -155,6 +156,17 @@ public class EpoptisService {
 			return false;	
 		}
 		
+		//alex version with test
+			public boolean login(Epoptis epoptis, EmailAddress email, String password)
+		{
+			if (email.isValid())
+			{
+				if (epoptis.getEmail().equals(email) && epoptis.getPassword().equals(password))
+						return true;
+			}		
+			return false;
+			
+		}
 		
 //		@SuppressWarnings("unchecked")
 //		public EpoptisState findState(Epoptis epoptis)
