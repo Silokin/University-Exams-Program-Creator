@@ -36,7 +36,11 @@ public class GrammateiaServiceTest {
 		em.close();
 	}
 	
+	protected void beforeDatabasePreparation(){}
 	
+	protected void afterDatabasePreparation(){}
+	
+	protected void afterTearDown() {	}
 	
 //	@SuppressWarnings("unchecked")
 //	@Test
