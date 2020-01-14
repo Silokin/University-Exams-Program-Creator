@@ -93,8 +93,9 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 	public void testAnaforaEpoptwn() {
 		
 		List<Program> programs = listPrograms();
-		List<AnaforaEpoptwnInfo>anafora = target(anaforaEpoptwnUri(Integer.toString(programs.get(0).getId()))).request().get(new GenericType<List<AnaforaEpoptwnInfo>>() {
-		});
-		Assert.assertNotEquals(1, anafora.size());
+		
+		Response response = target(anaforaEpoptwnUri(Integer.toString(programs.get(0).getId()))).request().get();
+		Assert.assertEquals(200, response.getStatus());
+		System.out.println(response.readEntity(String.class));
 	}
 }

@@ -1,15 +1,13 @@
 package gr.aueb.mscis.sample.service;
 
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
-
+import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
-import gr.aueb.mscis.sample.model.Epoptis;
+import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.Program;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 

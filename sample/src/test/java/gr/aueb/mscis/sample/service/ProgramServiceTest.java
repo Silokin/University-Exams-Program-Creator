@@ -11,8 +11,10 @@ import org.h2.command.dml.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
+import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.Program;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 

@@ -1,5 +1,6 @@
 package gr.aueb.mscis.sample.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -11,13 +12,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 
-@XmlRootElement(name="epoptis")
+@XmlRootElement
 public class AnaforaEpoptwnInfo {
 	
+	@XmlElement(name="Epoptis")
 	private String name;
 	
-	@XmlList
-	private List<String> epopteies;
+	@XmlElementWrapper(name = "Epopteies")
+	@XmlElement(name = "Epopteia")
+	private List<String> epopteies = new ArrayList();
 	
 	public AnaforaEpoptwnInfo() {
 		
@@ -27,7 +30,8 @@ public class AnaforaEpoptwnInfo {
 		this.name = epoptis.getName() + " " + epoptis.getSurName();
 		for(Epopteia epopteia : epoptis.getEpopteies()) {
 			if(epopteia.getProgram().getId() == id)
-			this.epopteies.add(epopteia.getMathima().getTitle()+" "+epopteia.getStarts().toString());
+				this.epopteies.add(epopteia.getMathima().getTitle()+" "+epopteia.getStarts().getDayOfMonth()+"/"+epopteia.getStarts().getMonth()+"/"+epopteia.getStarts().getYear()+
+						" "+epopteia.getStarts().getHour()+":"+epopteia.getStarts().getMinute()+"-"+epopteia.getEnds().getHour()+":"+epopteia.getEnds().getMinute());
 		}
 	}
 	
@@ -39,8 +43,7 @@ public class AnaforaEpoptwnInfo {
 		this.name = name;
 	}
 	
-	//@XmlElementWrapper(name = "epopteies")
-	//@XmlElement(name = "epopteia")
+
 	public List<String> getEpopteies() {
 		return epopteies;
 	}

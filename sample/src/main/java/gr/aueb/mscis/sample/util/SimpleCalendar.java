@@ -23,7 +23,7 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
      */
     public SimpleCalendar(int day, int month, int year, int hour, int minutes) {
         date = Calendar.getInstance();
-        date.set(day, month - 1, year, hour, minutes);
+        date.set(year, month - 1, day, hour, minutes);
        
     }
 
@@ -60,6 +60,14 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
      */
     public int getDayOfMonth() {
         return date.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    public int getHour() {
+        return date.get(Calendar.HOUR_OF_DAY);
+    }
+    
+    public int getMinute() {
+        return date.get(Calendar.MINUTE);
     }
 
     /**
