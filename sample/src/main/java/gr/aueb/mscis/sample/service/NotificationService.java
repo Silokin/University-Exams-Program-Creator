@@ -32,7 +32,7 @@ public class NotificationService {
 	     * κάποιου αντιτύπου.
 	     */
 	    @SuppressWarnings("unchecked")
-		public void notifyEpoptes(Program p) {
+		public void notifyEpoptes(Program p, int day_today, int month_today, int year_today) {
 	        if (provider == null) {
 	            throw new EpoptisException();
 	        }
@@ -47,10 +47,11 @@ public class NotificationService {
 	        
 	        
 	        Calendar date = Calendar.getInstance(); 
-	        int day_today = date.get(Calendar.DAY_OF_MONTH);
-	        int month_today = date.get(Calendar.MONTH);
-	        int year_today = date.get(Calendar.YEAR);
+//	        int day_today = date.get(Calendar.DAY_OF_MONTH);
+//	        int month_today = date.get(Calendar.MONTH);
+//	        int year_today = date.get(Calendar.YEAR);
 	        
+	        System.out.println(day_today);
 	        
 	        for (Epoptis epoptis : allEpoptes) {
 	            if (epoptis.getEmail() != null && epoptis.getEmail().isValid() && day_today < p.getStarts().getDayOfMonth() && month_today < p.getStarts().getMonth()) {
