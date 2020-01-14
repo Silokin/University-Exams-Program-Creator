@@ -1,5 +1,6 @@
 package gr.aueb.mscis.sample.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.After;
@@ -39,7 +40,8 @@ public class NotificationServiceTest extends GrammateiaServiceTest {
 		// Ρυθμίζουμε την ημερομηνία του συστήματος
 		// 1 μήνα πριν την εξεταστική
 
-		setSystemDateTo20thDecember2019();
+		//setSystemDateTo20thDecember2019();
+		setSystemDateTo20thJanuary2020();
 //		borrowUMLUserGuideToDiamantidis();
 //
 //		// Ρυθμίζουμε την ημερομηνία του συστήματος για
@@ -50,13 +52,15 @@ public class NotificationServiceTest extends GrammateiaServiceTest {
 //
 //		// ρυθμίζουμε την ημερομηνία για την 1η Νοεμβρίου
 //		setSystemDateTo1stNovember2007();
+		
+		Calendar date = Calendar.getInstance();
 		ProgramService ps = new ProgramService(em);
 		List<Program> p = ps.findAllPrograms();
 		
 		NotificationService service = new NotificationService();
 		service.setProvider(provider);
 		if (p.get(0) != null)
-			service.notifyEpoptes(p.get(0));
+			service.notifyEpoptes(p.get(0), date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH), date.get(Calendar.YEAR) );
 
 		// empty persistence context, in order to retrieve again from database
 		em.clear();
@@ -66,8 +70,12 @@ public class NotificationServiceTest extends GrammateiaServiceTest {
 		//ta emails einai osa kai oi epoptes!!
 		//ara 3
 		Assert.assertEquals(3, provider.allMessages.size());
-		EmailMessage message = provider.getAllEmails().get(0);
-		Assert.assertEquals(alex.getEmail(), message.getTo());
+		
+		if (provider.allMessages.size() >= 1)
+			{
+			EmailMessage message = provider.getAllEmails().get(1);
+			Assert.assertEquals(alex.getEmail(), message.getTo());
+			}
 	}
 
 	public void sendMessageOnOverdue() {
