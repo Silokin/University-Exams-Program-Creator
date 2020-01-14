@@ -2,6 +2,7 @@ package gr.aueb.mscis.sample.service;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -144,4 +145,15 @@ public class EpoptisServiceTest extends GrammateiaServiceTest {
 		assertEquals(1,epopteies.size());
 	}
 	
+	@Test
+	public void testLogin()
+	{
+		EpoptisService ep = new EpoptisService(em);
+		Epoptis epoptis = ep.findEpoptisByMail(new EmailAddress("testAlex@aueb.gr"));
+		//lathos email
+		assertFalse(ep.login(epoptis,new EmailAddress("testalex@aueb.gr"),"1234"));
+		//swsto email
+		assertTrue(ep.login(epoptis,new EmailAddress("testAlex@aueb.gr"),"1234"));
+		
+	}
 }
