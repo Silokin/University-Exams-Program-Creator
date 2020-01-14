@@ -76,19 +76,11 @@ public class EpoptisServiceTest extends GrammateiaServiceTest {
 		List<Epoptis> epoptis = service.findAllEpoptes();
 		MiDiathesimotita date = new MiDiathesimotita(new SimpleCalendar(25,1,2020,0,0));
 		MiDiathesimotita newMiDiathesimotita = null;
-		if (service.login(epoptis.get(0), new EmailAddress("testalex@aueb.gr"), "1234"))
-		{
-			newMiDiathesimotita= service.saveMiDiathesimotita(date);
-			//oti egine to save
-			assertNotNull(newMiDiathesimotita);
-			//oti egine i diagrafi!
-			assertTrue(service.deleteMiDiathesimotita(newMiDiathesimotita));
-		}
-		else
-		{
-			assertNull(newMiDiathesimotita);
-			assertFalse(service.deleteMiDiathesimotita(newMiDiathesimotita));
-		}
+		newMiDiathesimotita= service.saveMiDiathesimotita(date);
+		//oti egine to save
+		assertNotNull(newMiDiathesimotita);
+		//oti egine i diagrafi!
+		assertTrue(service.deleteMiDiathesimotita(newMiDiathesimotita));
 		
 		
 		
