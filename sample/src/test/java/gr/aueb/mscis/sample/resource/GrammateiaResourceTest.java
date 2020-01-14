@@ -4,7 +4,6 @@ package gr.aueb.mscis.sample.resource;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.ws.rs.core.Application;
 
 import org.glassfish.jersey.test.JerseyTest;
@@ -42,17 +41,6 @@ public abstract class GrammateiaResourceTest extends JerseyTest {
 		dataHelper.prepareData();
 	}
 	
-	public List<Mathima> listMathimata() {
-		EntityManager em = JPAUtil.getCurrentEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
-		List<Mathima> mathimata = em.createQuery("select m from Mathima m").getResultList();
-		
-		tx.commit();
-		em.close();
-		return mathimata;
-	}
 	
 	public List<Aithousa> findAithousaByName(String name) {
 		EntityManager em = JPAUtil.getCurrentEntityManager();
@@ -107,7 +95,17 @@ public abstract class GrammateiaResourceTest extends JerseyTest {
 		return mathima.get(0);
 	}
 	
+	public List<Mathima> findAllMathimata() {
+	EntityManager em = JPAUtil.getCurrentEntityManager();
 	
+	MathimaService service = new MathimaService(em);
+	List<Mathima> mathimata = service.findAllMathimata();
+	
+	em.close();
+	 
+	return mathimata;
+	
+	}
 
 //	protected List<Borrower> findBorrowerByLastName(String lastName) {
 //		EntityManager em = JPAUtil.getCurrentEntityManager();

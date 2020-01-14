@@ -147,9 +147,12 @@ public class EpoptisService {
 					return true;
 				}
 			}else {
-				
+				Epoptis epoptis = findEpoptisByMail(new EmailAddress(usr));
+				if(epoptis.getPassword().equals(pass)){
+					return true;
+				}
 			}
-			
+			return false;	
 		}
 		
 		

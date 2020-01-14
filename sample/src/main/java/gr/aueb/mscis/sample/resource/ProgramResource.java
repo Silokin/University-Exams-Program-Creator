@@ -1,37 +1,28 @@
 package gr.aueb.mscis.sample.resource;
 
-import static gr.aueb.mscis.sample.resource.GrammateiaUri.AITHOUSES;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.PROGRAM;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import gr.aueb.mscis.sample.persistence.JPAUtil;
 import java.net.URI;
 import gr.aueb.mscis.sample.resource.AbstractResource;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Response.Status;
-
-import gr.aueb.mscis.sample.model.Aithousa;
+import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.Program;
-import gr.aueb.mscis.sample.service.AithousaService;
+import gr.aueb.mscis.sample.service.EpoptisService;
 import gr.aueb.mscis.sample.service.ProgramService;
 
 import javax.persistence.EntityManager;
@@ -74,6 +65,26 @@ public class ProgramResource extends AbstractResource {
 		em.close();
 
 		return programInfo;
+
+	} 
+	
+	@GET
+	@Path("{programId:[0-9]*}/anaforaEpoptwn")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<AnaforaEpoptwnInfo> getAnaforaEpoptwn(@PathParam("programId") int programId) {
+
+		EntityManager em = getEntityManager();
+		
+		List<AnaforaEpoptwnInfo> stoixeia = new ArrayList();
+		
+		EpoptisService es = new EpoptisService(em);
+		List<Epoptis> epoptes = es.findAllEpoptes();
+		for(Epoptis epoptis : epoptes) {
+			stoixeia.add(new AnaforaEpoptwnInfo(epoptis,programId));
+		}
+		em.close();
+
+		return stoixeia;
 
 	} 
 	

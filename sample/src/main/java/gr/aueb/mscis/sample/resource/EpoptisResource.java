@@ -103,9 +103,9 @@ public class EpoptisResource extends AbstractResource {
 
 		EntityManager em = getEntityManager();
 		EpoptisService epoptisService = new EpoptisService(em);
+		if(epoptisService.logIn(mail, pass)) {
 		
-		Epoptis epoptis = epoptisService.findEpoptisByMail(new EmailAddress(mail));
-		if (epoptis.getPassword().equals(pass)) {
+			Epoptis epoptis = epoptisService.findEpoptisByMail(new EmailAddress(mail));
 			MiDiathesimotita md = new MiDiathesimotita(new SimpleCalendar(mdi.getDay(),mdi.getMonth(),mdi.getYear(),0,0));
 			epoptis.addMiDiathesimotita(md);
 
@@ -115,6 +115,7 @@ public class EpoptisResource extends AbstractResource {
 
 			return Response.ok().build();
 		}
+	
 				
 		em.close();
 

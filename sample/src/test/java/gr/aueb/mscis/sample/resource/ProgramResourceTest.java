@@ -14,6 +14,7 @@ import static gr.aueb.mscis.sample.resource.GrammateiaUri.PROGRAM;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.PROGRAM_SEARCH;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.aithousaIdUri;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.programIdUri;
+import static gr.aueb.mscis.sample.resource.GrammateiaUri.anaforaEpoptwnUri;
 import static org.junit.Assert.assertNotNull;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.programSearchUri;
 
@@ -86,5 +87,14 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 
 		Assert.assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
 
-	}	
+	}
+	
+	@Test
+	public void testAnaforaEpoptwn() {
+		
+		List<Program> programs = listPrograms();
+		List<AnaforaEpoptwnInfo>anafora = target(anaforaEpoptwnUri(Integer.toString(programs.get(0).getId()))).request().get(new GenericType<List<AnaforaEpoptwnInfo>>() {
+		});
+		Assert.assertNotEquals(1, anafora.size());
+	}
 }

@@ -30,6 +30,12 @@ public class GrammateiaUri {
 	public static final String PROGRAM = "program";
 
 	public static final String PROGRAM_SEARCH = "program/search";
+	/**
+	 * /mathima
+	 */
+	public static final String MATHIMATA = "mathimata";
+
+	public static final String MATHIMATA_SEARCH = "mathimata/search";
 
 	/**
 	 * /aithousa/{id}, <br>
@@ -76,8 +82,28 @@ public class GrammateiaUri {
 		return PROGRAM + "/" + id;
 	}
 	
+	public static String anaforaEpoptwnUri(String id) {
+		return PROGRAM + "/" + id + "/anaforaEpoptwn";
+	}
+	
 	public static String programSearchUri(SimpleCalendar date) {
 		return PROGRAM_SEARCH + "?date=" + date;
+	}
+	
+	/**
+	 * /mathima/{id}, <br>
+	 * e.g. /mathima/1
+	 */
+	public static String mathimaIdUri(String id) {
+		return MATHIMATA + "/" + id;
+	}
+	
+	/**
+	 * /?title={title}, <br>
+	 * e.g. /mathima?title=UML
+	 */
+	public static String mathimaSearchUri(String title) {
+		return MATHIMATA_SEARCH + "?title=" + title;
 	}
 
 }	
