@@ -72,7 +72,29 @@ public class ProgramServiceTest extends GrammateiaServiceTest {
 		assertEquals(3, epopteies.size());
 		
 	}
-	
+	@Test
+	public void testKatartisiProgrammatos()
+	{
+		MathimaService ms = new MathimaService(em);
+		AithousaService as = new AithousaService(em);
+		EpopteiaService es = new EpopteiaService(em);
+		ProgramService ps = new ProgramService(em);
+		
+		List<Mathima> m = ms.findMathimaBySemester(1);
+		List<Aithousa> a = as.findAithousaByKtirio("Ευελπίδων 1");
+		List<Epopteia> e = es.findAllEpopteies();
+		//Epopteia ep = es.findEpopteiaByStartDate(new SimpleCalendar(21,1,20,13,15));
+		List<Program> p = ps.findAllPrograms();
+				//ps.findProgramByStartDate(new SimpleCalendar(20,1,20,0,0));
+		
+		assertNotNull(m.get(0));
+		assertNotNull(a.get(0));
+		assertNotNull(e.get(0));
+		assertNotNull(p.get(0));
+		
+		Program pr = ps.katartisiProgrammatos(m.get(0), e.get(0), a.get(0), p.get(0));
+		assertTrue(pr.getEpopteies().contains(e.get(0)));
+	}
 //	@Test
 //	public void testGetListOfEpoptesInAnExetastiki()
 //	{
