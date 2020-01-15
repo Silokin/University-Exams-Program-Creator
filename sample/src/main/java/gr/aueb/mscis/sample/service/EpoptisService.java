@@ -77,9 +77,9 @@ public class EpoptisService {
 				.createQuery(
 						"select e from Epoptis e where e.email = :mail ")
 				.setParameter("mail", mail).getResultList();
-		if(epoptis.size()>0)
+		if(!epoptis.isEmpty())
 			return epoptis.get(0);
-		return new Epoptis();
+		return null;
 	}
 	
 	
@@ -150,14 +150,16 @@ public class EpoptisService {
 				}
 			}else {
 				Epoptis epoptis = findEpoptisByMail(new EmailAddress(usr));
-				if (epoptis.getId()!=null) {
-					if(epoptis.getPassword().equals(pass)){
-						return true;
+				if (epoptis != null)
+				{
+					if (epoptis.getId()!=null) {
+						if(epoptis.getPassword().equals(pass))
+							return true;
 					}
 				}
 			}
 			return false;	
-		}
+			}
 		
 		//alex version with test
 			public boolean login(Epoptis epoptis, EmailAddress email, String password)

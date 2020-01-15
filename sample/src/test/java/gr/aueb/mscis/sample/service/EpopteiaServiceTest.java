@@ -52,7 +52,7 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 	{
 		EpopteiaService service = new EpopteiaService(em); 
 		
-		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(27,2,20,13,30), new SimpleCalendar(27,2,20,15,30));
+		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(2020,2,27,13,30), new SimpleCalendar(2020,2,27,15,30));
 		Epopteia newEpopteia = service.saveEpopteia(epopteia1);
 	
 		//save
@@ -62,13 +62,15 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		
 	}
 	
+	//yparxoun allages!
 	@Test
 	public void testFindEpopteiaByStartDate()
 	{
 		EpopteiaService ep2 = new EpopteiaService(em);
-		List<Epopteia> epopteia =  ep2.findEpopteiaByStartDate(new SimpleCalendar(21,1,20,13,15));
+		List<Epopteia> epopteia =  ep2.findEpopteiaByStartDate(new SimpleCalendar(2020,1,21,13,15));
 		
-		assertEquals(0,epopteia.size());
+		assertNotNull(epopteia);
+		//assertEquals(0,epopteia.size());
 	}
 	
 	@Test
@@ -112,10 +114,10 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		EpoptisService serv2 = new EpoptisService(em);
 		
 		
-		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(27,2,20,14,30), new SimpleCalendar(27,2,20,15,30));
+		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(2020,2,27,14,30), new SimpleCalendar(2020,2,27,15,30));
 		Epopteia newEpopteia = service.saveEpopteia(epopteia1);
 		
-		Epopteia epopteia2 = new Epopteia(new SimpleCalendar(27,2,20,13,30), new SimpleCalendar(27,2,20,15,30));
+		Epopteia epopteia2 = new Epopteia(new SimpleCalendar(2020,2,27,13,30), new SimpleCalendar(2020,2,27,15,30));
 		Epopteia newEpopteia2 = service.saveEpopteia(epopteia2);
 
 		
@@ -143,7 +145,7 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		EpoptisService serv2 = new EpoptisService(em);
 		
 		
-		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(27,2,20,13,30), new SimpleCalendar(27,2,20,15,30));
+		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(2020,2,27,13,30), new SimpleCalendar(2020,2,27,15,30));
 		Epopteia newEpopteia = service.saveEpopteia(epopteia1);
 
 		
@@ -151,7 +153,7 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		//find epoptis by email
 		Epoptis epoptis = serv2.findEpoptisByMail(new EmailAddress("testAlex@aueb.gr"));
 		
-		MiDiathesimotita mi = new MiDiathesimotita(new SimpleCalendar(27,2,20,00,00));	
+		MiDiathesimotita mi = new MiDiathesimotita(new SimpleCalendar(2020,2,27,00,00));	
 		epoptis.addMiDiathesimotita(mi);
 		
 		//find an epopteia absed on id
@@ -172,21 +174,43 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		EpopteiaService service = new EpopteiaService(em); 
 		EpoptisService serv2 = new EpoptisService(em);
 		
-		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(27,2,20,13,30), new SimpleCalendar(27,2,20,15,30));
+		Epopteia epopteia1 = new Epopteia(new SimpleCalendar(2020,2,27,13,30), new SimpleCalendar(2020,2,27,15,30));
 		Epopteia newEpopteia = service.saveEpopteia(epopteia1);
 		
 		//find epoptis by email
 		Epoptis epoptis = serv2.findEpoptisByMail(new EmailAddress("testAlex@aueb.gr"));
 		
 		
-		//find an epopteia absed on id
+		//find an epopteia based on id
 		Epopteia savedEpopteia = em.find(Epopteia.class, newEpopteia.getId()); 
 		
+		List<Epopteia> oldEpopteia = service.findEpopteiaByStartDate(new SimpleCalendar(2020,1,21,13,15));
+
+//		if (epoptis != null)
+//			{
+//			service.anathesiEpopteias(epoptis, savedEpopteia);
+//			Assert.assertEquals(2, epoptis.getEpopteies().size());
+//			}
+//		else
+//			assertNull(epoptis);
+		
 		//ekxwrhsh epopteias gia certain epopti
+		//an den yparxei o epoptis me to certain email, tote NULL epoptis
+		//episis an den yparxei h epoptia, tote kai auti NULL
+		if (epoptis != null && savedEpopteia != null)
+		{
 		service.anathesiEpopteias(epoptis, savedEpopteia);
+		assertEquals(2, epoptis.getEpopteies().size());
+		}
+//		if (epoptis != null) {
+//			assertEquals(1, epoptis.getEpopteies().size());
+//			assertNull(oldEpopteia);
+//		}
+//		if (oldEpopteia != null)
+//			assertNull(epoptis);
 		
 		//yparxei 1 ston initializer idi kai twra prostithetai alli mia
-		Assert.assertEquals(2, epoptis.getEpopteies().size());
+		
 	}
 	
 	
@@ -207,8 +231,14 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		EpopteiaService service = new EpopteiaService(em); 
 		List<Epopteia> ep = service.findAllEpopteies();
 		
-		assertEquals(1,service.findEpoptesOfEpopteia(ep.get(0)).size());
-	
+		//an oi epoptes tis prwths epopteias einai >0 tote sigoura tha einai
+		//1
+		if (service.findEpoptesOfEpopteia(ep.get(0)).size() >0)
+			assertEquals(1,service.findEpoptesOfEpopteia(ep.get(0)).size());
+		//an oi epoptes einai ligoteroi tou 0, tote prokeitai gia kapoia
+		//epopteia pou den ehei epopti/es
+		else
+			assertEquals(0,service.findEpoptesOfEpopteia(ep.get(0)).size());
 	}
 	
 	

@@ -65,7 +65,7 @@ public class Initializer  {
 
         eraseData();                      
 
-        Program exe19_20 = new Program(new SimpleCalendar(2020,1,20,0,0),new SimpleCalendar(2020,2,12,0,0));
+        Program exe19_20 = new Program(new SimpleCalendar(2020,1,20,0,0),new SimpleCalendar(2020,2,21,0,0));
         
         Aithousa pleiades = new Aithousa("Πλειάδες", "1", 80, 2, "Ευελπίδων 1");
         Aithousa miltiades = new Aithousa("Μιλτιάδης", "1", 120, 4, "Κεντρικό");

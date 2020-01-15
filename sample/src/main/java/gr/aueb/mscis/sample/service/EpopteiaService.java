@@ -101,7 +101,11 @@ public class EpopteiaService {
 			results =  em.createQuery("select e from Epopteia e where e.starts = :date")
 					.setParameter("date",date).getResultList();
 	
-			return results;
+			
+			if (!results.isEmpty())
+				return results;
+			else
+				return null;
 			
 		}
 		

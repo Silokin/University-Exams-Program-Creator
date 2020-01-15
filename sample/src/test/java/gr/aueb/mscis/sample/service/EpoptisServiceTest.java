@@ -152,7 +152,7 @@ public class EpoptisServiceTest extends GrammateiaServiceTest {
 	public void testLogin()
 	{
 		EpoptisService ep = new EpoptisService(em);
-		Epoptis epoptis = ep.findEpoptisByMail(new EmailAddress("testAlex@aueb.gr"));
+		//Epoptis epoptis = ep.findEpoptisByMail(new EmailAddress("testAlex@aueb.gr"));
 		//lathos email
 		assertFalse(ep.login(epoptis,new EmailAddress("testalex@aueb.gr"),"1234"));
 		//swsto email
