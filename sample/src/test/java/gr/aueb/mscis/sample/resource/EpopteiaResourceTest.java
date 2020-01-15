@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,6 +34,28 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		 * 
 		 */
 		return new ResourceConfig(EpopteiaResource.class, DebugExceptionMapper.class);
+	}
+	
+	@Test
+	public void testListAllEpopteies() {
+
+		List<EpopteiaInfo> epopteies = target(EPOPTEIES).request().get(new GenericType<List<EpopteiaInfo>>() {
+		});
+		String firstEpopteiaById = Integer.toString(epopteies.get(0).getId());
+		Assert.assertEquals(3, epopteies.size());
+	}
+	
+	@Test
+	public void testListEpopteiaById() { 
+
+		
+		List<EpopteiaInfo> epopteies = target(EPOPTEIES).request().get(new GenericType<List<EpopteiaInfo>>() {
+		});
+
+		String firstEpopteiaById = Integer.toString(epopteies.get(0).getId());
+		EpopteiaInfo epopteia = target(epopteiesUri(firstEpopteiaById)).request().get(EpopteiaInfo.class);
+		Assert.assertNotNull(epopteia);
+		Assert.assertEquals(21 , epopteia.getStartD());
 	}
 	
 	@Test

@@ -106,26 +106,17 @@ public abstract class GrammateiaResourceTest extends JerseyTest {
 	return mathimata;
 	
 	}
-
-//	protected List<Borrower> findBorrowerByLastName(String lastName) {
-//		EntityManager em = JPAUtil.getCurrentEntityManager();
-//	
-//		BorrowerService service = new BorrowerService(em);
-//	
-//		List<Borrower> publishers = service.findBorrowersByLastName(lastName);
-//	
-//		em.close();
-//		return publishers;
-//	}
-//
-//	protected Loan findPendingLoanForItem(int itemId) {
-//	
-//		EntityManager em = JPAUtil.getCurrentEntityManager();
-//		LoanService service = new LoanService(em);
-//	
-//		Loan loan = service.findPendingLoan(itemId);
-//		em.close();
-//		return loan;
-//	}
 	
+	public List<Epoptis> findAllEpoptes() {
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		
+		EpoptisService service = new EpoptisService(em);
+		List<Epoptis> epoptes = service.findAllEpoptes();
+		
+		em.close();
+		 
+		return epoptes;
+		
+		}
+
 }

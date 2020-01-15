@@ -3,6 +3,7 @@ package gr.aueb.mscis.sample.resource;
 import javax.persistence.EntityManager;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -15,6 +16,9 @@ import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.persistence.JPAUtil;
 
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.epoptisIdUri;
+
+import java.util.List;
+
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTES;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTES_ADD_MD;
 
@@ -27,6 +31,27 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		 * 
 		 */
 		return new ResourceConfig(EpoptisResource.class, DebugExceptionMapper.class);
+	}
+	
+	@Test
+	public void testListEpoptisById() { 
+
+	
+		List<EpoptisInfo> epoptes = target(EPOPTES).request().get(new GenericType<List<EpoptisInfo>>() {
+		});
+ 
+		String firstEpoptisById = Integer.toString(epoptes.get(0).getId());
+		EpoptisInfo epoptis = target(epoptisIdUri(firstEpoptisById)).request().get(EpoptisInfo.class);
+		Assert.assertNotNull(epoptis);
+		Assert.assertEquals("Alex", epoptis.getName());
+	} 
+	
+	@Test
+	public void testListAllEpoptes() {
+
+		List<EpoptisInfo> epoptes = target(EPOPTES).request().get(new GenericType<List<EpoptisInfo>>() {
+		});
+		Assert.assertEquals(3, epoptes.size());
 	}
 	
 	@Test

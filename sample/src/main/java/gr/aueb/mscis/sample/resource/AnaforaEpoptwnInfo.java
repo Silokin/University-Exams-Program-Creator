@@ -27,7 +27,7 @@ public class AnaforaEpoptwnInfo {
 	}
 	
 	public AnaforaEpoptwnInfo(Epoptis epoptis,int id) {
-		this.name = "id="+epoptis.getId()+" "+epoptis.getName() + " " + epoptis.getSurName();
+		this.name = "id="+epoptis.getId()+" "+epoptis.getCategory().getDescription()+" "+epoptis.getName() + " " + epoptis.getSurName();
 		for(Epopteia epopteia : epoptis.getEpopteies()) {
 			if(epopteia.getProgram().getId() == id)
 				this.epopteies.add("id="+epopteia.getId()+" "+epopteia.getMathima().getTitle()+" "+epopteia.getStarts().getDayOfMonth()+"/"+epopteia.getStarts().getMonth()+"/"+epopteia.getStarts().getYear()+

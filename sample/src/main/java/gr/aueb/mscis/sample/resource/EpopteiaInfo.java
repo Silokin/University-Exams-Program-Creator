@@ -1,5 +1,8 @@
 package gr.aueb.mscis.sample.resource;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -60,6 +63,22 @@ public class EpopteiaInfo {
 		this.endY=endY;
 		this.endH=endH;
 		this.endMin=endMin;
+	}
+	
+	public EpopteiaInfo(Epopteia epopteia) {
+		this.id = epopteia.getId();
+		this.mathimaId = epopteia.getMathima().getId();
+		this.programId = epopteia.getProgram().getId();
+		this.startD = epopteia.getStarts().getDayOfMonth();
+		this.startM = epopteia.getStarts().getMonth();
+		this.startY = epopteia.getStarts().getYear();
+		this.startH = epopteia.getStarts().getHour();
+		this.startMin = epopteia.getStarts().getMinute();
+		this.endD = epopteia.getEnds().getDayOfMonth();
+		this.endM = epopteia.getEnds().getMonth();
+		this.endY = epopteia.getEnds().getYear();
+		this.endH = epopteia.getEnds().getHour();
+		this.endMin = epopteia.getEnds().getMinute();
 	}
 	
 	public Integer getId() {
@@ -165,6 +184,22 @@ public class EpopteiaInfo {
 
 	public void setEndMin(int endMin) {
 		this.endMin = endMin;
+	}
+	
+	public static EpopteiaInfo wrap(Epopteia epopteia) {
+		return new EpopteiaInfo(epopteia);
+	}
+	
+	public static List<EpopteiaInfo> wrap(List<Epopteia> epopteies) {
+
+		List<EpopteiaInfo> epopteiaInfoList = new ArrayList<>();
+
+		for (Epopteia epopteia : epopteies) {
+			epopteiaInfoList.add(new EpopteiaInfo(epopteia));
+		}
+
+		return epopteiaInfoList; 
+
 	}
 
 	public Epopteia getEpopteia(EntityManager em) {

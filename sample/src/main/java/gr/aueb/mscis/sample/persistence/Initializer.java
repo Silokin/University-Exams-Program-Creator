@@ -81,14 +81,14 @@ public class Initializer  {
         EpoptisCategory proswpiko = new EpoptisCategory("Προσωπικό Τμήματος",5);
         EpoptisCategory ypopsifios_didaktor = new EpoptisCategory("Υποψήφιος Διδάκτωρ",3);
         
-        Epoptis alex =  new Epoptis("Alex", "Ath", new EmailAddress("testAlex@aueb.gr"),null,"1234");
+        Epoptis alex =  new Epoptis("Alex", "Ath", new EmailAddress("testAlex@aueb.gr"),new TelephoneNumber("6984795050"),"1234");
         alex.setCategory(ypopsifios_didaktor);
         alex.addMiDiathesimotita(mi_diath1);
         
         Epoptis giannis =  new Epoptis("Giannis", "Nik", new EmailAddress("testGiannis@aueb.gr"),new TelephoneNumber("6984796060"),"1234");
         giannis.setCategory(proswpiko);
         
-        Epoptis tasos =  new Epoptis("Tasos", "Kouk", new EmailAddress("testTasos@aueb.gr"),null,"1234");
+        Epoptis tasos =  new Epoptis("Tasos", "Kouk", new EmailAddress("testTasos@aueb.gr"),new TelephoneNumber("6984794040"),"1234");
         tasos.setCategory(proswpiko);
         
         Epopteia epopteia1 = new Epopteia(new SimpleCalendar(2020,1,21,13,15),new SimpleCalendar(2020,1,21,15,15));

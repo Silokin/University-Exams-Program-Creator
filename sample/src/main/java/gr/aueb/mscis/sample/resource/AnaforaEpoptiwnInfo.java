@@ -29,7 +29,7 @@ public class AnaforaEpoptiwnInfo {
 					" "+epopteia.getStarts().getHour()+":"+epopteia.getStarts().getMinute()+"-"+epopteia.getEnds().getHour()+":"+epopteia.getEnds().getMinute();
 		
 		for(Epoptis epoptis : epopteia.getEpoptis()) {
-			epoptes.add("id="+epoptis.getId()+" "+epoptis.getName() + " " + epoptis.getSurName());
+			epoptes.add("id="+epoptis.getId()+" "+epoptis.getCategory().getDescription()+" "+epoptis.getName() + " " + epoptis.getSurName());
 		}
 	}
 

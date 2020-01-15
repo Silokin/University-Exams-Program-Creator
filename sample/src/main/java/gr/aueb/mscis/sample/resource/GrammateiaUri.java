@@ -53,6 +53,10 @@ public class GrammateiaUri {
 		return EPOPTES + "/" + id;
 	}
 	
+	public static String epoptisSearchUri(String name) {
+		return EPOPTES_SEARCH + "?name=" + name;
+	}
+	
 	public static String addMDUri (String mail , String pass) {
 		return EPOPTES_ADD_MD + "?email=" + mail +"&password=" + pass;
 	}
@@ -76,7 +80,6 @@ public class GrammateiaUri {
 	public static String epopteiesAnathesiUri(String EpopteiaId){
 		return epopteiesUri(EpopteiaId) + "/addEpopti";
 	}
-	
 	
 	public static String programIdUri(String id) {
 		return PROGRAM + "/" + id;

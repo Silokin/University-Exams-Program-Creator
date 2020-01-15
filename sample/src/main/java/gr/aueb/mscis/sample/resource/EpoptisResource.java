@@ -3,10 +3,12 @@ package gr.aueb.mscis.sample.resource;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -25,12 +27,45 @@ import javax.ws.rs.core.Response.Status;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTES;
 
 import java.net.URI;
+import java.util.List;
 
 @Path(EPOPTES)
 public class EpoptisResource extends AbstractResource {
 	
 	@Context
 	UriInfo uriInfo;
+	
+	@GET 
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<EpoptisInfo> listAllEpoptes() {
+		EntityManager em = getEntityManager();
+		EpoptisService epoptisService = new EpoptisService(em);
+		List<Epoptis> epoptes = epoptisService.findAllEpoptes();
+
+		List<EpoptisInfo> epoptisInfo = EpoptisInfo.wrap(epoptes);
+
+		em.close();
+		return epoptisInfo;
+
+	}
+	
+	@GET
+	@Path("{epoptisId:[0-9]*}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public EpoptisInfo getEpoptisDetails(@PathParam("epoptisId") int epoptisId) {
+
+		EntityManager em = getEntityManager();
+
+		EpoptisService epoptisService = new EpoptisService(em);
+		Epoptis epoptis = epoptisService.findEpoptisById(epoptisId);
+
+		EpoptisInfo epoptisInfo = EpoptisInfo.wrap(epoptis);
+		em.close();
+
+		return epoptisInfo;
+
+	}
+	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -66,7 +101,7 @@ public class EpoptisResource extends AbstractResource {
 	@PUT
 	@Path("{epoptisId:[0-9]*}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateBook(EpoptisInfo epoptisInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
+	public Response updateEpoptis(EpoptisInfo epoptisInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
 		EpoptisService es = new EpoptisService(em);

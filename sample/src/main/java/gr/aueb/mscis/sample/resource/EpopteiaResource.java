@@ -2,10 +2,12 @@ package gr.aueb.mscis.sample.resource;
 
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -22,6 +24,7 @@ import gr.aueb.mscis.sample.service.EpoptisService;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTEIES;
 
 import java.net.URI;
+import java.util.List;
 
 @Path(EPOPTEIES)
 public class EpopteiaResource extends AbstractResource{
@@ -29,9 +32,40 @@ public class EpopteiaResource extends AbstractResource{
 	@Context
 	UriInfo uriInfo;
 	
+	@GET  
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<EpopteiaInfo> listAllEpopteies() {
+		EntityManager em = getEntityManager();
+		EpopteiaService epopteiaService = new EpopteiaService(em);
+		List<Epopteia> epopteies = epopteiaService.findAllEpopteies();
+
+		List<EpopteiaInfo> epopteiaInfo = EpopteiaInfo.wrap(epopteies);
+
+		em.close();
+		return epopteiaInfo;
+
+	}
+	
+	@GET
+	@Path("{epopteiaId:[0-9]*}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public EpopteiaInfo getEpopteiaDetails(@PathParam("epopteiaId") int epopteiaId) {
+
+		EntityManager em = getEntityManager();
+
+		EpopteiaService epopteiaService = new EpopteiaService(em);
+		Epopteia epopteia = epopteiaService.findEpopteiaById(epopteiaId);
+
+		EpopteiaInfo epopteiaInfo = EpopteiaInfo.wrap(epopteia);
+		em.close();
+
+		return epopteiaInfo;
+
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createEpoptis(EpopteiaInfo epopteiaInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
+	public Response createEpopteia(EpopteiaInfo epopteiaInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
 		EpoptisService es = new EpoptisService(em);
