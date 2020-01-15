@@ -179,14 +179,21 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		Epoptis epoptis = serv2.findEpoptisByMail(new EmailAddress("testAlex@aueb.gr"));
 		
 		
-		//find an epopteia absed on id
+		//find an epopteia based on id
 		Epopteia savedEpopteia = em.find(Epopteia.class, newEpopteia.getId()); 
 		
 		//ekxwrhsh epopteias gia certain epopti
-		service.anathesiEpopteias(epoptis, savedEpopteia);
+		//an den yparxei o epoptis me to certain email, tote NULL epoptis
+		if (epoptis != null)
+			{
+			service.anathesiEpopteias(epoptis, savedEpopteia);
+			Assert.assertEquals(2, epoptis.getEpopteies().size());
+			}
+		else
+			assertNull(epoptis);
 		
 		//yparxei 1 ston initializer idi kai twra prostithetai alli mia
-		Assert.assertEquals(2, epoptis.getEpopteies().size());
+		
 	}
 	
 	
@@ -207,8 +214,14 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		EpopteiaService service = new EpopteiaService(em); 
 		List<Epopteia> ep = service.findAllEpopteies();
 		
-		assertEquals(1,service.findEpoptesOfEpopteia(ep.get(0)).size());
-	
+		//an oi epoptes tis prwths epopteias einai >0 tote sigoura tha einai
+		//1
+		if (service.findEpoptesOfEpopteia(ep.get(0)).size() >0)
+			assertEquals(1,service.findEpoptesOfEpopteia(ep.get(0)).size());
+		//an oi epoptes einai ligoteroi tou 0, tote prokeitai gia kapoia
+		//epopteia pou den ehei epopti/es
+		else
+			assertEquals(0,service.findEpoptesOfEpopteia(ep.get(0)).size());
 	}
 	
 	
