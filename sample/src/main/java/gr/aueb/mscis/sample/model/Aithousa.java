@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.mgiandia.library.domain.Author;
+import com.mgiandia.library.domain.Book;
+
 /**
  * Οι αίθουσες μιας σχολής
  * @author MscIS-AlexGianTas
@@ -53,8 +56,19 @@ public class Aithousa {
 	           cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE })
 	private Set<Epopteia> epopteia = new HashSet<Epopteia>();	 
 	
+	/**
+     * Προκαθορισμένος κατασκευαστής.
+     */
 	public Aithousa() {}
 	
+	/**
+     * Βοηθητικός κατασκευαστής.
+     * @param name 
+     * @param orofos 
+     * @param noThesewn Πόσα άτομα χωράει
+     * @param noEpoptes Πόσους επόπτες χρειάζεται
+     * @param ktirio Σε ποιο κτήριο γίνεται
+     */
 	public Aithousa(String name, String orofos, Integer noThesewn, Integer noEpoptes, String ktirio)
 	{
 		this.name = name;
@@ -121,7 +135,15 @@ public class Aithousa {
 	{
 		this.ktirio = ktirio;
 	}
-//	
+
+	/**
+     * Επιστρέφει τις εποπτείες μιας αίθουσας
+     * Η συλλογή των εποπτειών είναι αντίγραφο. Για την προσθήκη κάποιας εποπτείας
+     * στη συλλογή χρησιμοποιείστε τη μέθοδο {@link Aithousa#addEpopteia(Epopteia)}
+     * και για την  απομάκρυνση μιας εποπτείας τη
+     * μέθοδο {@link Aithousa#removeEpopteia(Epopteia)}.
+     * @return Αντίγραφο της συλλογής των εποπτειών της αίθουσας
+     */
 	public Set<Epopteia> getEpopteies() {
 	        return new HashSet<Epopteia>(epopteia);
 	}

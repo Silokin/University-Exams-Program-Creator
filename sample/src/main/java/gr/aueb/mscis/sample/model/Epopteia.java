@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.mgiandia.library.domain.Author;
+import com.mgiandia.library.domain.Book;
+
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 /**
@@ -46,7 +49,7 @@ public class Epopteia {
 	
     
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE ,CascadeType.REMOVE}, 
-            fetch=FetchType.LAZY)
+            fetch=FetchType.EAGER)
     @JoinTable(name="epopteia_aithousa", 
             joinColumns = {@JoinColumn(name="epopteia_id")},
             inverseJoinColumns = {@JoinColumn(name="aithousa_id")})
@@ -54,7 +57,7 @@ public class Epopteia {
 	
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE }, 
-            fetch=FetchType.LAZY)
+            fetch=FetchType.EAGER)
     @JoinTable(name="epopteia_epoptis", 
             joinColumns = {@JoinColumn(name="epopteia")},
             inverseJoinColumns = {@JoinColumn(name="epoptis")})
@@ -71,9 +74,17 @@ public class Epopteia {
 	@JoinColumn(name="program")
 	private Program program;
 	
+	/**
+     * Προκαθορισμένος κατασκευαστής.
+     */
 	public Epopteia()
 	{}
 	
+	/**
+     * Βοηθητικός κατασκευαστής.
+     * @param starts Ξεκινά η εποπτεία
+     * @param ends Τελειώνει η εποπτεία
+     */
 	public Epopteia(SimpleCalendar starts, SimpleCalendar ends)
 	{
 		this.starts = starts;
@@ -154,7 +165,14 @@ public class Epopteia {
 //			this.mathima = null;
 //			
 //	}
-	
+	/**
+     * Επιστρέφει τις αίθουσες πουδιεξάγεται η εποπτεία.
+     * Η συλλογή των αιθουσών είναι αντίγραφο. Για την προσθήκη κάποιας αίθουσας
+     * στη συλλογή χρησιμοποιείστε τη μέθοδο {@link Epopteia#addAithousa(Aithousa)}
+     * και για την  απομάκρυνση μιας αίθουσας
+     * μέθοδο {@link Epopteia#removeAithousa(Aithousa)}.
+     * @return Αντίγραφο της συλλογής των αιθουσών της εποπτείας
+     */
 	public Set<Aithousa> getAithouses() {
 	        return new HashSet<Aithousa>(aithousa);
 	}

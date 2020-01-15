@@ -24,6 +24,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.mgiandia.library.domain.Author;
+import com.mgiandia.library.domain.Book;
+
 
 /**
  * Οι επόπτες που αναλαμβάνουν εποπτείες μαθημάτων
@@ -83,10 +86,19 @@ public class Epoptis {
             cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE })
     private Set<Epopteia> epopteia = new HashSet<Epopteia>();
     
-    
+    /**
+     * Προκαθορισμένος κατασκευαστής.
+     */
 	public Epoptis() {
 	}
-
+	/**
+     * Βοηθητικός κατασκευαστής.
+     * @param name Το μικρό όνομα.
+     * @param surname Το επώνυμο.
+     * @param email
+     * @param telephone
+     * @param password
+     */
 	public Epoptis(String name, String surname, EmailAddress email, TelephoneNumber telephone, String password) {
 		super();
 		this.name = name;
@@ -168,10 +180,14 @@ public class Epoptis {
     	return category;
     }
     
-	//epistrefei antigrafo kai oxi to original. auto symbainei dioti theloume na apokleisoume to gegonos
-	//na ginoun allages stin lista me ti mi diathesimotita me kostos tin apwleia dedomenwn
-	
-	//auti ti lista tin ehei o GRAMMATEAS
+    /**
+     * Επιστρέφει την/τις ημερομηνία/ες μη διαθεσιμότητας ενός επόπτη .
+     * Η συλλογή των ημερομηνιών είναι αντίγραφο. Για την προσθήκη κάποιας ημερομηνίας
+     * στη συλλογή χρησιμοποιείστε τη μέθοδο {@link Epoptis#addMiDiathesimotita(MiDiathesimotita)}
+     * και για την  απομάκρυνση μιας ημερομηνίας τη
+     * μέθοδο {@link Epoptis#removeMiDiathesimotita(MiDiathesimotita)}.
+     * @return Αντίγραφο της συλλογής των ημερομηνιών μη διαθεσιμότητας του επόπτη
+     */
 	public Set<MiDiathesimotita> getMiDiathesimotita() {
         return new HashSet<MiDiathesimotita>(midiathesimotita); 
         //ayto einai antigrafo tis arxikis listas
