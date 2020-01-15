@@ -77,9 +77,9 @@ public class EpoptisService {
 				.createQuery(
 						"select e from Epoptis e where e.email = :mail ")
 				.setParameter("mail", mail).getResultList();
-		if(epoptis.size()>0)
+		if(!epoptis.isEmpty())
 			return epoptis.get(0);
-		return new Epoptis();
+		return null;
 	}
 	
 	
