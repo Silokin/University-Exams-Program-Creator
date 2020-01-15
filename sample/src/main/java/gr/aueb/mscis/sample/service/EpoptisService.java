@@ -87,13 +87,17 @@ public class EpoptisService {
 	{
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		if (midiathesimotita.getId() != null) {
-			em.merge(midiathesimotita);
-		} else {
-			em.persist(midiathesimotita);
+		if (midiathesimotita != null) {
+			if (midiathesimotita.getId() != null) {
+				em.merge(midiathesimotita);
+			} else {
+				em.persist(midiathesimotita);
+			}
+			tx.commit();
+			return midiathesimotita;
 		}
-		tx.commit();
-		return midiathesimotita;
+		else 
+			return null;
 		//midiathesimotita.setEpoptis(epoptis.getId());
 	}
 	
