@@ -2,6 +2,7 @@ package gr.aueb.mscis.sample.resource;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.GenericType;
@@ -19,6 +20,7 @@ import org.junit.Test;
 
 
 import gr.aueb.mscis.sample.model.Program;
+import gr.aueb.mscis.sample.persistence.JPAUtil;
 
 
 
@@ -76,10 +78,12 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		List<Program> foundPrograms = listPrograms();
+		
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		List<Program> foundPrograms = listPrograms(em);
 		Assert.assertNotEquals(1, foundPrograms.size());
 		Assert.assertEquals(2, foundPrograms.size());
-
+		em.close();
 	}
 
 	@Test
@@ -94,8 +98,11 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 	
 	@Test
 	public void testAnaforaEpoptwn() {
+		EntityManager em = JPAUtil.getCurrentEntityManager();
 		
-		List<Program> programs = listPrograms();
+		List<Program> programs = listPrograms(em);
+		
+		em.close();
 		
 		Response response = target(anaforaEpoptwnUri(Integer.toString(programs.get(0).getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().get();
 		Response response2 = target(anaforaEpoptwnUri(Integer.toString(programs.get(0).getId()))).queryParam("username", "admin").queryParam("password", "guy").request().get();
@@ -106,8 +113,11 @@ public class ProgramResourceTest extends GrammateiaResourceTest {
 	
 	@Test
 	public void testAnaforaEpoptiwn() {
+		EntityManager em = JPAUtil.getCurrentEntityManager();
 		
-		List<Program> programs = listPrograms();
+		List<Program> programs = listPrograms(em);
+		
+		em.close();
 		
 		Response response = target(anaforaEpoptiwnUri(Integer.toString(programs.get(0).getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().get();
 		Response response2 = target(anaforaEpoptiwnUri(Integer.toString(programs.get(0).getId()))).queryParam("username", "admin").queryParam("password", "guy").request().get();

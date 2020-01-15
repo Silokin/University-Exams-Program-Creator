@@ -46,7 +46,7 @@ public class Epopteia {
 	
     
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE ,CascadeType.REMOVE}, 
-            fetch=FetchType.EAGER)
+            fetch=FetchType.LAZY)
     @JoinTable(name="epopteia_aithousa", 
             joinColumns = {@JoinColumn(name="epopteia_id")},
             inverseJoinColumns = {@JoinColumn(name="aithousa_id")})
@@ -54,7 +54,7 @@ public class Epopteia {
 	
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE }, 
-            fetch=FetchType.EAGER)
+            fetch=FetchType.LAZY)
     @JoinTable(name="epopteia_epoptis", 
             joinColumns = {@JoinColumn(name="epopteia")},
             inverseJoinColumns = {@JoinColumn(name="epoptis")})

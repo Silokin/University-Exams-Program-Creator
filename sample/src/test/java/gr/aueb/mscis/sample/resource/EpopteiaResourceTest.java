@@ -8,6 +8,7 @@ import static gr.aueb.mscis.sample.resource.GrammateiaUri.epopteiesAnathesiUri;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
@@ -22,6 +23,7 @@ import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.Mathima;
 import gr.aueb.mscis.sample.model.Program;
+import gr.aueb.mscis.sample.persistence.JPAUtil;
 
 public class EpopteiaResourceTest extends GrammateiaResourceTest{
 	
@@ -35,11 +37,12 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 	
 	@Test
 	public void testCreateNewEpopteia() {
-
+		EntityManager em = JPAUtil.getCurrentEntityManager();
 		// Create an epoptis info object and submit
-		Mathima mathima = findMathimaByName("Επιστήμη των Υπολογιστών"); 
-		List<Program> programs = listPrograms();
+		Mathima mathima = findMathimaByName("Επιστήμη των Υπολογιστών",em); 
+		List<Program> programs = listPrograms(em);
 		EpopteiaInfo epopteiaInfo = new EpopteiaInfo(mathima.getId(),programs.get(0).getId(),22,2,2020,18,30,22,2,2020,20,30);
+		em.close();
 
 		Response response = target(EPOPTEIES).queryParam("username", "admin").queryParam("password", "qwerty").request().post(Entity.entity(epopteiaInfo, MediaType.APPLICATION_JSON));
 		Response response2 = target(EPOPTEIES).queryParam("username", "bad").queryParam("password", "guy").request().post(Entity.entity(epopteiaInfo, MediaType.APPLICATION_JSON));
@@ -48,44 +51,55 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		List<Epopteia> epopteies = listEpopteies();
+		
+		EntityManager em2 = JPAUtil.getCurrentEntityManager();
+		List<Epopteia> epopteies = listEpopteies(em2);
 		Assert.assertEquals(4,epopteies.size());
+		em2.close();
 	}
 	
 	@Test
 	public void testAddAithousa() {
 		
-		List<Aithousa> aithousa = findAithousaByName("Πλειάδες");
-		List<Epopteia> epopteia = listEpopteies();
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		List<Aithousa> aithousa = findAithousaByName("Πλειάδες",em);
+		List<Epopteia> epopteia = listEpopteies(em);
 		AithousaInfo aithousaInfo = new AithousaInfo(aithousa.get(0));
 		
 		Assert.assertEquals("Πλειάδες",aithousaInfo.getName());
+		em.close();
 		
-		Response response = target(epopteiesAddClassUri(Integer.toString(epopteia.get(1).getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
+		Response response = target(epopteiesAddClassUri(Integer.toString(epopteia.get(0).getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
 		Response response2 = target(epopteiesAddClassUri(Integer.toString(epopteia.get(0).getId()))).queryParam("username", "bad").queryParam("password", "guy").request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
 		
 		Assert.assertEquals(200, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		
+		EntityManager em2 = JPAUtil.getCurrentEntityManager();
+		epopteia = listEpopteies(em2);
 		Set<Aithousa> found = epopteia.get(0).getAithouses();
 		Assert.assertEquals(1,found.size());
+		em2.close();
 	}
 	
 	@Test
 	public void anathesiEpopteias() {
-		
-		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr",em);
 		EpoptisInfo epoptisInfo = new EpoptisInfo(epoptis);
 		
-		List<Epopteia> epopteia = listEpopteies();
+		List<Epopteia> epopteia = listEpopteies(em);
+		em.close();
 		
 		Response response = target(epopteiesAnathesiUri(Integer.toString(epopteia.get(0).getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().put(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
 		Response response2 = target(epopteiesAnathesiUri(Integer.toString(epopteia.get(0).getId()))).queryParam("username", "bad").queryParam("password", "guy").request().put(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
 		
 		Assert.assertEquals(200, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		epopteia = listEpopteies();
+		
+		EntityManager em2 = JPAUtil.getCurrentEntityManager();
+		epopteia = listEpopteies(em2);
 		Set<Epoptis> found = epopteia.get(0).getEpoptis();
-		Assert.assertEquals(2,found.size());
+		em2.close();
+		Assert.assertEquals(1,found.size());
 	}
 }

@@ -42,56 +42,56 @@ public abstract class GrammateiaResourceTest extends JerseyTest {
 	}
 	
 	
-	public List<Aithousa> findAithousaByName(String name) {
-		EntityManager em = JPAUtil.getCurrentEntityManager();
+	public List<Aithousa> findAithousaByName(String name,EntityManager em) {
+		//EntityManager em = JPAUtil.getCurrentEntityManager();
 		
 		AithousaService service = new AithousaService(em);
 		List<Aithousa> aithouses = service.findAithousaByName(name);
 		
-		em.close();
+		//em.close();
 		
 		return aithouses;
 	}
 	
-	public List<Program> listPrograms() {
-		EntityManager em = JPAUtil.getCurrentEntityManager();
+	public List<Program> listPrograms(EntityManager em) {
+		//EntityManager em = JPAUtil.getCurrentEntityManager();
 		
 		ProgramService service = new ProgramService(em);
 		List<Program> programs = service.findAllPrograms();
 		
 		
-		em.close(); 
+		//em.close(); 
 		return programs; 
 	}
 	
-	public List<Epopteia> listEpopteies() {
-		EntityManager em = JPAUtil.getCurrentEntityManager();
+	public List<Epopteia> listEpopteies(EntityManager em) {
+		//EntityManager em = JPAUtil.getCurrentEntityManager();
 		
 		EpopteiaService service = new EpopteiaService(em);
 		List<Epopteia> epopteies = service.findAllEpopteies();
 		
-		em.close(); 
+		//em.close(); 
 		return epopteies; 
 	}
 	
-	public Epoptis findEpoptisByMail(String mail) {
-		EntityManager em = JPAUtil.getCurrentEntityManager();
+	public Epoptis findEpoptisByMail(String mail,EntityManager em) {
+		//EntityManager em = JPAUtil.getCurrentEntityManager();
 		
 		EpoptisService service = new EpoptisService(em);
 		Epoptis epoptis = service.findEpoptisByMail(new EmailAddress(mail));
 		
-		em.close();
+		//em.close();
 		
 		return epoptis;
 	}
 	
-	public Mathima findMathimaByName(String name) {
-		EntityManager em = JPAUtil.getCurrentEntityManager();
+	public Mathima findMathimaByName(String name,EntityManager em) {
+		//EntityManager em = JPAUtil.getCurrentEntityManager();
 		
 		MathimaService ms = new MathimaService(em);
 		List<Mathima> mathima = ms.findMathimaByTitle(name);
 		
-		em.close();
+		//em.close();
 		return mathima.get(0);
 	}
 	

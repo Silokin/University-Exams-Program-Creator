@@ -1,5 +1,6 @@
 package gr.aueb.mscis.sample.resource;
 
+import javax.persistence.EntityManager;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
@@ -11,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import gr.aueb.mscis.sample.model.Epoptis;
+import gr.aueb.mscis.sample.persistence.JPAUtil;
 
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.epoptisIdUri;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTES;
@@ -29,7 +31,8 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 	
 	@Test
 	public void testCreateNewEpoptis() {
-
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		
 		// Create an epoptis info object and submit
 		EpoptisInfo epoptisInfo = new EpoptisInfo("Dimitris", "Nikolis", "6985674589", "dnikolis@aueb.gr", "gav123","ΥΔ");
 
@@ -39,18 +42,20 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		Epoptis foundEpoptis = findEpoptisByMail("dnikolis@aueb.gr");
+		Epoptis foundEpoptis = findEpoptisByMail("dnikolis@aueb.gr",em);
 		Assert.assertEquals(epoptisInfo.getEmail(), foundEpoptis.getEmail().getAddress());
-
+		em.close();
 	}
 
 	@Test
 	public void testUpdateEpoptis() {
-
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		
 		// Find an epoptis and update its email
-		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");
+		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr",em);
 		Assert.assertEquals(epoptis.getEmail().getAddress(),"testGiannis@aueb.gr");
 		EpoptisInfo epoptisInfo = EpoptisInfo.wrap(epoptis);
+		em.close();
 		epoptisInfo.setEmail("inikolis@aueb.gr");
 
 		// Submit the updated representation
@@ -62,14 +67,17 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		Epoptis foundEpoptis = findEpoptisByMail("inikolis@aueb.gr");
+		EntityManager em2 = JPAUtil.getCurrentEntityManager();
+		Epoptis foundEpoptis = findEpoptisByMail("inikolis@aueb.gr",em2);
+		em2.close();
 		Assert.assertEquals("inikolis@aueb.gr", foundEpoptis.getEmail().getAddress());
 	}
 
 	@Test
 	public void testDeleteExistingEpoptis() {
-
-		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		
+		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr",em);
 		
 		Response response = target(epoptisIdUri(Integer.toString(epoptis.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().delete();
 		Response response2 = target(epoptisIdUri(Integer.toString(epoptis.getId()))).queryParam("username", "bad").queryParam("password", "guy").request().delete();
@@ -77,8 +85,9 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		Epoptis foundEpoptis = findEpoptisByMail("testGiannis@aueb.gr");
+		Epoptis foundEpoptis = findEpoptisByMail("testGiannis@aueb.gr",em);
 		Assert.assertNotNull(foundEpoptis.getEmail());
+		em.close();
 
 	}
 
@@ -100,11 +109,13 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		
 		Response response = target(EPOPTES_ADD_MD).queryParam("email","testGiannis@aueb.gr").queryParam("password", "1234").request().put(Entity.entity(mdi,MediaType.APPLICATION_JSON));
 		
-		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr",em);
 		Assert.assertEquals(epoptis.getEmail().getAddress(),"testGiannis@aueb.gr");
 		
 		Assert.assertEquals(200, response.getStatus());
 		Assert.assertEquals(epoptis.getMiDiathesimotita().isEmpty(),false);
+		em.close();
 
 	}
 	

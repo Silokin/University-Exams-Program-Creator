@@ -3,6 +3,7 @@ package gr.aueb.mscis.sample.resource;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.GenericType;
@@ -23,6 +24,7 @@ import org.junit.Test;
 
 
 import gr.aueb.mscis.sample.model.*;
+import gr.aueb.mscis.sample.persistence.JPAUtil;
 
 
 
@@ -71,12 +73,13 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 
 	@Test
 	public void testUpdateAithousa() {
-
+		EntityManager em = JPAUtil.getCurrentEntityManager();
 		// Find an aithousa and update its name
-		List<Aithousa> aithouses = findAithousaByName("Πλειάδες");
+		List<Aithousa> aithouses = findAithousaByName("Πλειάδες",em);
 		Assert.assertEquals(1, aithouses.size());
 		AithousaInfo aithousaInfo = AithousaInfo.wrap(aithouses.get(0));
 		aithousaInfo.setName("Πλειάδες2");
+		em.close();
 
 		// Submit the updated representation
 		Response response = target(aithousaIdUri(Integer.toString(aithousaInfo.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request()
@@ -87,18 +90,21 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		List<Aithousa> foundAithouses = findAithousaByName("Πλειάδες2");
+		EntityManager em2 = JPAUtil.getCurrentEntityManager();
+		List<Aithousa> foundAithouses = findAithousaByName("Πλειάδες2",em2);
 		Assert.assertEquals(1, foundAithouses.size());
-
+		em2.close();
 	}
 
 	@Test
 	public void testDeleteExistingAithousa() {
 		// Find an aithousa and update its title
-		List<Aithousa> aithouses = findAithousaByName("Πλειάδες");
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		List<Aithousa> aithouses = findAithousaByName("Πλειάδες",em);
 		Assert.assertEquals(1, aithouses.size());
 		Aithousa aithousa = aithouses.get(0);
-
+		em.close();
+		
 		// Submit the updated representation
 		Response response = target(aithousaIdUri(Integer.toString(aithousa.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().delete();
 		Response response2 = target(aithousaIdUri(Integer.toString(aithousa.getId()))).queryParam("username", "bad").queryParam("password", "guy").request().delete();
@@ -106,9 +112,10 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		List<Aithousa> foundAithouses = findAithousaByName("Πλειάδες");
+		EntityManager em2 = JPAUtil.getCurrentEntityManager();
+		List<Aithousa> foundAithouses = findAithousaByName("Πλειάδες",em2);
 		Assert.assertEquals(0, foundAithouses.size());
-
+		em2.close();
 	}
 	
 	@Test
@@ -150,9 +157,11 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
 		Assert.assertEquals(401, response2.getStatus());
-		List<Aithousa> foundAithouses = findAithousaByName("mes");
+		
+		EntityManager em = JPAUtil.getCurrentEntityManager();
+		List<Aithousa> foundAithouses = findAithousaByName("mes",em);
 		Assert.assertEquals(1, foundAithouses.size());
-
+		em.close();
 	}
 	
 	@Test
