@@ -168,7 +168,6 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 	
 	
 
-	//YPARXOUN ALLAGES
 	@Test
 	public void testAnathesiEpopteias()
 	{ 
@@ -186,8 +185,7 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		Epopteia savedEpopteia = em.find(Epopteia.class, newEpopteia.getId()); 
 		
 		List<Epopteia> oldEpopteia = service.findEpopteiaByStartDate(new SimpleCalendar(2020,1,21,13,15));
-//		//ekxwrhsh epopteias gia certain epopti
-//		//an den yparxei o epoptis me to certain email, tote NULL epoptis
+
 //		if (epoptis != null)
 //			{
 //			service.anathesiEpopteias(epoptis, savedEpopteia);
@@ -195,11 +193,22 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 //			}
 //		else
 //			assertNull(epoptis);
-		if (epoptis != null && oldEpopteia != null)
+		
+		//ekxwrhsh epopteias gia certain epopti
+		//an den yparxei o epoptis me to certain email, tote NULL epoptis
+		//episis an den yparxei h epoptia, tote kai auti NULL
+		if (epoptis != null && savedEpopteia != null)
 		{
-		service.anathesiEpopteias(epoptis, oldEpopteia.get(0));
-		Assert.assertEquals(2, epoptis.getEpopteies().size());
+		service.anathesiEpopteias(epoptis, savedEpopteia);
+		assertEquals(2, epoptis.getEpopteies().size());
 		}
+//		if (epoptis != null) {
+//			assertEquals(1, epoptis.getEpopteies().size());
+//			assertNull(oldEpopteia);
+//		}
+//		if (oldEpopteia != null)
+//			assertNull(epoptis);
+		
 		//yparxei 1 ston initializer idi kai twra prostithetai alli mia
 		
 	}
