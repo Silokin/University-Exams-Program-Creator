@@ -150,14 +150,16 @@ public class EpoptisService {
 				}
 			}else {
 				Epoptis epoptis = findEpoptisByMail(new EmailAddress(usr));
-				if (epoptis.getId()!=null) {
-					if(epoptis.getPassword().equals(pass)){
-						return true;
+				if (epoptis != null)
+				{
+					if (epoptis.getId()!=null) {
+						if(epoptis.getPassword().equals(pass))
+							return true;
 					}
 				}
 			}
 			return false;	
-		}
+			}
 		
 		//alex version with test
 			public boolean login(Epoptis epoptis, EmailAddress email, String password)
