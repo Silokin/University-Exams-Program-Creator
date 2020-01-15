@@ -123,6 +123,6 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		epopteia = listEpopteies(em2);
 		Set<Epoptis> found = epopteia.get(0).getEpoptis();
 		em2.close();
-		Assert.assertEquals(1,found.size());
+		Assert.assertEquals(2,found.size());
 	}
 }
