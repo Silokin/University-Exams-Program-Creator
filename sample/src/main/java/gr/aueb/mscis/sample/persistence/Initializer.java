@@ -6,7 +6,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import gr.aueb.mscis.sample.contacts.EmailAddress;
-import gr.aueb.mscis.sample.contacts.TelephoneNumber;
+import gr.aueb.mscis.sample.contacts.TelephoneNumber; 
 import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
