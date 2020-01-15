@@ -106,7 +106,6 @@ public class Initializer  {
         
 
         epopteia1.ekxwrhshEpopteias(alex);
-        //epopteia2.ekxwrhshEpopteias(giannis);
         
         EntityManager em = JPAUtil.getCurrentEntityManager();
         EntityTransaction tx = em.getTransaction();
