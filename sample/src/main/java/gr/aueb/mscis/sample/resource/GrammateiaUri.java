@@ -86,6 +86,10 @@ public class GrammateiaUri {
 		return PROGRAM + "/" + id + "/anaforaEpoptwn";
 	}
 	
+	public static String anaforaEpoptiwnUri(String id) {
+		return PROGRAM + "/" + id + "/anaforaEpoptiwn";
+	}
+	
 	public static String programSearchUri(SimpleCalendar date) {
 		return PROGRAM_SEARCH + "?date=" + date;
 	}

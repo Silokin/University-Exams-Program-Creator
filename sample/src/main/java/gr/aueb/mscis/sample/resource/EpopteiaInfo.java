@@ -177,8 +177,8 @@ public class EpopteiaInfo {
 			epopteia = new Epopteia();
 		}
 
-		epopteia.setStarts(new SimpleCalendar(startD,startM,startY,startH,startMin));
-		epopteia.setEnds(new SimpleCalendar(endD,endM,endY,endH,endMin));
+		epopteia.setStarts(new SimpleCalendar(startY,startM,startD,startH,startMin));
+		epopteia.setEnds(new SimpleCalendar(endY,endM,endD,endH,endMin));
 		
 		ProgramService ps = new ProgramService(em);
 		epopteia.setProgram(ps.findProgramById(programId));

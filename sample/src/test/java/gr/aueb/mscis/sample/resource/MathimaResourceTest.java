@@ -40,20 +40,28 @@ public class MathimaResourceTest extends GrammateiaResourceTest {
 	public void testListMathimaById() { 
 
 		// get all Mathimata
-		List<MathimaInfo> mathimata = target(MATHIMATA).request().get(new GenericType<List<MathimaInfo>>() {
+		List<MathimaInfo> mathimata = target(MATHIMATA).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<MathimaInfo>>() {
+		});
+		List<MathimaInfo> mathimata2 = target(MATHIMATA).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<MathimaInfo>>() {
 		});
   
 		String firstMathimaById = Integer.toString(mathimata.get(0).getId());
-		MathimaInfo mathima = target(mathimaIdUri(firstMathimaById)).request().get(MathimaInfo.class);
+		MathimaInfo mathima = target(mathimaIdUri(firstMathimaById)).queryParam("username", "admin").queryParam("password", "qwerty").request().get(MathimaInfo.class);
+		MathimaInfo mathima2 = target(mathimaIdUri(firstMathimaById)).queryParam("username", "bad").queryParam("password", "guy").request().get(MathimaInfo.class);
 		Assert.assertNotNull(mathima);
+		Assert.assertNull(mathima2.getId());
+		Assert.assertTrue(mathimata2.isEmpty());	
 	}
 	
 	@Test
 	public void testListAllMathimata() {
 
-		List<MathimaInfo> mathimata = target(MATHIMATA).request().get(new GenericType<List<MathimaInfo>>() {
+		List<MathimaInfo> mathimata = target(MATHIMATA).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<MathimaInfo>>() {
+		});
+		List<MathimaInfo> mathimata2 = target(MATHIMATA).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<MathimaInfo>>() {
 		});
 		Assert.assertEquals(4, mathimata.size());
+		Assert.assertEquals(0, mathimata2.size());
 	}
 
 	@Test 
@@ -65,10 +73,13 @@ public class MathimaResourceTest extends GrammateiaResourceTest {
 		MathimaInfo mathimaInfo = MathimaInfo.wrap(mathimata.get(0));
 		mathimaInfo.setTitle("Επιστήμη των Υπολογιστών2");
 
-		Response response = target(mathimaIdUri(Integer.toString(mathimaInfo.getId()))).request()
+		Response response = target(mathimaIdUri(Integer.toString(mathimaInfo.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request()
+				.put(Entity.entity(mathimaInfo, MediaType.APPLICATION_JSON));
+		Response response2 = target(mathimaIdUri(Integer.toString(mathimaInfo.getId()))).queryParam("username", "bad").queryParam("password", "guy").request()
 				.put(Entity.entity(mathimaInfo, MediaType.APPLICATION_JSON));
 
 		Assert.assertEquals(200, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		List<Mathima> foundMathimata = findMathimaByTitle("Επιστήμη των Υπολογιστών2");
 		Assert.assertEquals(1, foundMathimata.size());
 
@@ -77,9 +88,11 @@ public class MathimaResourceTest extends GrammateiaResourceTest {
 	@Test
 	public void testDeleteNonExistingMathima() {
 
-		Response response = target(mathimaIdUri(Integer.toString(Integer.MAX_VALUE))).request().delete();
+		Response response = target(mathimaIdUri(Integer.toString(Integer.MAX_VALUE))).queryParam("username", "admin").queryParam("password", "qwerty").request().delete();
+		Response response2 = target(mathimaIdUri(Integer.toString(Integer.MAX_VALUE))).queryParam("username", "bad").queryParam("password", "guy").request().delete();
 
 		Assert.assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 
 	}
 
@@ -90,10 +103,12 @@ public class MathimaResourceTest extends GrammateiaResourceTest {
 		
 		MathimaInfo mathimaInfo = new MathimaInfo("vash",1,"kot");
 
-		Response response = target(MATHIMATA).request().post(Entity.entity(mathimaInfo, MediaType.APPLICATION_JSON));
+		Response response = target(MATHIMATA).queryParam("username", "admin").queryParam("password", "qwerty").request().post(Entity.entity(mathimaInfo, MediaType.APPLICATION_JSON));
+		Response response2 = target(MATHIMATA).queryParam("username", "bad").queryParam("password", "guy").request().post(Entity.entity(mathimaInfo, MediaType.APPLICATION_JSON));
 
 		
 		Assert.assertEquals(201, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		List<Mathima> foundMathimata = findMathimaByTitle("vash");
 		Assert.assertEquals(1, foundMathimata.size());
 

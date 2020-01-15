@@ -21,7 +21,7 @@ public class SimpleCalendar implements  Comparable<SimpleCalendar> {
      * @param hour Οι ώρες της ημέρας από 00-23
      * @param Τα λεπτά από 00-59
      */
-    public SimpleCalendar(int day, int month, int year, int hour, int minutes) {
+    public SimpleCalendar(int year, int month, int day, int hour, int minutes) {
         date = Calendar.getInstance();
         date.set(year, month - 1, day, hour, minutes);
        

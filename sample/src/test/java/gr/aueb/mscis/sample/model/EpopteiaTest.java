@@ -52,7 +52,7 @@ public class EpopteiaTest {
 		aithousa2.addEpopteia(epopteia3);
 		epopteia.addAithousa(aithousa3);
 
-		Assert.assertEquals(3,epopteia.getAithouses().size());	
+		Assert.assertEquals(4,epopteia.getAithouses().size());	
 		assertEquals(epopteia.getAithouses().size(),4);	
 	}
 	  

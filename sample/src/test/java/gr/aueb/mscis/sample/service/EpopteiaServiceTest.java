@@ -98,7 +98,7 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 		Epopteia e = es.findEpopteiaById(ep.get(0).getId());
 		
 		assertNotNull("Expected non null epopteia", e);
-		assertEquals(new SimpleCalendar(20,1,20,8,15), e.getProgram().getStarts());
+		assertEquals(new SimpleCalendar(2020,1,20,0,0), e.getProgram().getStarts());
 		
 	}
 			

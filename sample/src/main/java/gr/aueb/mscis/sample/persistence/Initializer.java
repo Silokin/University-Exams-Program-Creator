@@ -65,7 +65,7 @@ public class Initializer  {
 
         eraseData();                      
 
-        Program exe19_20 = new Program(new SimpleCalendar(20,1,20,0,0),new SimpleCalendar(22,2,20,0,0));
+        Program exe19_20 = new Program(new SimpleCalendar(2020,1,20,0,0),new SimpleCalendar(2020,2,12,0,0));
         
         Aithousa pleiades = new Aithousa("Πλειάδες", "1", 80, 2, "Ευελπίδων 1");
         Aithousa miltiades = new Aithousa("Μιλτιάδης", "1", 120, 4, "Κεντρικό");
@@ -76,7 +76,7 @@ public class Initializer  {
         Mathima crypto = new Mathima("Κρυπτογραφία",5,"Μαριάς");
         Mathima biology = new Mathima("Βιολογία",2,"Πικράκης");
         
-        MiDiathesimotita mi_diath1 = new MiDiathesimotita(new SimpleCalendar(22,1,20,12,10));
+        MiDiathesimotita mi_diath1 = new MiDiathesimotita(new SimpleCalendar(2020,1,25,0,0));
         
         EpoptisCategory proswpiko = new EpoptisCategory("Προσωπικό Τμήματος",5);
         EpoptisCategory ypopsifios_didaktor = new EpoptisCategory("Υποψήφιος Διδάκτωρ",3);
@@ -91,23 +91,22 @@ public class Initializer  {
         Epoptis tasos =  new Epoptis("Tasos", "Kouk", new EmailAddress("testTasos@aueb.gr"),null,"1234");
         tasos.setCategory(proswpiko);
         
-        Epopteia epopteia1 = new Epopteia(new SimpleCalendar(21,1,20,13,15),new SimpleCalendar(21,1,20,15,15));
+        Epopteia epopteia1 = new Epopteia(new SimpleCalendar(2020,1,21,13,15),new SimpleCalendar(2020,1,21,15,15));
         epopteia1.setProgram(exe19_20);
         epopteia1.setMathima(biology);
         
-        Epopteia epopteia2 = new Epopteia(new SimpleCalendar(22,1,20,13,15),new SimpleCalendar(22,1,20,15,15));
+        Epopteia epopteia2 = new Epopteia(new SimpleCalendar(2020,1,22,13,15),new SimpleCalendar(2020,1,22,15,15));
         epopteia2.setProgram(exe19_20);
         epopteia2.setMathima(crypto);
         epopteia2.addAithousa(pleiades);
         
-        Epopteia epopteia3 = new Epopteia(new SimpleCalendar(22,2,20,13,15),new SimpleCalendar(22,2,20,15,15));
+        Epopteia epopteia3 = new Epopteia(new SimpleCalendar(2020,2,22,13,15),new SimpleCalendar(2020,2,22,15,15));
         epopteia3.setProgram(exe19_20);
         epopteia3.setMathima(statistics);
         
 
         epopteia1.ekxwrhshEpopteias(alex);
         epopteia2.ekxwrhshEpopteias(giannis);
-        
         
         EntityManager em = JPAUtil.getCurrentEntityManager();
         EntityTransaction tx = em.getTransaction();

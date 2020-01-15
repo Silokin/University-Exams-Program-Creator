@@ -127,6 +127,7 @@ public class EpopteiaService {
 			return epopteia;
 			}
 		else
+			tx.commit();
 			return null;
 
 	}

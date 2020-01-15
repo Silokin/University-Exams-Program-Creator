@@ -167,8 +167,8 @@ public class ProgramInfo {
 		} else {
 			program = new Program();
 		}
-		program.setStarts(new SimpleCalendar(startD,startM,startY,0,0));
-		program.setEnds(new SimpleCalendar(endD,endM,endY,0,0));
+		program.setStarts(new SimpleCalendar(startY,startM,startD,0,0));
+		program.setEnds(new SimpleCalendar(endY,endM,endD,0,0));
 
 		return program;
 	}

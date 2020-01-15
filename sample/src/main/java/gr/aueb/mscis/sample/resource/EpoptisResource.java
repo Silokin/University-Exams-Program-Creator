@@ -34,14 +34,15 @@ public class EpoptisResource extends AbstractResource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createEpoptis(EpoptisInfo epoptisInfo) {
+	public Response createEpoptis(EpoptisInfo epoptisInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-
+		EpoptisService es = new EpoptisService(em);
+		boolean access = es.logIn(user, pass);
+		if(access) {
 		Epoptis epoptis = epoptisInfo.getEpoptis(em);
 
-		EpoptisService epoptisService = new EpoptisService(em);
-		epoptis = epoptisService.saveEpoptis(epoptis);
+		epoptis = es.saveEpoptis(epoptis);
 
 		UriBuilder ub = uriInfo.getAbsolutePathBuilder();
 		URI newEpoptisUri = ub.path(Integer.toString(epoptis.getId())).build();
@@ -49,6 +50,9 @@ public class EpoptisResource extends AbstractResource {
 		em.close();
 
 		return Response.created(newEpoptisUri).build();
+		}
+		em.close();
+		return Response.status(Status.UNAUTHORIZED).build();
 	}
 
 	/**
@@ -62,29 +66,34 @@ public class EpoptisResource extends AbstractResource {
 	@PUT
 	@Path("{epoptisId:[0-9]*}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateBook(EpoptisInfo epoptisInfo) {
+	public Response updateBook(EpoptisInfo epoptisInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-
+		EpoptisService es = new EpoptisService(em);
+		boolean access = es.logIn(user, pass);
+		if(access) {
 		Epoptis epoptis = epoptisInfo.getEpoptis(em);
 
-		EpoptisService epoptisService = new EpoptisService(em);
-		epoptis = epoptisService.saveEpoptis(epoptis);
+		epoptis = es.saveEpoptis(epoptis);
 
 		em.close();
 
 		return Response.ok().build();
+		}
+		em.close();
+		return Response.status(Status.UNAUTHORIZED).build();
 	}
 
 	@DELETE
 	@Path("{epoptisId:[0-9]*}")
-	public Response deleteEpoptis(@PathParam("epoptisId") int epoptisId) {
+	public Response deleteEpoptis(@PathParam("epoptisId") int epoptisId,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-		
-		EpoptisService service = new EpoptisService(em);
-		Epoptis epoptis = service.findEpoptisById(epoptisId);
-		boolean result = service.deleteEpoptis(epoptis);
+		EpoptisService es = new EpoptisService(em);
+		boolean access = es.logIn(user, pass);
+		if(access) {
+		Epoptis epoptis = es.findEpoptisById(epoptisId);
+		boolean result = es.deleteEpoptis(epoptis);
 		
 		if (!result) {
 			em.close();
@@ -93,6 +102,9 @@ public class EpoptisResource extends AbstractResource {
 
 		em.close();
 		return Response.ok().build();
+		}
+		em.close();
+		return Response.status(Status.UNAUTHORIZED).build();
 
 	}
 	
@@ -106,7 +118,7 @@ public class EpoptisResource extends AbstractResource {
 		if(epoptisService.logIn(mail, pass)) {
 		
 			Epoptis epoptis = epoptisService.findEpoptisByMail(new EmailAddress(mail));
-			MiDiathesimotita md = new MiDiathesimotita(new SimpleCalendar(mdi.getDay(),mdi.getMonth(),mdi.getYear(),0,0));
+			MiDiathesimotita md = new MiDiathesimotita(new SimpleCalendar(mdi.getYear(),mdi.getMonth(),mdi.getDay(),0,0));
 			epoptis.addMiDiathesimotita(md);
 
 			epoptis = epoptisService.saveEpoptis(epoptis);

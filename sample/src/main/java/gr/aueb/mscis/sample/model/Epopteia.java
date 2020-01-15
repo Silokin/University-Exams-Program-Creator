@@ -45,16 +45,16 @@ public class Epopteia {
     private SimpleCalendar ends;
 	
     
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
-            fetch=FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE ,CascadeType.REMOVE}, 
+            fetch=FetchType.EAGER)
     @JoinTable(name="epopteia_aithousa", 
             joinColumns = {@JoinColumn(name="epopteia_id")},
             inverseJoinColumns = {@JoinColumn(name="aithousa_id")})
     private Set<Aithousa> aithousa = new HashSet<Aithousa>();
 	
 	
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
-            fetch=FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE }, 
+            fetch=FetchType.EAGER)
     @JoinTable(name="epopteia_epoptis", 
             joinColumns = {@JoinColumn(name="epopteia")},
             inverseJoinColumns = {@JoinColumn(name="epoptis")})

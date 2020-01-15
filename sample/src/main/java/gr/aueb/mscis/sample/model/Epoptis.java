@@ -80,7 +80,7 @@ public class Epoptis {
     
    //oi epopteies tou
     @ManyToMany(mappedBy="epoptis",fetch=FetchType.LAZY, 
-            cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE })
     private Set<Epopteia> epopteia = new HashSet<Epopteia>();
     
     

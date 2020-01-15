@@ -4,7 +4,7 @@ import static gr.aueb.mscis.sample.resource.GrammateiaUri.AITHOUSES;
 
 
 import java.net.URI;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -25,6 +25,7 @@ import javax.ws.rs.core.Response.Status;
 
 import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.service.AithousaService;
+import gr.aueb.mscis.sample.service.EpoptisService;
 
 import javax.persistence.EntityManager;
 
@@ -38,13 +39,20 @@ public class AithousaResource extends AbstractResource {
 
 	@GET 
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<AithousaInfo> listAllAithouses() {
+	public List<AithousaInfo> listAllAithouses(@QueryParam("username") String user,@QueryParam("password") String pass) {
 		EntityManager em = getEntityManager();
-		AithousaService aithousaService = new AithousaService(em);
-		List<Aithousa> aithouses = aithousaService.findAllAithouses();
-
-		List<AithousaInfo> aithousaInfo = AithousaInfo.wrap(aithouses);
-
+		EpoptisService es = new EpoptisService(em);
+		List<AithousaInfo> aithousaInfo = new ArrayList();
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			AithousaService aithousaService = new AithousaService(em);
+			List<Aithousa> aithouses = aithousaService.findAllAithouses();
+	
+			aithousaInfo = AithousaInfo.wrap(aithouses);
+	
+			em.close();
+			return aithousaInfo;
+		}
 		em.close();
 		return aithousaInfo;
 
@@ -53,53 +61,69 @@ public class AithousaResource extends AbstractResource {
 	@GET
 	@Path("{aithousaId:[0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public AithousaInfo getAithousaDetails(@PathParam("aithousaId") int aithousaId) {
+	public AithousaInfo getAithousaDetails(@PathParam("aithousaId") int aithousaId,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-
-		AithousaService aithousaService = new AithousaService(em);
-		Aithousa aithousa = aithousaService.findAithousaById(aithousaId);
-
-		AithousaInfo aithousaInfo = AithousaInfo.wrap(aithousa);
+		EpoptisService es = new EpoptisService(em);
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			AithousaService aithousaService = new AithousaService(em);
+			Aithousa aithousa = aithousaService.findAithousaById(aithousaId);
+	
+			AithousaInfo aithousaInfo = AithousaInfo.wrap(aithousa);
+			em.close();
+	
+			return aithousaInfo;
+		}
 		em.close();
-
-		return aithousaInfo;
-
+		return new AithousaInfo();
 	}
  
 	@GET
 	@Path("search")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<AithousaInfo> searchAithousaByName(@QueryParam("name") String name) {
+	public List<AithousaInfo> searchAithousaByName(@QueryParam("name") String name,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-		AithousaService aithousaService = new AithousaService(em);
-		List<Aithousa> aithouses = aithousaService.findAithousaByName(name);
-
-		List<AithousaInfo> aithousesInfo = AithousaInfo.wrap(aithouses);
-
+		EpoptisService es = new EpoptisService(em);
+		List<AithousaInfo> aithousesInfo = new ArrayList();
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			AithousaService aithousaService = new AithousaService(em);
+			List<Aithousa> aithouses = aithousaService.findAithousaByName(name);
+	
+			aithousesInfo = AithousaInfo.wrap(aithouses);
+	
+			em.close();
+			return aithousesInfo;
+		}
 		em.close();
 		return aithousesInfo;
-
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createAithousa(AithousaInfo aithousaInfo) {
+	public Response createAithousa(AithousaInfo aithousaInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
+		EpoptisService es = new EpoptisService(em);
 
-		Aithousa aithousa = aithousaInfo.getAithousa(em);
-
-		AithousaService aithousaService = new AithousaService(em);
-		aithousa = aithousaService.saveAithousa(aithousa);
-
-		UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-		URI newAithousaUri = ub.path(Integer.toString(aithousa.getId())).build();
-
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			Aithousa aithousa = aithousaInfo.getAithousa(em);
+	
+			AithousaService aithousaService = new AithousaService(em);
+			aithousa = aithousaService.saveAithousa(aithousa);
+	
+			UriBuilder ub = uriInfo.getAbsolutePathBuilder();
+			URI newAithousaUri = ub.path(Integer.toString(aithousa.getId())).build();
+	
+			em.close();
+	
+			return Response.created(newAithousaUri).build();
+		}
 		em.close();
-
-		return Response.created(newAithousaUri).build();
+		return Response.status(Status.UNAUTHORIZED).build();
 	}
 
 	/**
@@ -113,45 +137,51 @@ public class AithousaResource extends AbstractResource {
 	@PUT
 	@Path("{aithousaId:[0-9]*}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateAithousa(AithousaInfo aithousaInfo) {
+	public Response updateAithousa(AithousaInfo aithousaInfo,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
- 
-		Aithousa aithousa = aithousaInfo.getAithousa(em);
+		EpoptisService es = new EpoptisService(em);
 
-		AithousaService aithousaService = new AithousaService(em);
-		aithousa = aithousaService.saveAithousa(aithousa);
-
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			Aithousa aithousa = aithousaInfo.getAithousa(em);
+	
+			AithousaService aithousaService = new AithousaService(em);
+			aithousa = aithousaService.saveAithousa(aithousa);
+	
+			em.close();
+	
+			return Response.ok().build();
+		}
 		em.close();
-
-		return Response.ok().build();
+		return Response.status(Status.UNAUTHORIZED).build(); 
 	}
 
 	@DELETE
 	@Path("{aithousaId:[0-9]*}")
-	public Response deleteAithousa(@PathParam("aithousaId") int aithousaId) {
+	public Response deleteAithousa(@PathParam("aithousaId") int aithousaId,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-		
-		AithousaService aithousaService = new AithousaService(em);
-		
-		Aithousa aithousa = aithousaService.findAithousaById(aithousaId);
+		EpoptisService es = new EpoptisService(em);
 
-		boolean result = aithousaService.deleteAithousa(aithousa);
-		
-		if (!result) {
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			AithousaService aithousaService = new AithousaService(em);
+			
+			Aithousa aithousa = aithousaService.findAithousaById(aithousaId);
+	
+			boolean result = aithousaService.deleteAithousa(aithousa);
+			
+			if (!result) {
+				em.close();
+				return Response.status(Status.NOT_FOUND).build();
+			}
+	
 			em.close();
-			return Response.status(Status.NOT_FOUND).build();
+			return Response.ok().build();
 		}
-
 		em.close();
-		return Response.ok().build();
-
+		return Response.status(Status.UNAUTHORIZED).build();
 	}
 
-}
-
-
-
-
-	
+}	

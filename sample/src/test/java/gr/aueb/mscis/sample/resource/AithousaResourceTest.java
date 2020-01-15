@@ -43,22 +43,30 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 	public void testListAithousaById() { 
 
 		// get all aithouses
-		List<AithousaInfo> aithouses = target(AITHOUSES).request().get(new GenericType<List<AithousaInfo>>() {
+		List<AithousaInfo> aithouses = target(AITHOUSES).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<AithousaInfo>>() {
+		});
+		List<AithousaInfo> aithouses2 = target(AITHOUSES).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<AithousaInfo>>() {
 		});
 
 		String firstAithousaById = Integer.toString(aithouses.get(0).getId());
-		AithousaInfo aithousa = target(aithousaIdUri(firstAithousaById)).request().get(AithousaInfo.class);
+		AithousaInfo aithousa = target(aithousaIdUri(firstAithousaById)).queryParam("username", "admin").queryParam("password", "qwerty").request().get(AithousaInfo.class);
+		AithousaInfo aithousa2 = target(aithousaIdUri(firstAithousaById)).queryParam("username", "bad").queryParam("password", "guy").request().get(AithousaInfo.class);
 		Assert.assertNotNull(aithousa);
 		Assert.assertEquals("Πλειάδες", aithousa.getName());
+		Assert.assertNull(aithousa2.getId());
+		Assert.assertTrue(aithouses2.isEmpty());	
 	}
 
 
 	@Test
 	public void testListAllAithouses() {
 
-		List<AithousaInfo> aithouses = target(AITHOUSES).request().get(new GenericType<List<AithousaInfo>>() {
+		List<AithousaInfo> aithouses = target(AITHOUSES).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<AithousaInfo>>() {
+		});
+		List<AithousaInfo> aithouses2 = target(AITHOUSES).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<AithousaInfo>>() {
 		});
 		Assert.assertEquals(3, aithouses.size());
+		Assert.assertTrue(aithouses2.isEmpty());
 	}
 
 	@Test
@@ -71,11 +79,14 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 		aithousaInfo.setName("Πλειάδες2");
 
 		// Submit the updated representation
-		Response response = target(aithousaIdUri(Integer.toString(aithousaInfo.getId()))).request()
+		Response response = target(aithousaIdUri(Integer.toString(aithousaInfo.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request()
+				.put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
+		Response response2 = target(aithousaIdUri(Integer.toString(aithousaInfo.getId()))).queryParam("username", "bad").queryParam("password", "guy").request()
 				.put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
 
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		List<Aithousa> foundAithouses = findAithousaByName("Πλειάδες2");
 		Assert.assertEquals(1, foundAithouses.size());
 
@@ -89,10 +100,12 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 		Aithousa aithousa = aithouses.get(0);
 
 		// Submit the updated representation
-		Response response = target(aithousaIdUri(Integer.toString(aithousa.getId()))).request().delete();
+		Response response = target(aithousaIdUri(Integer.toString(aithousa.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().delete();
+		Response response2 = target(aithousaIdUri(Integer.toString(aithousa.getId()))).queryParam("username", "bad").queryParam("password", "guy").request().delete();
 
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		List<Aithousa> foundAithouses = findAithousaByName("Πλειάδες");
 		Assert.assertEquals(0, foundAithouses.size());
 
@@ -101,20 +114,26 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 	@Test
 	public void testDeleteNonExistingAithousa() {
 
-		Response response = target(aithousaIdUri(Integer.toString(Integer.MAX_VALUE))).request().delete();
+		Response response = target(aithousaIdUri(Integer.toString(Integer.MAX_VALUE))).queryParam("username", "admin").queryParam("password", "qwerty").request().delete();
+		Response response2 = target(aithousaIdUri(Integer.toString(Integer.MAX_VALUE))).queryParam("username", "bad").queryParam("password", "guy").request().delete();
 
 		Assert.assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 
 	}
  
 	@Test
 	public void testSearchAithousaByName() {
 		System.out.println(GrammateiaUri.aithousaSearchUri("Πλειάδες"));
-		List<AithousaInfo> aithouses = target(AITHOUSES_SEARCH).queryParam("name", "Πλειάδες").request()
+		List<AithousaInfo> aithouses = target(AITHOUSES_SEARCH).queryParam("name", "Πλειάδες").queryParam("username", "admin").queryParam("password", "qwerty").request()
+				.get(new GenericType<List<AithousaInfo>>() {
+				});
+		List<AithousaInfo> aithouses2 = target(AITHOUSES_SEARCH).queryParam("name", "Πλειάδες").queryParam("username", "bad").queryParam("password", "guy").request()
 				.get(new GenericType<List<AithousaInfo>>() {
 				});
 
 		Assert.assertEquals(1, aithouses.size());
+		Assert.assertTrue(aithouses2.isEmpty());
 	}
 
 	@Test
@@ -125,10 +144,12 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 		// Create an aithousa info object and submit
 		AithousaInfo aithousaInfo = new AithousaInfo("mes","des",1,2,"fes");
 
-		Response response = target(AITHOUSES).request().post(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
+		Response response = target(AITHOUSES).queryParam("username", "admin").queryParam("password", "qwerty").request().post(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
+		Response response2 = target(AITHOUSES).queryParam("username", "bad").queryParam("password", "guy").request().post(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
 
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		List<Aithousa> foundAithouses = findAithousaByName("mes");
 		Assert.assertEquals(1, foundAithouses.size());
 
@@ -138,9 +159,12 @@ public class AithousaResourceTest extends GrammateiaResourceTest {
 	public void testListAithousaById2() { 
 
 		// get all aithouses
-		List<AithousaInfo> aithouses = target(AITHOUSES).request().get(new GenericType<List<AithousaInfo>>() {
+		List<AithousaInfo> aithouses = target(AITHOUSES).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<AithousaInfo>>() {
+		});
+		List<AithousaInfo> aithouses2 = target(AITHOUSES).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<AithousaInfo>>() {
 		});
 		AithousaInfo firstAithousa = aithouses.get(0);
 		assertNotNull(firstAithousa);
+		Assert.assertTrue(aithouses2.isEmpty());
 	}
 }

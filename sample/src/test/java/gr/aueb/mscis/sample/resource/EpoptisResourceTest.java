@@ -33,10 +33,12 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		// Create an epoptis info object and submit
 		EpoptisInfo epoptisInfo = new EpoptisInfo("Dimitris", "Nikolis", "6985674589", "dnikolis@aueb.gr", "gav123","ΥΔ");
 
-		Response response = target(EPOPTES).request().post(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
+		Response response = target(EPOPTES).queryParam("username", "admin").queryParam("password", "qwerty").request().post(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
+		Response response2 = target(EPOPTES).queryParam("username", "bad").queryParam("password", "guy").request().post(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
 
 		// Check status and database state
 		Assert.assertEquals(201, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		Epoptis foundEpoptis = findEpoptisByMail("dnikolis@aueb.gr");
 		Assert.assertEquals(epoptisInfo.getEmail(), foundEpoptis.getEmail().getAddress());
 
@@ -52,11 +54,14 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 		epoptisInfo.setEmail("inikolis@aueb.gr");
 
 		// Submit the updated representation
-		Response response = target(epoptisIdUri(Integer.toString(epoptisInfo.getId()))).request()
+		Response response = target(epoptisIdUri(Integer.toString(epoptisInfo.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request()
+				.put(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
+		Response response2 = target(epoptisIdUri(Integer.toString(epoptisInfo.getId()))).queryParam("username", "bad").queryParam("password", "guy").request()
 				.put(Entity.entity(epoptisInfo, MediaType.APPLICATION_JSON));
 
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		Epoptis foundEpoptis = findEpoptisByMail("inikolis@aueb.gr");
 		Assert.assertEquals("inikolis@aueb.gr", foundEpoptis.getEmail().getAddress());
 	}
@@ -66,10 +71,12 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 
 		Epoptis epoptis = findEpoptisByMail("testGiannis@aueb.gr");
 		
-		Response response = target(epoptisIdUri(Integer.toString(epoptis.getId()))).request().delete();
+		Response response = target(epoptisIdUri(Integer.toString(epoptis.getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().delete();
+		Response response2 = target(epoptisIdUri(Integer.toString(epoptis.getId()))).queryParam("username", "bad").queryParam("password", "guy").request().delete();
 
 		// assertion on request status and database state
 		Assert.assertEquals(200, response.getStatus());
+		Assert.assertEquals(401, response2.getStatus());
 		Epoptis foundEpoptis = findEpoptisByMail("testGiannis@aueb.gr");
 		Assert.assertNotNull(foundEpoptis.getEmail());
 
@@ -78,10 +85,11 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 	@Test
 	public void testDeleteNonExistingEpoptis() {
 
-		Response response = target(epoptisIdUri(Integer.toString(Integer.MAX_VALUE))).request().delete();
+		Response response = target(epoptisIdUri(Integer.toString(Integer.MAX_VALUE))).queryParam("username", "admin").queryParam("password", "qwerty").request().delete();
+		Response response2 = target(epoptisIdUri(Integer.toString(Integer.MAX_VALUE))).queryParam("username", "bad").queryParam("password", "guy").request().delete();
 
 		Assert.assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
-
+		Assert.assertEquals(401, response2.getStatus());
 	}
 
 	@Test

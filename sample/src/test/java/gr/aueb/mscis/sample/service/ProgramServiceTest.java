@@ -47,7 +47,7 @@ public class ProgramServiceTest extends GrammateiaServiceTest {
 		ProgramService ps = new ProgramService(em);
 		List<Program> pl = ps.findAllPrograms();
 		Program p = ps.findProgramById(pl.get(0).getId());
-		assertEquals(new SimpleCalendar(20,1,20,8,15), p.getStarts());
+		assertEquals(new SimpleCalendar(2020,1,20,0,0), p.getStarts());
 		assertNotNull("Expected non null epoptis", p);
 	}
 	
@@ -61,7 +61,7 @@ public class ProgramServiceTest extends GrammateiaServiceTest {
 		//List<Program> savedP = service.findProgramByStartDate(new SimpleCalendar(20,1,20,8,15));
 		assertNotNull(savedOne);
 		assertEquals(1, savedOne.size());
-		assertEquals(new SimpleCalendar(20,1,20,8,15), savedOne.get(0).getStarts());
+		assertEquals(new SimpleCalendar(2020,1,20,0,0), savedOne.get(0).getStarts());
 	}
 	
 	@Test

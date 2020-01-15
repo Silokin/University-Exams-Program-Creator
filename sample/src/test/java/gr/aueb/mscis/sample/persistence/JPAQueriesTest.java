@@ -64,7 +64,7 @@ public class JPAQueriesTest {
     //tasos has epopteia
     @Test
     public void innerJoin() {
-        int EXPECTED_ITEM_NUMBER = 3;
+        int EXPECTED_ITEM_NUMBER = 2;
         EntityManager em = JPAUtil.getCurrentEntityManager();
         Query query = em.createQuery("select e from Epoptis e join e.epopteia ep");        
         Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
@@ -74,7 +74,7 @@ public class JPAQueriesTest {
     //perimenw 1 epopti giati ehw ekxwrhsie mono 1 epopteia genikotera
     @Test
     public void queryFromJoinTable() {
-        int EXPECTED_ITEM_NUMBER = 3;
+        int EXPECTED_ITEM_NUMBER = 2;
         EntityManager em = JPAUtil.getCurrentEntityManager();
         Query query = em.createNativeQuery("select epoptis from epopteia_epoptis");        
         Assert.assertEquals(EXPECTED_ITEM_NUMBER,query.getResultList().size());
