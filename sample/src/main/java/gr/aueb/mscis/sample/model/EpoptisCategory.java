@@ -7,10 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Columns;
-
-import gr.aueb.mscis.sample.util.SimpleCalendar;
-
 /**
 * Η κατηγορία επόπτη.
 * @authorMscIS-AlexGianTas

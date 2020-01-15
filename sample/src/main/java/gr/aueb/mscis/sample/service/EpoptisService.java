@@ -1,19 +1,12 @@
 package gr.aueb.mscis.sample.service;
 
 import java.util.List;
-import java.util.Map;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
-
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
-import gr.aueb.mscis.sample.model.EpoptisCategory;
-import gr.aueb.mscis.sample.model.EpoptisState;
 import gr.aueb.mscis.sample.model.MiDiathesimotita;
 
 public class EpoptisService {

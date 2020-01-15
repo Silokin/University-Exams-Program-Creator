@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Mathima;
 
 public class MathimaServiceTest extends GrammateiaServiceTest {

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.contacts.TelephoneNumber;
-import gr.aueb.mscis.sample.model.*;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 import org.junit.Before;

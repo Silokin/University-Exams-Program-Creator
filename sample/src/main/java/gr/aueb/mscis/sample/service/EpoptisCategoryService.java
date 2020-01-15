@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
-import gr.aueb.mscis.sample.model.Epoptis;
 import gr.aueb.mscis.sample.model.EpoptisCategory;
 
 public class EpoptisCategoryService {

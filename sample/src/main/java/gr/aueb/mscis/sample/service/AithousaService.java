@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import gr.aueb.mscis.sample.model.Aithousa;
-import gr.aueb.mscis.sample.model.Mathima;
 
 public class AithousaService {
 	private EntityManager em;

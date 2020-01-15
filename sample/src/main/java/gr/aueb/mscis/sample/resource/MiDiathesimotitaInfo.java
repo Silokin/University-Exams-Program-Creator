@@ -1,10 +1,6 @@
 package gr.aueb.mscis.sample.resource;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
-import gr.aueb.mscis.sample.model.*;
-import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 
 

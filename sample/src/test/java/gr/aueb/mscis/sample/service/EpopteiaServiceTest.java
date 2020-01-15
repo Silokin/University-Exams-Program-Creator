@@ -1,27 +1,20 @@
 package gr.aueb.mscis.sample.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 
 import gr.aueb.mscis.sample.contacts.EmailAddress;
-import gr.aueb.mscis.sample.exceptions.EpoptisException;
-import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Epopteia;
 import gr.aueb.mscis.sample.model.Epoptis;
-import gr.aueb.mscis.sample.model.EpoptisState;
 import gr.aueb.mscis.sample.model.MiDiathesimotita;
 import gr.aueb.mscis.sample.model.Program;
-import gr.aueb.mscis.sample.persistence.JPAUtil;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 public class EpopteiaServiceTest extends GrammateiaServiceTest {

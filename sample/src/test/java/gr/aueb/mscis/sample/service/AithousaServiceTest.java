@@ -1,7 +1,6 @@
 package gr.aueb.mscis.sample.service;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -10,8 +9,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import gr.aueb.mscis.sample.model.Aithousa;
-import gr.aueb.mscis.sample.model.Epopteia;
-import gr.aueb.mscis.sample.util.SimpleCalendar;
 
 public class AithousaServiceTest extends GrammateiaServiceTest {
 

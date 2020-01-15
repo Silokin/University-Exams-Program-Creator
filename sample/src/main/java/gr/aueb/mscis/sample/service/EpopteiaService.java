@@ -1,8 +1,6 @@
 package gr.aueb.mscis.sample.service;
 
 import java.util.List;
-import java.util.Map;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;

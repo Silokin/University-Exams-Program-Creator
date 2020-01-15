@@ -1,6 +1,5 @@
 package gr.aueb.mscis.sample.resource;
 
-import gr.aueb.mscis.sample.model.Aithousa;
 import gr.aueb.mscis.sample.model.Program;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 

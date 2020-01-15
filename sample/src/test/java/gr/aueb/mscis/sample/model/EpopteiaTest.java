@@ -8,7 +8,6 @@ import org.junit.Test;
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 import gr.aueb.mscis.sample.contacts.EmailAddress;
 import gr.aueb.mscis.sample.contacts.TelephoneNumber;
-import gr.aueb.mscis.sample.model.*;
 
 public class EpopteiaTest {
 	
