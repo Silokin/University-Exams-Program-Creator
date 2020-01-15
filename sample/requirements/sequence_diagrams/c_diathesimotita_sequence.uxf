@@ -28,149 +28,43 @@ fontsize=12
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>90</x>
-      <y>81</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>_UserEpoptis_
-bg=black</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>675</x>
-      <y>81</y>
+      <x>369</x>
+      <y>0</y>
       <w>99</w>
       <h>27</h>
     </coordinates>
-    <panel_attributes>entity manager
+    <panel_attributes>em:EntityManager
 bg=red</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>126</x>
-      <y>99</y>
+      <x>405</x>
+      <y>18</y>
       <w>27</w>
-      <h>45</h>
+      <h>135</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>711</x>
-      <y>99</y>
-      <w>27</w>
-      <h>81</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>126</x>
-      <y>126</y>
+      <x>207</x>
+      <y>45</y>
       <w>18</w>
-      <h>414</h>
+      <h>378</h>
     </coordinates>
     <panel_attributes>
 bg=yellow</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>135</x>
-      <y>369</y>
-      <w>432</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-saveEpoptis</panel_attributes>
-    <additional_attributes>460.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>270</x>
-      <y>162</y>
-      <w>459</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-
-createQuery</panel_attributes>
-    <additional_attributes>490.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>225</x>
-      <y>81</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>EpoptisService
-bg=orange</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>261</x>
-      <y>99</y>
-      <w>27</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>261</x>
-      <y>144</y>
-      <w>18</w>
-      <h>99</h>
-    </coordinates>
-    <panel_attributes>
-bg=red</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>135</x>
+      <x>405</x>
       <y>135</y>
-      <w>144</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-
-findEpoptisByMail</panel_attributes>
-    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>270</x>
-      <y>189</y>
-      <w>459</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-return &lt;List&gt;epoptis</panel_attributes>
-    <additional_attributes>10.0;20.0;490.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>711</x>
-      <y>162</y>
       <w>18</w>
       <h>270</h>
     </coordinates>
@@ -181,164 +75,63 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>135</x>
-      <y>216</y>
-      <w>144</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-return epoptis</panel_attributes>
-    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>135</x>
-      <y>279</y>
-      <w>288</w>
+      <x>216</x>
+      <y>198</y>
+      <w>207</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
-addMiDiathesimotita</panel_attributes>
-    <additional_attributes>300.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>369</x>
-      <y>81</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>_:Epoptis_
-bg=orange</panel_attributes>
-    <additional_attributes/>
+merge(midiathesimotita)</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>405</x>
-      <y>99</y>
-      <w>27</w>
-      <h>189</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>405</x>
-      <y>270</y>
-      <w>18</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>
-bg=magenta</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>558</x>
-      <y>387</y>
-      <w>171</w>
+      <x>216</x>
+      <y>324</y>
+      <w>207</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
-persist Epoptis</panel_attributes>
-    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>513</x>
-      <y>81</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>EpoptisService
-bg=orange</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>549</x>
-      <y>99</y>
-      <w>27</w>
-      <h>261</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;270.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>549</x>
-      <y>342</y>
-      <w>18</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>
-bg=yellow</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>135</x>
-      <y>432</y>
-      <w>90</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>135</x>
-      <y>468</y>
-      <w>18</w>
-      <h>45</h>
-    </coordinates>
-    <panel_attributes>
-bg=yellow</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>198</x>
-      <y>432</y>
-      <w>108</w>
-      <h>72</h>
-    </coordinates>
-    <panel_attributes>Check alles
-miDiathesimotites</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>144</x>
-      <y>477</y>
-      <w>81</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+persist(midiathesimotita)</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>63</x>
-      <y>126</y>
-      <w>738</w>
-      <h>414</h>
+      <x>162</x>
+      <y>81</y>
+      <w>414</w>
+      <h>333</h>
     </coordinates>
-    <panel_attributes>loop</panel_attributes>
+    <panel_attributes>Opt
+--
+[midiathesimotita != null]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>54</y>
+      <w>225</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+saveMiDiathesimotita(midiathesimotita)</panel_attributes>
+    <additional_attributes>230.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>171</x>
+      <y>117</y>
+      <w>387</w>
+      <h>297</h>
+    </coordinates>
+    <panel_attributes>Opt
+--
+[getId != null]</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
