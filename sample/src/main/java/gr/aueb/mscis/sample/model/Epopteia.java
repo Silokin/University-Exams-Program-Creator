@@ -17,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.mgiandia.library.domain.Author;
-import com.mgiandia.library.domain.Book;
 
 import gr.aueb.mscis.sample.util.SimpleCalendar;
 
