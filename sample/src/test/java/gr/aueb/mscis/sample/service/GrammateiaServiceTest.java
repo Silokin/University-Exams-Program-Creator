@@ -25,9 +25,10 @@ public class GrammateiaServiceTest {
 	@Before
 	public void setup(){
 		// prepare database for each test
-		em = JPAUtil.getCurrentEntityManager();
 		dataHelper = new Initializer();
 		dataHelper.prepareData();
+		em = JPAUtil.getCurrentEntityManager();
+
 		
 	}
 	

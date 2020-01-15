@@ -54,7 +54,7 @@ public class Initializer  {
 //        query.executeUpdate();
         
         tx.commit();
-     //   em.close();
+        em.close();
     }
     
     /**
@@ -106,7 +106,7 @@ public class Initializer  {
         
 
         epopteia1.ekxwrhshEpopteias(alex);
-        epopteia2.ekxwrhshEpopteias(giannis);
+        //epopteia2.ekxwrhshEpopteias(giannis);
         
         EntityManager em = JPAUtil.getCurrentEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -139,7 +139,7 @@ public class Initializer  {
 
         //edw apothikeuontai
         tx.commit();
-        //em.close();
+        em.close();
     
     }
 }

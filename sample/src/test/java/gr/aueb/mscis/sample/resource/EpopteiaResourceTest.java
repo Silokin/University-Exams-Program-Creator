@@ -61,7 +61,7 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		
 		Assert.assertEquals("Πλειάδες",aithousaInfo.getName());
 		
-		Response response = target(epopteiesAddClassUri(Integer.toString(epopteia.get(0).getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
+		Response response = target(epopteiesAddClassUri(Integer.toString(epopteia.get(1).getId()))).queryParam("username", "admin").queryParam("password", "qwerty").request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
 		Response response2 = target(epopteiesAddClassUri(Integer.toString(epopteia.get(0).getId()))).queryParam("username", "bad").queryParam("password", "guy").request().put(Entity.entity(aithousaInfo, MediaType.APPLICATION_JSON));
 		
 		Assert.assertEquals(200, response.getStatus());
@@ -86,6 +86,6 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		Assert.assertEquals(401, response2.getStatus());
 		epopteia = listEpopteies();
 		Set<Epoptis> found = epopteia.get(0).getEpoptis();
-		Assert.assertEquals(1,found.size());
+		Assert.assertEquals(2,found.size());
 	}
 }

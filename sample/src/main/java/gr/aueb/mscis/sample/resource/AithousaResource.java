@@ -32,7 +32,7 @@ import javax.persistence.EntityManager;
 
 
 @Path(AITHOUSES)
-public class AithousaResource extends AbstractResource {
+public class AithousaResource extends AbstractResource { 
 
 	@Context
 	UriInfo uriInfo; 
