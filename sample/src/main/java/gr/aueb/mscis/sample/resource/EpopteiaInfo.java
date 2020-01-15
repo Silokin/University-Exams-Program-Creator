@@ -14,7 +14,7 @@ import gr.aueb.mscis.sample.util.SimpleCalendar;
 @XmlRootElement
 public class EpopteiaInfo {
 	
-	private Integer id;
+	private int id = 0;
 	
 	private int mathimaId;
 	
@@ -81,7 +81,7 @@ public class EpopteiaInfo {
 		this.endMin = epopteia.getEnds().getMinute();
 	}
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -206,7 +206,7 @@ public class EpopteiaInfo {
 
 		Epopteia epopteia = null;
 
-		if (id != null) {
+		if (id != 0) {
 			epopteia = em.find(Epopteia.class, id);
 		} else {
 			epopteia = new Epopteia();

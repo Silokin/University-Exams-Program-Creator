@@ -24,6 +24,7 @@ import gr.aueb.mscis.sample.service.EpoptisService;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTEIES;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path(EPOPTEIES)
@@ -34,33 +35,46 @@ public class EpopteiaResource extends AbstractResource{
 	
 	@GET  
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<EpopteiaInfo> listAllEpopteies() {
+	public List<EpopteiaInfo> listAllEpopteies(@QueryParam("username") String user,@QueryParam("password") String pass) {
 		EntityManager em = getEntityManager();
-		EpopteiaService epopteiaService = new EpopteiaService(em);
-		List<Epopteia> epopteies = epopteiaService.findAllEpopteies();
-
-		List<EpopteiaInfo> epopteiaInfo = EpopteiaInfo.wrap(epopteies);
-
+		EpoptisService es = new EpoptisService(em);
+		
+		List<EpopteiaInfo> epopteiaInfo = new ArrayList();
+		
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			EpopteiaService epopteiaService = new EpopteiaService(em);
+			List<Epopteia> epopteies = epopteiaService.findAllEpopteies();
+	
+			epopteiaInfo = EpopteiaInfo.wrap(epopteies);
+	
+			em.close();
+			return epopteiaInfo;
+		}
 		em.close();
 		return epopteiaInfo;
-
 	}
 	
 	@GET
 	@Path("{epopteiaId:[0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public EpopteiaInfo getEpopteiaDetails(@PathParam("epopteiaId") int epopteiaId) {
+	public EpopteiaInfo getEpopteiaDetails(@PathParam("epopteiaId") int epopteiaId,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-
-		EpopteiaService epopteiaService = new EpopteiaService(em);
-		Epopteia epopteia = epopteiaService.findEpopteiaById(epopteiaId);
-
-		EpopteiaInfo epopteiaInfo = EpopteiaInfo.wrap(epopteia);
+		EpoptisService es = new EpoptisService(em);
+		
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			EpopteiaService epopteiaService = new EpopteiaService(em);
+			Epopteia epopteia = epopteiaService.findEpopteiaById(epopteiaId);
+	
+			EpopteiaInfo epopteiaInfo = EpopteiaInfo.wrap(epopteia);
+			em.close();
+	
+			return epopteiaInfo;
+		}
 		em.close();
-
-		return epopteiaInfo;
-
+		return new EpopteiaInfo();
 	}
 	
 	@POST

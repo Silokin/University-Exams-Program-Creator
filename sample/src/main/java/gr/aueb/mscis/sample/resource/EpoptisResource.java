@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response.Status;
 import static gr.aueb.mscis.sample.resource.GrammateiaUri.EPOPTES;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path(EPOPTES)
@@ -37,13 +38,21 @@ public class EpoptisResource extends AbstractResource {
 	
 	@GET 
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<EpoptisInfo> listAllEpoptes() {
+	public List<EpoptisInfo> listAllEpoptes(@QueryParam("username") String user,@QueryParam("password") String pass) {
 		EntityManager em = getEntityManager();
-		EpoptisService epoptisService = new EpoptisService(em);
-		List<Epoptis> epoptes = epoptisService.findAllEpoptes();
-
-		List<EpoptisInfo> epoptisInfo = EpoptisInfo.wrap(epoptes);
-
+		EpoptisService es = new EpoptisService(em);
+		
+		List<EpoptisInfo> epoptisInfo = new ArrayList();
+		
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			List<Epoptis> epoptes = es.findAllEpoptes();
+	
+			epoptisInfo = EpoptisInfo.wrap(epoptes);
+	
+			em.close();
+			return epoptisInfo;
+		}
 		em.close();
 		return epoptisInfo;
 
@@ -52,17 +61,22 @@ public class EpoptisResource extends AbstractResource {
 	@GET
 	@Path("{epoptisId:[0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public EpoptisInfo getEpoptisDetails(@PathParam("epoptisId") int epoptisId) {
+	public EpoptisInfo getEpoptisDetails(@PathParam("epoptisId") int epoptisId,@QueryParam("username") String user,@QueryParam("password") String pass) {
 
 		EntityManager em = getEntityManager();
-
-		EpoptisService epoptisService = new EpoptisService(em);
-		Epoptis epoptis = epoptisService.findEpoptisById(epoptisId);
-
-		EpoptisInfo epoptisInfo = EpoptisInfo.wrap(epoptis);
+		
+		EpoptisService es = new EpoptisService(em);
+		boolean access = es.logIn(user, pass);
+		if(access) {
+			Epoptis epoptis = es.findEpoptisById(epoptisId);
+	
+			EpoptisInfo epoptisInfo = EpoptisInfo.wrap(epoptis);
+			em.close();
+	
+			return epoptisInfo;
+			}
 		em.close();
-
-		return epoptisInfo;
+		return new EpoptisInfo();
 
 	}
 	

@@ -73,18 +73,13 @@ public class NotificationServiceTest extends GrammateiaServiceTest {
 		
 		if (provider.allMessages.size() >= 1)
 			{
-			EmailMessage message = provider.getAllEmails().get(1);
+			EmailMessage message = provider.getAllEmails().get(0);
 			Assert.assertEquals(alex.getEmail(), message.getTo());
 			}
 	}
 
 	public void sendMessageOnOverdue() {
 
-	}
-
-	//ena mina prin tin eksetastiki
-	private void setSystemDateTo20thDecember2019() {
-		SystemDateStub.setStub(new SimpleCalendar(20, 12, 19, 0, 0));
 	}
 
 	//tin imera tis eksetastikis

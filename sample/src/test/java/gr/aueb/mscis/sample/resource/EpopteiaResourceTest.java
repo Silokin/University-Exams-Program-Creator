@@ -39,23 +39,30 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 	@Test
 	public void testListAllEpopteies() {
 
-		List<EpopteiaInfo> epopteies = target(EPOPTEIES).request().get(new GenericType<List<EpopteiaInfo>>() {
+		List<EpopteiaInfo> epopteies = target(EPOPTEIES).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<EpopteiaInfo>>() {
 		});
-		String firstEpopteiaById = Integer.toString(epopteies.get(0).getId());
+		List<EpopteiaInfo> epopteies2 = target(EPOPTEIES).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<EpopteiaInfo>>() {
+		});
 		Assert.assertEquals(3, epopteies.size());
+		Assert.assertTrue(epopteies2.isEmpty());
 	}
 	
 	@Test
 	public void testListEpopteiaById() { 
 
 		
-		List<EpopteiaInfo> epopteies = target(EPOPTEIES).request().get(new GenericType<List<EpopteiaInfo>>() {
+		List<EpopteiaInfo> epopteies = target(EPOPTEIES).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<EpopteiaInfo>>() {
+		});
+		List<EpopteiaInfo> epopteies2 = target(EPOPTEIES).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<EpopteiaInfo>>() {
 		});
 
 		String firstEpopteiaById = Integer.toString(epopteies.get(0).getId());
-		EpopteiaInfo epopteia = target(epopteiesUri(firstEpopteiaById)).request().get(EpopteiaInfo.class);
+		EpopteiaInfo epopteia = target(epopteiesUri(firstEpopteiaById)).queryParam("username", "admin").queryParam("password", "qwerty").request().get(EpopteiaInfo.class);
+		EpopteiaInfo epopteia2 = target(epopteiesUri(firstEpopteiaById)).queryParam("username", "bad").queryParam("password", "guy").request().get(EpopteiaInfo.class);
 		Assert.assertNotNull(epopteia);
 		Assert.assertEquals(21 , epopteia.getStartD());
+		Assert.assertTrue(epopteies2.isEmpty());
+		Assert.assertEquals(0 , epopteia2.getId());
 	}
 	
 	@Test
@@ -123,6 +130,6 @@ public class EpopteiaResourceTest extends GrammateiaResourceTest{
 		epopteia = listEpopteies(em2);
 		Set<Epoptis> found = epopteia.get(0).getEpoptis();
 		em2.close();
-		Assert.assertEquals(2,found.size());
+		Assert.assertEquals(1,found.size());
 	}
 }

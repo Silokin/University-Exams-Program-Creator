@@ -67,9 +67,9 @@ public class EpopteiaServiceTest extends GrammateiaServiceTest {
 	public void testFindEpopteiaByStartDate()
 	{
 		EpopteiaService ep2 = new EpopteiaService(em);
-		List<Epopteia> epopteia =  ep2.findEpopteiaByStartDate(new SimpleCalendar(2020,1,21,13,15));
+		List<Epopteia> epopteia =  ep2.findEpopteiaByStartDate(new SimpleCalendar(2020,1,22,13,15));
 		
-		assertNotNull(epopteia);
+		assertNull(epopteia);
 		//assertEquals(0,epopteia.size());
 	}
 	

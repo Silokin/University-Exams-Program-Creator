@@ -37,21 +37,31 @@ public class EpoptisResourceTest extends GrammateiaResourceTest{
 	public void testListEpoptisById() { 
 
 	
-		List<EpoptisInfo> epoptes = target(EPOPTES).request().get(new GenericType<List<EpoptisInfo>>() {
+		List<EpoptisInfo> epoptes = target(EPOPTES).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<EpoptisInfo>>() {
+		});
+		List<EpoptisInfo> epoptes2 = target(EPOPTES).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<EpoptisInfo>>() {
 		});
  
 		String firstEpoptisById = Integer.toString(epoptes.get(0).getId());
-		EpoptisInfo epoptis = target(epoptisIdUri(firstEpoptisById)).request().get(EpoptisInfo.class);
+		EpoptisInfo epoptis = target(epoptisIdUri(firstEpoptisById)).queryParam("username", "admin").queryParam("password", "qwerty").request().get(EpoptisInfo.class);
+		EpoptisInfo epoptis2 = target(epoptisIdUri(firstEpoptisById)).queryParam("username", "bad").queryParam("password", "guy").request().get(EpoptisInfo.class);
 		Assert.assertNotNull(epoptis);
+		
+		Assert.assertTrue(epoptes2.isEmpty());
+		Assert.assertNull(epoptis2.getId());
 		Assert.assertEquals("Alex", epoptis.getName());
 	} 
 	
 	@Test
 	public void testListAllEpoptes() {
 
-		List<EpoptisInfo> epoptes = target(EPOPTES).request().get(new GenericType<List<EpoptisInfo>>() {
+		List<EpoptisInfo> epoptes = target(EPOPTES).queryParam("username", "admin").queryParam("password", "qwerty").request().get(new GenericType<List<EpoptisInfo>>() {
 		});
+		List<EpoptisInfo> epoptes2 = target(EPOPTES).queryParam("username", "bad").queryParam("password", "guy").request().get(new GenericType<List<EpoptisInfo>>() {
+		});
+		
 		Assert.assertEquals(3, epoptes.size());
+		Assert.assertTrue(epoptes2.isEmpty());
 	}
 	
 	@Test
